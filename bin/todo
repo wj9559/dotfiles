@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+TODOFILE=~/.todo
+
+if [[ ! -f $TODOFILE ]]; then
+    touch $TODOFILE
+fi
+
+usage(){
+echo "Usage: todo [todo]
+simple todo list
+  -h, --help            display this help and exit
+  -l, --list            display the list
+  -r, --remove          remove an item from the list
+  -e, --edit            direct edit todo.file
+  --clear               clear the list
+  other                 add an item to the list"
+exit 0
+}
+
+remove(){
+    nl $TODOFILE
+    eval printf %.0s- {1..${COLUMNS:-$(tput cols)}}; echo
+    read -p "Type a number to remove: " number
+    sed -i ${number}d $TODOFILE
+}
+
+write(){
+    printf "%s\n" "$*" >> $TODOFILE
+    sed -i "/^$/d" $TODOFILE
+}
+
+case ${1} in
+""              ) echo -e "  -h|--help          display help\n" && nl $TODOFILE;;
+-h|--help       ) usage;;
+-l|--list       ) nl $TODOFILE;;
+-r|--remove     ) remove;;
+-e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
+--clear         ) > $TODOFILE;;
+*               ) write $*;;
+esac

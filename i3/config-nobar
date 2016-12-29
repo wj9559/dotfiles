@@ -1,0 +1,248 @@
+# i3 config  http://i3wm.org/docs/userguide.html
+set $mod	Mod4
+set $left	h
+set $down	j
+set $up		k
+set $right	l
+
+set $1 1
+set $2 2
+set $3 3
+set $4 4
+set $5 5
+set $6 6
+set $7 7
+set $8 8:
+set $9 9:
+set $0 10:
+
+font pango:Monaco 8
+floating_modifier $mod
+
+#bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+#bindsym $mod+Return exec --no-startup-id gnome-terminal
+bindsym $mod+Return exec --no-startup-id roxterm
+bindsym $mod+Shift+Return exec --no-startup-id roxterm -T roxterm-force-floating
+bindsym $mod+q kill
+bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop 
+
+#bindsym $mod+v split toggle
+bindsym $mod+v split v
+bindsym $mod+g split h
+
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+#bindsym $mod+x focus output HDMI-2
+
+bindsym $mod+$left	focus left
+bindsym $mod+$down	focus down
+bindsym $mod+$up	focus up
+bindsym $mod+$right	focus right
+#-------------------------------------
+bindsym $mod+Shift+$left	move left	20 px
+bindsym $mod+Shift+$down	move down	20 px
+bindsym $mod+Shift+$up		move up		20 px
+bindsym $mod+Shift+$right	move right	20 px
+
+bindsym $mod+c move absolute position center
+bindsym $mod+Shift+c move position mouse
+#bindsym $mod+Shift+b move container to workspace back_and_forth
+
+bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+#bindsym $mod+w layout toggle all
+
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+1 workspace $1
+bindsym $mod+2 workspace $2
+bindsym $mod+3 workspace $3
+bindsym $mod+4 workspace $4
+bindsym $mod+5 workspace $5
+bindsym $mod+6 workspace $6
+bindsym $mod+7 workspace $7
+bindsym $mod+8 workspace $8
+bindsym $mod+9 workspace $9
+bindsym $mod+0 workspace $0
+#-------------------------------------
+bindsym $mod+Shift+1 move container to workspace $1
+bindsym $mod+Shift+2 move container to workspace $2
+bindsym $mod+Shift+3 move container to workspace $3
+bindsym $mod+Shift+4 move container to workspace $4
+bindsym $mod+Shift+5 move container to workspace $5
+bindsym $mod+Shift+6 move container to workspace $6
+bindsym $mod+Shift+7 move container to workspace $7
+bindsym $mod+Shift+8 move container to workspace $8
+bindsym $mod+Shift+9 move container to workspace $9
+bindsym $mod+Shift+0 move container to workspace $0
+#-------------------------------------
+bindsym Mod1+Shift+1 move container to workspace $1, workspace $1
+bindsym Mod1+Shift+2 move container to workspace $2, workspace $2
+bindsym Mod1+Shift+3 move container to workspace $3, workspace $3
+bindsym Mod1+Shift+4 move container to workspace $4, workspace $4
+bindsym Mod1+Shift+5 move container to workspace $5, workspace $5
+bindsym Mod1+Shift+6 move container to workspace $6, workspace $6
+bindsym Mod1+Shift+7 move container to workspace $7, workspace $7
+bindsym Mod1+Shift+8 move container to workspace $8, workspace $8
+bindsym Mod1+Shift+9 move container to workspace $9, workspace $9
+bindsym Mod1+Shift+0 move container to workspace $0, workspace $0
+
+
+#bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r reload
+
+mode "resize" {
+    bindsym $left resize shrink width 10 px or 10 ppt
+    bindsym $down resize grow height 10 px or 10 ppt
+    bindsym $up resize shrink height 10 px or 10 ppt
+    bindsym $right resize grow width 10 px or 10 ppt
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bar {
+	position top
+	hidden_state hide
+	#mode hide
+	#modifier Mod1
+	#status_command conky -c ~/.config/i3status/conkyrc
+	#font pango:Tewi, FontAwesome 9
+	#separator_symbol " "
+	#tray_padding 2
+	#tray_output primary
+#   colors {
+#       # <workclass>       <border> <bg>   <text>
+#       focused_workspace   #da2263 #d70a53 #ffffff
+#       active_workspace    #565656 #444444 #ffffff
+#       inactive_workspace  #373737 #222222 #888888
+#       urgent_workspace    #ec7ea4 #eb709b #ffffff
+#   }
+}
+
+
+
+set $Locker i3lock -c '#2F4F4F' && sleep .1
+set $mode_system-key  L    E    S    H    R    P
+#set $mode_system-key L     E     S     H     R     P 
+#set $mode_system-key   L lock,     E logout,     S suspend,     H hibernate,     R reboot,     Shift+S shutdown
+mode "$mode_system-key" {
+	bindsym l exec --no-startup-id $Locker, exec xset dpms force off, mode "default"
+	bindsym e exec --no-startup-id i3-msg exit
+	bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+	bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+	bindsym r exec --no-startup-id systemctl reboot
+	bindsym p exec --no-startup-id systemctl poweroff -i
+
+	bindsym Escape mode "default"
+}
+bindsym $mod+Escape mode "$mode_system-key"
+
+
+# exec_always	随i3重启的应用
+# exec			跟随初始启动
+
+#exec --no-startup-id "xrandr --output VGA-1-2 --off"
+exec --no-startup-id roxterm
+#exec --no-startup-id xcompmgr &
+
+
+new_window pixel 1
+hide_edge_borders both
+workspace_auto_back_and_forth yes
+#default_orientation horizontal | vertical | auto 
+#focus_on_window_activation smart|urgent|focus|none
+#workspace_layout default|tabbed|stacking
+#force_display_urgency_hint 500 ms
+
+bindsym $mod+t border toggle
+bindsym $mod+x sticky toggle
+
+bindsym $mod+Tab workspace next
+bindsym $mod+shift+Tab workspace prev
+
+set $jump ~/.config/i3/jump/
+#bindsym $mod+m exec --no-startup-id i3-input -f pango:mono -F 'mark %s' -l 1 -P 'Mark: '
+#bindsym $mod+comma exec --no-startup-id i3-input -f pango:mono -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+bindsym $mod+m exec --no-startup-id $jump/mark
+bindsym $mod+Shift+m exec --no-startup-id $jump/unmark
+bindsym $mod+comma exec --no-startup-id $jump/goto
+bindsym $mod+grave exec --no-startup-id $jump/winmenu.py
+exec --no-startup-id $jump/alternating_layouts.py
+
+bindsym $mod+minus move scratchpad
+bindsym $mod+plus scratchpad show
+
+bindsym $mod+b bar mode toggle
+
+bindsym XF86AudioPrev exec --no-startup-id mocp --previous 
+bindsym XF86AudioPlay exec --no-startup-id mocp --toggle-pause
+bindsym XF86AudioNext exec --no-startup-id mocp --next
+bindsym XF86AudioStop exec --no-startup-id mocp --stop
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% 
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+#bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
+#bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
+#bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle
+
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
+bindsym $mod+XF86MonBrightnessUp exec --no-startup-id light -A 5
+bindsym $mod+XF86MonBrightnessDown exec --no-startup-id light -U 5
+
+bindsym $mod+Delete exec --no-startup-id $Locker && systemctl suspend
+bindsym Print exec --no-startup-id ~/bin/screenshot root
+bindsym $mod+Print exec --no-startup-id ~/bin/screenshot active
+bindsym $mod+Shift+Print exec --no-startup-id scrot -s
+#bindsym $mod+Shift+Print exec --no-startup-id import ~/Pictures/Screenshots/select-$(date +%Y-%m-%d_%H-%M-%S).png
+
+# Move to workspace
+# assign [instance|class="firefox"] firefox
+
+# Layout	边框类型，窗口布局，大小调整，自动移到工作去等，多项定义用,隔开
+# for_window [instance|class|workspace|title|window_role|="gedit|vim"] move container to workspace $WS5, workspace $WS5, layout tabbed, sticky enable
+# for_window [title="x200: ~/work"] floating enable
+
+# 图标查询 http://fontawesome.io/cheatsheet/
+assign [class="Firefox|Chromium|Opera"] $8
+assign [class="VirtualBox"] $9
+assign [class="smplayer|mpv"] $0
+
+for_window [class="Firefox|Chromium|Opera|smplayer|mpv"] border pixel 0,focus
+for_window [class="VirtualBox"] floating enable,border normal,focus
+for_window [title="force-floating$"] floating enable,border pixel 1,focus
+#for_window [window_role="pop-up"] floating enable
+#for_window [window_role="task_dialog"] floating enable
+#for_window [class="(?i)test"] kill
+
+
+mode "quick_Launcher" {
+	bindsym c exec --no-startup-id chromium, mode "default"
+	bindsym $mod+c exec --no-startup-id chromium --incognito, mode "default"
+	bindsym $mod+f exec --no-startup-id firefox --private-window, mode "default"
+	bindsym $mod+o exec --no-startup-id opera --proxy-server="127.0.0.1:8787", mode "default"
+	#opera --private
+	bindsym e exec --no-startup-id pcmanfm, mode "default"
+	bindsym f exec --no-startup-id firefox, mode "default"
+	bindsym o exec --no-startup-id opera, mode "default"
+	bindsym p exec --no-startup-id zathura, mode "default"
+	bindsym s exec --no-startup-id smplayer, mode "default"
+	bindsym v exec --no-startup-id virtualbox, mode "default"
+
+	bindsym Escape mode "default"
+}
+bindsym $mod+z mode "quick_Launcher"
+
+# colors
+# class                 border  backgr  text    indicator
+client.focused          #da2263 #d70a53 #ffffff #eb709b
+client.focused_inactive #565656 #444444 #ffffff #666666
+client.unfocused    	#373737 #222222 #888888 #444444
+client.urgent           #ec7ea4 #eb709b #ffffff #eb709b

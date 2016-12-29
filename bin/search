@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+usage(){
+echo "Usage: search [key] [site] [browser]
+Quick search in CLI
+  b,  bing     [default]   Bing
+  g,  google               Google
+  ba, baidu                Baidu
+  zh, zhihu                Zhihu
+  gh, github               Github
+  db, douban               Douban
+  tb, taobao               Taobao
+  jd                       JD
+  al, archlinux-wiki       Archlinux-wiki
+  wp, wikipedia            Wikipedia
+  ---------------------------------------
+  f,  firefox  [default]   firefox
+  c,  chromium             chromium
+  o,  opera                opera
+  e,  elinks               elinks
+  w,  w3m                  w3m
+  -h, --help               display this help and exit"
+exit 0
+}
+[[ $1 == "-h" || $1 == "--help" ]] && usage
+
+key=$(echo $1 | tr " " "+")
+
+# -----------------------site----------------------
+case ${2:-b} in
+b |bing           ) url="https://www.bing.com/search?q=$key";;
+g |google         ) url="https://www.google.com/search?q=$key";;
+ba|baidu          ) url="https://www.baidu.com/baidu?wd=$key";;
+zh|zhihu          ) url="https://www.zhihu.com/search?q=$key";;
+gh|github         ) url="https://github.com/search?q=$key";;
+db|douban         ) url="https://www.douban.com/search?q=$key";;
+tb|taobao         ) url="https://s.taobao.com/search?q=$key";;
+jd                ) url="https://search.jd.com/Search?keyword=$key";;
+al|archlinux-wiki ) url="https://wiki.archlinux.org/index.php?&search=$key";;
+wp|wikipedia      ) url="https://zh.wikipedia.org/w/index.php?search=$key";;
+esac
+
+# -----------------------browser----------------------
+# force-browser
+case $3 in
+f|firefox  ) fb=firefox;;
+c|chromium ) fb=chromium;;
+o|opera    ) fb=opera;;
+e|elinks   ) fb=elinks;;
+w|w3m      ) fb=w3m;;
+esac
+
+# running-browser
+pidof chromium &> /dev/null && rb=chromium
+pidof opera &> /dev/null && rb=opera
+pidof firefox &> /dev/null && rb=firefox
+
+# default-browser
+db=${BROWSER:-chromium}
+
+[[ -n $db ]] && browser=$db
+[[ -n $rb ]] && browser=$rb
+[[ -n $fb ]] && browser=$fb
+
+# -----------------------run----------------------
+$browser $url &> /dev/null &

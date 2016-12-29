@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+filepath=~/Pictures/Wallpaper/bing/`date +%Y-%m`/bing_`date +%Y-%m-%d`.jpg
+
+[ -e `dirname $filepath` ] || mkdir -pv `dirname $filepath`
+
+size=`stat -c %s $filepath 2>/dev/null`
+
+if [[ ! -e "$filepath" || $size -lt 40000 ]] ; then
+	xmlUrl="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=zh-CN"
+	picUrl='http://www.bing.com'$(curl -s $xmlUrl | grep -oP "<urlBase>(.*)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)_1366x768.jpg
+	wget --tries=4 -qO $filepath $picUrl
+#	curl -so $filepath $picUrl
+fi
+
+feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg ~/Pictures/Wallpaper/archlinux-simplyblack.png

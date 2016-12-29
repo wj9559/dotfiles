@@ -1,0 +1,6 @@
+map y scroll half-down
+map t scroll half-up
+map p scroll half-down
+map v scroll half-down
+map c scroll half-up
+set scroll-full-overlap 0.05

@@ -1,0 +1,4 @@
+#!/bin/sh
+CMD='ls -F --color=auto'
+exec $CMD "$@"
+

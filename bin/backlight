@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+type -a light &>/dev/null
+if [[ $? != 0 ]];then
+    echo "Please install \"aur/light\""
+    exit 1
+fi
+
+info(){
+light -G
+}
+
+add(){
+light -A 10
+info
+}
+
+add-l(){
+light -A 5
+info
+}
+
+subtract(){
+light -U 10
+info
+}
+
+subtract-l(){
+light -U 5
+info
+}
+
+set(){
+light -S $1
+info
+}
+
+usage(){
+echo "Usage: backlight [options] [value]
+change backlight
+  i         info
+  +         add (+10)
+  ++        add (+ 5)
+  -         subtract (-10)
+  --        subtract (- 5)
+  s         set [value]
+  --help    display this help and exit"
+exit 0
+}
+
+case ${1:-i} in
+i       ) info;;
++       ) add;;
+++      ) add-l;;
+-       ) subtract;;
+--      ) subtract-l;;
+s       ) set $2;;
+--help  ) usage;;
+esac

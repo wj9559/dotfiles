@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+info(){
+pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"
+pidof adbyby &>/dev/null && echo "adbyby  :on" || echo "adbyby  :off"
+}
+on(){
+echo "switch to on" 
+doNotRepeatRun adbyby &
+doNotRepeatRun lantern -headless &
+}
+
+off(){
+echo "switch to off"
+killall -q lantern 
+killall -q adbyby
+}
+
+toggle(){
+pidof lantern && off || on
+}
+
+usage(){
+echo "Usage: gfw [on | off | toggle | --help]
+Fuck great fire wall
+  on
+  off
+  info
+  toggle (default)
+  --help                display this help and exit"
+exit 0
+}
+
+select=${1:-toggle}
+case $select in
+on          ) on &>/dev/null;;
+off         ) off &>/dev/null;;
+info        ) info;;
+toggle      ) pidof lantern &>/dev/null && off || on;;
+-h|--help   ) usage;;
+esac

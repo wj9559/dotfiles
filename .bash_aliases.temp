@@ -1,0 +1,7 @@
+#
+# ~/.bash_aliases.temp
+#
+
+[[ ${0#*/} == ${BASH_SOURCE[0]##*/} ]] && echo "please \"source\" this script, like \"source .bash_aliases.temp\""
+
+alias ranger-list='ranger -r ~/.config/ranger-list/'

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+usage(){
+echo "Usage: separatedLine [rows] [color] [separator]
+generate separated line
+  rows          number
+  color         red, blue, green, yellow, white, black, purple, cyan
+  separator     any, eg: -, =, #, !, \~, \*
+  -h, --help    display this help and exit"
+}
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+usage
+exit
+fi
+
+reset_color='\e[0m'
+
+rows=${1:-2}
+cols=$(tput cols)
+let cols*=$rows
+
+case ${2:-yellow} in
+    black	) color='\e[1;30m';;
+    red 	) color='\e[1;31m';;
+    green	) color='\e[1;32m';;
+    yellow	) color='\e[1;33m';;
+    -       ) color='\e[1;33m';;
+    blue	) color='\e[1;34m';;
+    purple	) color='\e[1;35m';;
+    cyan	) color='\e[1;36m';;
+    white	) color='\e[1;37m';;
+esac
+
+[[ -z $3 ]] && separator=# || separator=$3
+
+echo -ne $color
+eval printf %.0s$separator {1..$cols}
+echo -e $reset_color

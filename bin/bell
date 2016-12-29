@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+freq=$(expr ${1:-1} \- 1)
+play /usr/share/sounds/freedesktop/stereo/complete.oga repeat $freq &> /dev/null &

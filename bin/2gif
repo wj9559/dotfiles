@@ -1,0 +1,40 @@
+#!/bin/sh
+palette="/tmp/palette.png"
+filters="fps=10,scale=$3:-1:flags=lanczos"
+
+if [ "$#" == "0" ]; then
+	echo "Usage: `basename $0` [source dest compression] {start[hh:mm:ss] duration[ss]}"
+	echo ""
+	echo "Eg: `basename $0` cat.mp4 cat.gif 400 80"
+	echo "creates cat.gif at 400 pixels using level 80 compression"
+	echo ""
+	echo "Eg: `basename $0` cat.mp4 cat.gif 400 80 00:22:45 30"
+	echo "creates cat.gif from cat.mp4, starting at 22m45s for 30s"
+	echo "compression levels (30 is very light compression, 200 is heavy)"
+  exit 0
+fi
+
+
+	echo "Converting "$1" to "$2"......."
+if [ "$5" != "0" ] && [ "$6" != "0" ]; then
+	ffmpeg -loglevel panic -ss $5 -t $6 -i file:"$1" -vf "$filters,palettegen=stats_mode=diff" -y $palette
+	ffmpeg -loglevel panic -ss $5 -t $6 -i file:"$1" -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y "$2"
+fi
+
+
+if [ "$5" == "" ] && [ "$6" == "" ]; then
+	ffmpeg -loglevel panic -i file:"$1" -vf "$filters,palettegen=stats_mode=diff" -y $palette
+	ffmpeg -loglevel panic -i file:"$1" -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y "$2"
+
+fi
+	rm $palette
+	echo "Optimizing "$2"............."
+	gifsicle -O3 --lossy=$4 -o output.gif "$2"
+	mv output.gif "$2"
+	echo "Finished!"
+	echo " "
+	imagesize="`file "$2" | rev | cut -d ' ' -f 1-3 | rev`"
+	filesize="`du -h "$2" | cut -f 1`"
+	echo "$2" image size is $imagesize and file size is $filesize""
+
+exit 0

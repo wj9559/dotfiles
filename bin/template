@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+usage(){
+echo "Usage: template [filename.filetype] ...
+create file by template. Template in ~/Template
+  list [default]
+  --help			display this help and exit"
+exit 0
+}
+
+list(){
+echo "--help,		display this help and exit"
+echo
+echo "Template list:"
+ls ~/Template
+}
+
+create(){
+name=$(echo $1 | cut -d. -f1)
+type=$(echo $1 | cut -d. -f2)
+cp ~/Template/$type $1 &> /dev/null
+
+if [[ $? -eq 0 ]]; then
+	echo "create '$1'"
+else
+	echo "please create '.$type' Template" >&2
+	return 2
+fi
+}
+
+createForeach(){
+exitcode=0
+for i in $@; do
+create $i
+[[ $? == 2 ]] && let exitcode++
+done
+[[ $exitcode -gt 0 ]] && exit 2 || exit 0
+}
+
+select=${1:-list}
+case $select in
+list	) list;;
+--help	) usage;;
+*		) createForeach $@;;
+esac

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+SCREENSHOT_DIR=~/Pictures/Screenshots/
+SCREENSHOT_TIME=$(date +%Y-%m-%d_%H-%M-%S)
+
+get_active_id(){
+xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d' ' -f5
+}
+get_id(){
+xprop |grep "group leader:" |cut -d" " -f7
+}
+get_name(){
+xprop -id $windowid | sed -n '/WM_CLASS/s/.* = "\([^\"]*\)".*/\1\n/p'
+}
+select_shot(){
+filename="select-$SCREENSHOT_TIME.png"
+import "$SCREENSHOT_DIR/$filename"
+ln -sf "$filename" $SCREENSHOT_DIR/last.png
+exit
+}
+
+case ${1:-root} in
+  root)
+    windowid='root';;
+  active)
+    windowid=$(get_active_id);;
+  select)
+    select_shot;;
+esac
+
+if [ -z "$name" ];then
+  if [ $windowid == "root" ];then
+    name='root'
+  else
+    name=$(get_name)
+    [ -z "$name" ] && name='window'
+  fi
+fi
+
+filename="$name-$SCREENSHOT_TIME.png"
+import -border -window $windowid "$SCREENSHOT_DIR/$filename" &
+ln -sf "$filename" $SCREENSHOT_DIR/last.png

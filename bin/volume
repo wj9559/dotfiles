@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+type -a pactl &>/dev/null
+if [[ $? != 0 ]];then
+    echo "Please install \"libpulse\""
+    exit 1
+fi
+
+info(){
+amixer | grep -A10 'Master' | sed -rn 's/.*\[([0-9]+%)\].*\[(on|off)\]/\2 \1/p' | sed -n '1p'
+}
+
+add(){
+pactl set-sink-volume 0 +5%
+info
+}
+
+subtract(){
+pactl set-sink-volume 0 -5%
+info
+}
+
+set(){
+pactl set-sink-volume 0 $1%
+info
+}
+
+mute(){
+pactl set-sink-mute 0 toggle
+info
+}
+
+usage(){
+echo "Usage: volume [options] [value]
+change backlight
+  i,			info
+  +,			add
+  -,			subtract
+  s,			set [value]
+  m,			toggle mute
+  --help,		display this help and exit"
+exit 0
+}
+
+case ${1:-i} in
+i		) info;;
++		) add;;
+-		) subtract;;
+s		) set $2;;
+m		) mute;;
+--help	) usage;;
+esac

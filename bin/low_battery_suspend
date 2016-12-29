@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# virtualbox will get battery info when running, acpi process becomes uninterruptible sleep.
+pidof VirtualBox &>/dev/null && exit 2
+usage(){
+  cat << EOF
+Usage: low_battery_suspend ['warning' 1-100] ['suspend' 1-'warning']
+
+  Takes a percentage which is compared against the actual battery percentage.
+  If the actual battery percentage <= provided percentage, then alert, even suspend the system.
+EOF
+exit
+}
+if [[ -z $1 || $1 -lt 1 || $1 -lt $2 || $1 -gt 100 ]]; then
+  usage
+fi
+
+low_battery_audio="~/Music/other/android-N-audio/ui/LowBattery.ogg"
+SUSPEND_CMD="systemctl suspend"
+WARN=$1
+MIN=$2
+bDir="/sys/class/power_supply/BAT0"
+[ -e $bDir ] || bDir="/sys/class/power_supply/BAT1"
+STATE=$(cat $bDir/status)
+CHARGE=$(cat $bDir/capacity)
+
+if [ $STATE == "Discharging" ] && [ $CHARGE -le $WARN ]; then
+    play $low_battery_audio &>/dev/null
+fi
+if [ $STATE == "Discharging" ] && [ $CHARGE -le $MIN ]; then
+    $SUSPEND_CMD
+fi

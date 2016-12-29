@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
+
+usage(){
+echo "Usage: bak [filename] ...
+create file.bak, default exec \"$cpmv\".
+  -mv       mv filename filename.bak
+  --help	display this help and exit"
+exit 0
+}
+if [[ $1 == "--help" || -z $1 ]]; then
+    usage
+    exit 0
+fi
+
+cpmv="cp -r"
+
+create(){
+var=$1
+[[ ${var:(-1)} == "/" ]] && var=${var%/*}
+$cpmv $var{,.bak} &> /dev/null
+
+if [[ $? -eq 0 ]]; then
+	echo "create '$var.bak'"
+else
+	echo "bak: cannot access '$1': No such file or directory" >&2
+	return 2
+fi
+}
+
+exitcode=0
+if [[ $1 == "-mv" ]] ;then
+    cpmv=mv
+    for i in ${@:2}; do
+    create $i
+    [[ $? == 2 ]] && let exitcode++
+    done
+else
+    for i in $@; do
+    create $i
+    [[ $? == 2 ]] && let exitcode++
+    done
+fi
+[[ $exitcode -gt 0 ]] && exit 2 || exit 0

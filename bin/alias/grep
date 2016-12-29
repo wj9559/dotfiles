@@ -1,0 +1,4 @@
+#!/bin/sh
+CMD='grep --color=auto'
+exec $CMD "$@"
+

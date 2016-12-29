@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+lock(){
+    vlock -a
+}
+
+usage(){
+echo "Usage: pm [ l s h r p --help ]
+Power management
+  l,        lock
+  s,        suspend (default)
+  h,        hibernate
+  r,        reboot
+  p,        poweroff
+  --help,   help"
+exit 0
+}
+
+case ${1:-s} in
+l) lock;;
+s) systemctl suspend;;
+h) systemctl hibernate;;
+r) systemctl reboot;;
+p) systemctl poweroff;;
+--help) usage;;
+esac

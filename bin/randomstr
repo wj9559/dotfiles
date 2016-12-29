@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# DATE=$(date +%Y%m%d%H%M%S)
+# $RANDOM
+# $$
+usage(){
+echo 'Usage: randomstr [LENGTH] [COUNT] [CHARMODE]
+generate random string, default length=12, char_mode=alphabet & digit, count=1
+  -h, --help        display this help and exit
+char mode:
+          [:digit:]    所有数字
+          [:lower:]    所有小写字母
+          [:upper:]    所有大写字母
+          [:alpha:]    所有字母
+          [:alnum:]    所有字母和数字
+          [:punct:]    所有标点符号
+          [:graph:]    所有可打印字符(除了空格)
+          [:print:]    所有可打印字符(包括空格)'
+exit 0
+}
+[[ $1 == "-h" || $1 == "--help" ]] && usage
+ 
+LENGTH=${1:-12}
+COUNT=${2:-1}
+CHARMODE="${3:-[:alnum:]}"
+
+cat /dev/urandom | tr -dc $CHARMODE | fold -w $LENGTH | head -n $COUNT
