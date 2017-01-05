@@ -181,7 +181,7 @@ bindsym $mod+plus scratchpad show
 bindsym $mod+b bar mode toggle
 
 bindsym XF86AudioPrev exec --no-startup-id mocp --previous 
-bindsym XF86AudioPlay exec --no-startup-id mocp --toggle-pause
+bindsym XF86AudioPlay exec --no-startup-id mocplay
 bindsym XF86AudioNext exec --no-startup-id mocp --next
 bindsym XF86AudioStop exec --no-startup-id mocp --stop
 
@@ -200,8 +200,7 @@ bindsym $mod+XF86MonBrightnessDown exec --no-startup-id light -U 5
 bindsym $mod+Delete exec --no-startup-id $Locker && systemctl suspend
 bindsym Print exec --no-startup-id ~/bin/screenshot root
 bindsym $mod+Print exec --no-startup-id ~/bin/screenshot active
-bindsym $mod+Shift+Print exec --no-startup-id scrot -s
-#bindsym $mod+Shift+Print exec --no-startup-id import ~/Pictures/Screenshots/select-$(date +%Y-%m-%d_%H-%M-%S).png
+bindsym $mod+Shift+Print exec --no-startup-id ~/bin/screenshot select
 
 # Move to workspace
 # assign [instance|class="firefox"] firefox

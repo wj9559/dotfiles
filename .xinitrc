@@ -61,6 +61,7 @@ case $session in
 	xmonad            ) exec xmonad;;
 
 	i3n               ) exec i3 -c ~/.config/i3/config-nobar;;
+	i3debug           ) exec i3 -V -d all 2>> ~/.config/i3/i3log-$(date +'%F-%k-%M-%S');;
 	win               ) exec virtualbox --startvm ie11win7;;
 	arch              ) exec virtualbox --startvm archinbox;;
 	terminal          ) exec roxterm -f;;

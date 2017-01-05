@@ -1,4 +1,3 @@
 #!/bin/sh
 
-exec /opt/tor-browser_zh-CN/Browser/start-tor-browser --detach  "$@"
-
+exec /opt/tor-browser/Browser/start-tor-browser --detach  "$@"

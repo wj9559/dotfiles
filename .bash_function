@@ -29,7 +29,7 @@ alarm(){
 }
 
 cl(){
-	cd $1 && l
+	cd "$1" && l
 }
 
 privateshell(){
@@ -124,6 +124,17 @@ done
 
 paclfb(){
     pacman -Ql $1 | grep /usr/bin/ | cut -d/ -f4 | sed '/^$/d'
+}
+
+gpg-verify(){
+local sig=$1
+local gpg=$2.gpg
+local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
+echo RSA=$RSA
+
+gpg --no-default-keyring --keyring $gpg --keyserver pgp.mit.edu --recv-keys $RSA
+separatedLine
+gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
 
 hl() {

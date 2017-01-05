@@ -11,7 +11,6 @@ alias la='l -Ah'
 alias ll='l -Ahl'
 alias grep='grep --color=auto'
 alias mkdir='mkdir -pv'
-alias vi='vim'
 alias du1='du -d1 -h'
 alias date1='date "+%Y-%m-%d_%H-%M-%S_%a"'
 alias date2='date "+%H:%M:%S"'
@@ -53,7 +52,7 @@ alias yaoc='sudo yaourt -Sc'
 alias yaolf='yaourt -Ql'
 
 
-alias cdm='cd /mnt/wj/win/'
+alias cdm='cd /home/wj/windows/'
 alias usetips='less ~/backup/useTips'
 alias errors="journalctl --priority=0..3 --catalog -n"
 alias uninterruptible='ps -eo pid,args,stat,etime,user | grep -v "grep\|PID COMMAND\|-d\|-D" | grep D'
