@@ -5,6 +5,7 @@ i3/jump/__pycache__/
 
 ranger/bookmarks
 ranger/history
+ranger/tagged
 
 .moc/*
 !.moc/config

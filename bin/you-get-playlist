@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DATE=$(date +%d_%T)
+page_url=/tmp/page_url.$DATE
+page_url_tmp=$page_url.tmp
+video_url=/tmp/video_url.$DATE
+video_url_tmp=$video_url.tmp
+
+echo -n | xclip
+watch -n 0.5 "xclip -o >> $page_url_tmp && echo >> $page_url_tmp"
+sort $page_url_tmp | uniq | sed /^$/d > $page_url
+vi $page_url
+
+for line in $(seq 1 $(wc -l < $page_url)); do
+    url=$(sed -n ${line}p $page_url)
+    you-get --format=mp4 --url $url >> $video_url_tmp 2>/dev/null \
+    || you-get --url $url >> $video_url_tmp
+done
+grep -E "^https?://" $video_url_tmp > $video_url
+mpv --speed 2 --playlist=$video_url &>/dev/null
+rm $page_url_tmp
+rm $video_url_tmp

@@ -3,9 +3,11 @@
 #
 
 alias sudo='sudo '
-alias cls='clear;clear;echo -ne "\033c"'
+alias cls='echo -ne "\033c"'
 alias yis='yi -s -t zh'
 alias py='python2'
+alias py2='python2'
+alias py3='python3'
 alias l='ls -F --color=auto'
 alias la='l -Ah'
 alias ll='l -Ahl'
@@ -21,12 +23,12 @@ alias sshd='pidof sshd && systemctl stop sshd || systemctl start sshd'
 alias vcat='vimcat'
 alias inotify='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e modify,delete,create,attrib,move'
 alias inotify-ao='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e access,open'
-alias top='htop'
+alias axel='axel --alternate'
+alias ping='ping -c 5'
 #alias rm='rm -I'
 #alias cp='cp -ir'
 #alias mv='mv -i'
 #alias ln='ln -i'
-#alias ping='ping -c 5'
 
 
 # pacman
@@ -53,13 +55,12 @@ alias yaolf='yaourt -Ql'
 
 
 alias cdm='cd /home/wj/windows/'
-alias usetips='less ~/backup/useTips'
+alias usetips='vless ~/backup/useTips'
 alias errors="journalctl --priority=0..3 --catalog -n"
 alias uninterruptible='ps -eo pid,args,stat,etime,user | grep -v "grep\|PID COMMAND\|-d\|-D" | grep D'
 alias ipaddress='ifconfig | grep broadcast | awk "{print \$2}";curl -s ip.cn | \grep -o "[0-9.]\+"'
 alias sitedownload='wget -Erkp -np'
 alias acpi='bDir="/sys/class/power_supply/BAT0";[ -e $bDir ] || bDir="/sys/class/power_supply/BAT1";echo $(cat $bDir/status)\ $(cat $bDir/capacity)%;unset bDir'
-alias rmclass='rm *.class'
 alias caffeine='xset s off'
 alias trA2a='tr [:upper:] [:lower:]'
 alias tra2A='tr [:lower:] [:upper:]'

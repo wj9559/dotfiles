@@ -14,4 +14,4 @@ if [[ ! -e "$filepath" || $size -lt 40000 ]] ; then
 #	curl -so $filepath $picUrl
 fi
 
-feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg ~/Pictures/Wallpaper/archlinux-simplyblack.png
+feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png

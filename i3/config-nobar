@@ -29,7 +29,8 @@ bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 #bindsym $mod+v split toggle
 bindsym $mod+v split v
-bindsym $mod+g split h
+bindsym $mod+Shift+v split h
+#bindsym $mod+g split h
 
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle

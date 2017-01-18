@@ -105,25 +105,26 @@ unset gitrepo
 decompress(){
 for file in $@; do
     case $file in
-        *.rar            ) unrar x $file    ;; # rar a    filename.rar dirname
-        *.zip            ) unzip $file      ;; # zip -r   filename.zip dirname
-        *.7z             ) 7z x $file       ;; # 7z -t7z  dirname
-        *.tar            ) tar xvf $file    ;; # tar cvf  filename.tar dirname
-        *.tbz2|*.tar.bz2 ) tar xjvf $file   ;; # tar cjvf filename.tar.bz2 dirname
-        *.bz2            ) bunzip2 -k $file ;; # bzip2 -z filename
-        *.tgz|*.tar.gz   ) tar xzvf $file   ;; # tar czvf filename.tar.gz dirname
-        *.gz             ) gunzip -k $file  ;; # gzip     filename
-        *.tar.Z          ) tar xZvf $file   ;; # tar cZvf filename.tar.Z dirname
-        *.Z              ) uncompress $file ;; # compress filename
-        *.tar.xz         ) tar xJvf $file   ;; # tar cJvf filename.tar.xz dirname
-        *.xz             ) xz -kd $file     ;; # xz       filename
+        # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
+        *.rar            ) unrar x $file    ;; # rar a     name.rar name
+        *.zip            ) unzip $file      ;; # zip -r    name.zip name
+        *.7z             ) 7z x $file       ;; # 7z a      name.7z  name
+        *.tar            ) tar xvf $file    ;; # tar cvf   name.tar name
+        *.tbz2|*.tar.bz2 ) tar xjvf $file   ;; # tar cjvf  name.tar.bz2 name
+        *.bz2            ) bunzip2 -k $file ;; # bzip2 -zk filename
+        *.tgz|*.tar.gz   ) tar xzvf $file   ;; # tar czvf  name.tar.gz name
+        *.gz             ) gunzip -k $file  ;; # gzip -k   filename
+        *.tar.Z          ) tar xZvf $file   ;; # tar cZvf  name.tar.Z name
+        *.Z              ) uncompress $file ;; # compress  name
+        *.tar.xz         ) tar xJvf $file   ;; # tar cJvf  name.tar.xz name
+        *.xz             ) xz -kd $file     ;; # xz -k     filename
         *                ) echo "'$file' cannot be extracted via decompress()" ;;
     esac
 done
 }
 
 paclfb(){
-    pacman -Ql $1 | grep /usr/bin/ | cut -d/ -f4 | sed '/^$/d'
+    pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4 
 }
 
 gpg-verify(){
@@ -136,6 +137,12 @@ gpg --no-default-keyring --keyring $gpg --keyserver pgp.mit.edu --recv-keys $RSA
 separatedLine
 gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
+
+
+you-get-play(){
+you-get --player ${2:-smplayer} "$1"
+}
+
 
 hl() {
 #H_COLORS_FG="bold black on_rgb520","bold red on_rgb025"
