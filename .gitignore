@@ -1,6 +1,5 @@
 #.gitignore
 
-i3/config
 i3/jump/__pycache__/
 
 ranger/bookmarks

@@ -32,35 +32,33 @@ cl(){
 	cd "$1" && l
 }
 
-privateshell(){
-	if [[ $HISTIGNORE == 'ls:*' ]]; then
-		$(grep HISTIGNORE ~/.bashrc | awk "{print $2}")
-		set -o history
-		echo 'current shell private: off'
-	else
-		HISTIGNORE=ls:*
-		set +o history
-		echo 'current shell private: on'
-	fi
+incognitoshell(){
+    if [[ -z $(echo $SHELLOPTS | grep -o history) ]]; then
+        set -o history
+        echo -e incognito: '\e[1;33m'off
+    else
+        set +o history
+        echo -e incognito: '\e[1;33m'on
+    fi
 }
 
 proxyshell(){
-	if [[ $http_proxy == 127.0.0.1:8787 ]]; then
-		unset http_proxy && unset https_proxy
-		echo 'current shell proxy: off'
-	else
-		export http_proxy=127.0.0.1:8787 && export https_proxy=$http_proxy
-		echo 'current shell proxy: on'
-	fi
+    if [[ $http_proxy == 127.0.0.1:8787 ]]; then
+        unset http_proxy && unset https_proxy
+        echo -e proxy: '\e[1;33m'off
+    else
+        export http_proxy=127.0.0.1:8787 && export https_proxy=$http_proxy
+        echo -e proxy: '\e[1;33m'on
+    fi
 }
 
 langswitch(){
 	if [[ $LANG == zh_CN.UTF-8 ]]; then
 		export LANGUAGE=en_US && export LANG=en_US.UTF-8
-		echo 'current shell language: en'
+		echo -e language: '\e[1;33m'en
 	else
 		export LANGUAGE=zh_CN:en_US && export LANG=zh_CN.UTF-8
-		echo 'current shell language: zh'
+		echo -e language: '\e[1;33m'zh
 	fi
 }
 
@@ -138,12 +136,20 @@ separatedLine
 gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
 
-
 you-get-play(){
-you-get --player ${2:-smplayer} "$1"
+you-get --format=mp4 --player ${2:-smplayer} "$1" || you-get --player ${2:-smplayer} "$1"
 }
 
+gitup(){
+local commitMessage="timeline";
+[[ -n "$1" ]] && commitMessage="$1"
 
+git add .
+git commit -m "$commitMessage"
+git push --tags
+}
+
+#-----------------------------------------------------------
 hl() {
 #H_COLORS_FG="bold black on_rgb520","bold red on_rgb025"
 #H_COLORS_BG="underline bold rgb520","underline bold rgb025"

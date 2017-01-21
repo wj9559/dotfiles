@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+usage(){
+echo "Usage: screenshot [options]
+screenshot script for X
+  root
+  active
+  frame
+  select"
+exit 0
+}
+[[ $1 == '-h' || $1 == '--help' ]] && usage
 SCREENSHOT_DIR=~/Pictures/Screenshots/
 [[ -d $SCREENSHOT_DIR ]] && mkdir $SCREENSHOT_DIR &>/dev/null
 SCREENSHOT_TIME=$(date +%Y-%m-%d_%H-%M-%S)
