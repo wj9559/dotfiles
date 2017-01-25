@@ -25,14 +25,12 @@ cd
 xset s 180 &
 xset b off &
 xflux -l 30.53 -g 117.11 &
-~/bin/wallpaper &
+wallpaper &
 fcitx-autostart &
 xcompmgr &
 
 [ -f $HOME/.Xmodmap ] && /usr/bin/xmodmap $HOME/.Xmodmap
 
-#exec i3 -V >> ~/logs/i3/i3log-$(date +'%F-%k-%M-%S') 2>&1
-#exec i3 -V -d all >> ~/logs/i3/i3log-$(date +'%F-%k-%M-%S') 2>&1
 # xinit awesome
 # startx ~/.xinitrc awesome
 
@@ -60,7 +58,6 @@ case $session in
 	xfce|xfce4        ) exec startxfce4;;
 	xmonad            ) exec xmonad;;
 
-	i3n               ) exec i3 -c ~/.config/i3/config-nobar;;
 	i3debug           ) exec i3 -V -d all 2>> ~/.config/i3/i3log-$(date +'%F-%k-%M-%S');;
 	win               ) exec virtualbox --startvm ie11win7;;
 	arch              ) exec virtualbox --startvm archinbox;;

@@ -1,4 +1,0 @@
-#!/bin/sh
-CMD='l -Alh'
-exec $CMD "$@"
-

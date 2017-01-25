@@ -4,7 +4,8 @@
 
 [[ -f ~/.bashrc ]] && source ~/.bashrc
 
-PATH=$PATH:$HOME/bin
+PATH=$PATH:~/bin
+PATH=$PATH:~/bin/alias
 export PATH
 
 #[[ ! $TERM =~ screen ]] && SHELL=tmux fbterm

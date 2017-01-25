@@ -10,5 +10,6 @@ wget https://raw.githubusercontent.com/MicahChambers/i3-wm-scripts/master/unmark
 wget https://raw.githubusercontent.com/MicahChambers/i3-wm-scripts/master/nextfind.py
 wget https://raw.githubusercontent.com/MicahChambers/i3-wm-scripts/master/nextmatch.py
 wget https://raw.githubusercontent.com/ziberna/i3-py/master/examples/winmenu.py
+wget https://raw.githubusercontent.com/cornerman/i3-completion/master/i3_completion.sh -O /usr/share/bash-completion/completions/i3-msg
 
 chmod 755 alternating_layouts.py goto mark nextfind.py nextmatch.py unmark winmenu.py

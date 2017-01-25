@@ -26,7 +26,8 @@ conky.config = {
 conky.text = [[
 
 ♫ ${exec mocp -Q %song} - ${exec mocp -Q %artist}   \
-${if_up eno1} ${downspeed eno1} ${upspeed eno1}$else ${if_up wlo1} ${downspeed wlo1} ${upspeed wlo1}   ${wireless_essid wlo1}$else No Wireless $endif $endif   \
+${if_up wlo1} ${downspeed wlo1} ${upspeed wlo1}   ${wireless_essid wlo1}$else No Wireless $endif   \
+${if_up eno1} ${downspeed eno1} ${upspeed eno1}$endif   \
  ${cpu cpu0}% ${hwmon 0 temp 2}°C   \
  ${memperc}%   \
  ${color (#0A1B2C)}${exec printf %.0f $(light)}   \

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sleeptime="0.5"
-iface="wlo1"
+iface=${1:-wlo1}
 type=" "
 
 #ifstat -j $iface | grep -o "rx_bytes\":[0-9]\+" | cut -d: -f2

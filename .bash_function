@@ -126,27 +126,45 @@ paclfb(){
 }
 
 gpg-verify(){
-local sig=$1
-local gpg=$2.gpg
-local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
-echo RSA=$RSA
+    local sig=$1
+    local gpg=$2.gpg
+    local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
+    echo RSA=$RSA
 
-gpg --no-default-keyring --keyring $gpg --keyserver pgp.mit.edu --recv-keys $RSA
-separatedLine
-gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
+    gpg --no-default-keyring --keyring $gpg --keyserver pgp.mit.edu --recv-keys $RSA
+    separatedLine
+    gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
 
 you-get-play(){
-you-get --format=mp4 --player ${2:-smplayer} "$1" || you-get --player ${2:-smplayer} "$1"
+    you-get --format=mp4 --player ${2:-smplayer} "$1" || you-get --player ${2:-smplayer} "$1"
 }
 
 gitup(){
-local commitMessage="timeline";
-[[ -n "$1" ]] && commitMessage="$1"
+    local commitMessage="timeline";
+    [[ -n "$1" ]] && commitMessage="$1"
 
-git add .
-git commit -m "$commitMessage"
-git push --tags
+    git add .
+    git commit -m "$commitMessage"
+    git push
+}
+
+insh(){
+if [[ $(type -t $1) == alias ]]; then
+    local CMD="$(aliased $1) ${@:2}"
+else
+    local CMD=$*
+fi
+while true; do
+    echo -ne '\e[1;32m'$CMD' \e[0m'
+    read KEY
+    $CMD $KEY
+done
+}
+
+aliased(){
+    local aliasStr=$(type $1 | cut -d\` -f2)
+    echo ${aliasStr%\'*}
 }
 
 #-----------------------------------------------------------

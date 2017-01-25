@@ -8,6 +8,7 @@ shopt -s checkwinsize
 #shopt -s no_empty_cmd_completion
 shopt -s histappend
 shopt -s autocd
+set -o notify 
 #set -o vi
 trap EC ERR
 #PS1='\[\e[1;32m\]\u\[\e[m\]:\[\e[1;34m\]\w\[\e[m\]\$ '
@@ -23,7 +24,7 @@ export HISTSIZE=-10
 export HISTFILESIZE=-10
 export HISTTIMEFORMAT='%F_%T '
 export HISTCONTROL=ignoreboth
-export HISTIGNORE='pwd:l:ls:ll:cls:bash:bell:..:privateshell:todo *:'
+export HISTIGNORE='pwd:l:ls:ll:cls:bash:incognitoshell:todo*:yi*:yis*:'
 
 export EDITOR=vim
 export VISUAL=vim
