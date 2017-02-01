@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
+tmpdir=/tmp/you-get-playlist
+mkdir $tmpdir &>/dev/null
+
 DATE=$(date +%d_%T)
-page_url=/tmp/page_url.$DATE
+page_url=$tmpdir/page_url.$DATE
 page_url_tmp=$page_url.tmp
-video_url=/tmp/video_url.$DATE
+video_url=$tmpdir/video_url.$DATE
 video_url_tmp=$video_url.tmp
 
-ln -fs $page_url /tmp/page_url.last
-ln -fs $video_url /tmp/video_url.last
+ln -fs $page_url $tmpdir/page_url.last
+ln -fs $video_url $tmpdir/video_url.last
 
 echo -n | xclip
 watch -n 0.5 "xclip -o >> $page_url_tmp && echo >> $page_url_tmp"

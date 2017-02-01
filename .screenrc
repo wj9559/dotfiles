@@ -15,8 +15,8 @@ bindkey "^[[C" next
 
 # status line
 hardstatus on
-hardstatus alwayslastline
-hardstatus string "%{= br}%{g}[%{G}$USER@%H%{g}]%{w}%1`%{g}[%=%{=kw}%{w}%-w%{Y}[%{W}%n-%t%{Y}]%{w}%+w%=%{g}][%l][%{w}%Y-%m-%d %{Y}%c%{g}]"
+hardstatus firstline
+hardstatus string "%{= br}%{g}[%l]%{w}%1`%{g}[%=%{=kw}%{w}%-w%{Y}[%{W}%n-%t%{Y}]%{w}%+w%=%{g}][%{w}%m-%d %{Y}%c%{g}]"
 
 # screen windows
 screen -t w   1

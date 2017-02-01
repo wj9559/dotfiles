@@ -7,8 +7,6 @@
 # slackware version of dircolors) are recognized but ignored.
 # Below are TERM entries, which can be a glob patterns, to match
 # against the TERM environment variable to determine if it is colorizable.
-# fg: 0=重置,30=黑色,31=红色,32=绿色,33=黄色,34=蓝色,35=洋红,36=青色,37=白色
-# bg: 0=重置,40=黑色,41=红色,42=绿色,43=黄色,44=蓝色,45=洋红,46=青色,47=白色
 TERM Eterm
 TERM ansi
 TERM color-xterm
@@ -49,6 +47,8 @@ TERM xterm*
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 #NORMAL 00 # no color code at all
 #FILE 00 # regular file: use no color at all
+# fg: 0=重置,30=黑色,31=红色,32=绿色,33=黄色,34=蓝色,35=洋红,36=青色,37=白色
+# bg: 0=重置,40=黑色,41=红色,42=绿色,43=黄色,44=蓝色,45=洋红,46=青色,47=白色
 RESET 0 # reset to "normal" color
 DIR 01;34 # directory
 LINK 01;36 # symbolic link. (If you set this to 'target' instead of a
@@ -310,4 +310,3 @@ EXEC 01;32
 .ORIG 01;33
 .swp 01;33
 .swo 01;33
-*,v 01;33

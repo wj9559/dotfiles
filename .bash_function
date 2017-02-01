@@ -11,11 +11,6 @@ calc() {
     echo "scale=3;$@" | bc -l
 }
 
-pss(){
-	echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
-	ps -aux | grep -v "grep" | grep $1
-}
-
 mkcd(){
 	mkdir "$@" && cd "$@"
 }
@@ -166,6 +161,32 @@ aliased(){
     local aliasStr=$(type $1 | cut -d\` -f2)
     echo ${aliasStr%\'*}
 }
+
+shacheck(){
+local BYTE=$(echo -n $2 | wc -c)
+local CMD
+case $BYTE in
+32  ) CMD=md5sum   ;;
+40  ) CMD=sha1sum  ;;
+56  ) CMD=sha224sum;;
+64  ) CMD=sha256sum;;
+96  ) CMD=sha384sum;;
+128 ) CMD=sha512sum;;
+esac
+
+$CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $CMD: WARNING: 1 computed checksum did NOT match
+}
+
+ifdown(){
+while true; do
+if [[ ! $(pidof $1) ]]; then
+bell 2
+notify-send --app-name=$1 --expire-time=0 "$1 is over."
+exit
+fi
+done
+}
+
 
 #-----------------------------------------------------------
 hl() {
