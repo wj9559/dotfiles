@@ -5,7 +5,7 @@
 alias sudo='sudo '
 alias cls='echo -ne "\033c"'
 alias yis='yi -s -t zh'
-alias py='python2'
+alias py='python3'
 alias py2='python2'
 alias py3='python3'
 alias l='ls -F --color=auto'

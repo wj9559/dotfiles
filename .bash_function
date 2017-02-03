@@ -16,10 +16,10 @@ mkcd(){
 }
 
 alarm(){
-	date1
+	date +%F_%T
 	sleep ${1}m
 	espeak "$1 miutes" &>/dev/null
-	date1
+	date +%F_%T
 	bell 4
 }
 
