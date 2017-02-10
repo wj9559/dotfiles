@@ -10,11 +10,12 @@ usage(){
 echo "Usage: todo [todo]
 simple todo list
   -h, --help            display this help and exit
-  -l, --list            display the list
-  -r, --remove          remove an item from the list
+  -l, --list            display the todo-list
+  -s, --show            display the specified row in the todo-list
+  -r, --remove          remove an item from the todo-list
   -e, --edit            direct edit todo.file
-  --clear               clear the list
-  other                 add an item to the list"
+  --clear               clear the todo-list
+  other                 add an item to the todo-list"
 exit 0
 }
 
@@ -34,6 +35,7 @@ case ${1} in
 ""              ) echo -e "  -h|--help          display help\n" && nl $TODOFILE;;
 -h|--help       ) usage;;
 -l|--list       ) nl $TODOFILE;;
+-s|--show       ) sed -n ${2}p $TODOFILE;;
 -r|--remove     ) remove;;
 -e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
 --clear         ) > $TODOFILE;;

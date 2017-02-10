@@ -24,7 +24,7 @@ export HISTSIZE=-10
 export HISTFILESIZE=-10
 export HISTTIMEFORMAT='%F_%T '
 export HISTCONTROL=ignoreboth
-export HISTIGNORE='pwd:l:ls:ll:cls:bash:incognitoshell:todo*:yi*:yis*:'
+export HISTIGNORE='pwd:l:ls:ll:cls:bash:incognitoshell:todo*:'
 
 export EDITOR=vim
 export VISUAL=vim

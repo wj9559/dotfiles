@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
 
-sleeptime="0.5"
+sleeptime="0.1"
 iface=${1:-wlo1}
 type=" "
 
-#ifstat -j $iface | grep -o "rx_bytes\":[0-9]\+" | cut -d: -f2
-#ifstat -j $iface | grep -o "tx_bytes\":[0-9]\+" | cut -d: -f2
-#ifstat -j $iface | grep -o "[rt]x_bytes\":[0-9]\+" | cut -d: -f2
+_get_rx(){
+cat /sys/class/net/"$iface"/statistics/rx_bytes
+#ifstat -j $iface | grep -Po "rx_bytes\":\d+" | cut -d: -f2
+}
+_get_tx(){
+cat /sys/class/net/"$iface"/statistics/tx_bytes
+#ifstat -j $iface | grep -Po "tx_bytes\":\d+" | cut -d: -f2
+}
 
-RXB=$(</sys/class/net/"$iface"/statistics/rx_bytes)
-TXB=$(</sys/class/net/"$iface"/statistics/tx_bytes)
+RXB=$(_get_rx)
+TXB=$(_get_tx)
 sleep "$sleeptime"
-RXBN=$(</sys/class/net/"$iface"/statistics/rx_bytes)
-TXBN=$(</sys/class/net/"$iface"/statistics/tx_bytes)
-
+RXBN=$(_get_rx)
+TXBN=$(_get_tx)
 RXDIF=$(echo "$((RXBN - RXB)) / 1024 / ${sleeptime}" | bc )
 TXDIF=$(echo "$((TXBN - TXB)) / 1024 / ${sleeptime}" | bc )
 
+if [[ $2 == '-h' ]]; then
 if [ $RXDIF -gt 1024 ]; then
 	RXDIF=$(echo "scale=1;${RXDIF} / 1024" | bc)
 	RXDIF_UNIT="M/s"
@@ -34,3 +39,10 @@ fi
 # NOTE: '%5.01' for fixed length always
 #printf " ${RXDIF}${RXDIF_UNIT}  ${TXDIF}${TXDIF_UNIT}"
 echo " ${RXDIF}${RXDIF_UNIT}  ${TXDIF}${TXDIF_UNIT}"
+else
+    if [[ $2 == 't' ]]; then
+        echo $TXDIF
+    else
+        echo $RXDIF
+    fi
+fi

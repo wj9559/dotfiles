@@ -35,8 +35,8 @@ usage(){
 echo "Usage: volume [options] [value]
 change backlight
   i,			info
-  +,			add
-  -,			subtract
+  +,			add      5%
+  -,			subtract 5%
   s,			set [value]
   m,			toggle mute
   --help,		display this help and exit"

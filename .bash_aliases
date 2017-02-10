@@ -48,7 +48,7 @@ alias yaoi='yaourt -Si'
 
 alias usetips='vless ~/backup/useTips'
 alias errors="journalctl --priority=0..3 --catalog -n"
-alias uninterruptible='ps -eo pid,args,stat,etime,user | grep -v "grep\|PID COMMAND\|-d\|-D" | grep D'
+alias uninterruptibleSleep='ps -eo stat,args | grep "^D"'
 alias ipaddress='ifconfig | grep broadcast | awk "{print \$2}";curl -s ipinfo.io/ip'
 alias websiteget='wget -Erkp --no-parent --random-wait -U mozilla'
 alias acpi='bDir="/sys/class/power_supply/BAT0";[ -e $bDir ] || bDir="/sys/class/power_supply/BAT1";echo $(cat $bDir/status)\ $(cat $bDir/capacity)%;unset bDir'
@@ -65,3 +65,6 @@ alias pss='echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIM
 alias histg='history | grep'
 alias listen='lsof -P -i -n'
 alias port='netstat -tulanp'
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias cdtmp='mkcd /tmp/tmp_$(whoami)/$(randomstr);ln -sfn $PWD ../last'
+alias cdtmpl='cd /tmp/tmp_$(whoami)/last &>/dev/null;if [[ $? != 0 ]];then cdtmp;fi'

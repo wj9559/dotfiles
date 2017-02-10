@@ -120,6 +120,10 @@ paclfb(){
     pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4 
 }
 
+paclfs(){
+    pacman -Ql $1 | grep -Ee "\.service$" -e "\.socket$" | cut -d" " -f2
+}
+
 gpg-verify(){
     local sig=$1
     local gpg=$2.gpg
@@ -179,13 +183,20 @@ $CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $CMD: WARNING: 1 compu
 
 ifdown(){
 while true; do
-if [[ ! $(pidof $1) ]]; then
-bell 2
-notify-send --app-name=$1 --expire-time=0 "$1 is over."
-exit
-fi
+    if [[ ! $(pidof $1) ]]; then
+        bell 2
+        notify-send --app-name=$1 --expire-time=0 "$1 is over."
+        exit
+    fi
 done
 }
+
+#cdtmp(){
+#local tmpdir=/tmp/$(whoami)_tmp/$(randomstr)
+#mkdir -p $tmpdir
+#cd $tmpdir
+#ln -s $tmpdir ../last
+#}
 
 
 #-----------------------------------------------------------

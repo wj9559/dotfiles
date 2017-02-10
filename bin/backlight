@@ -40,10 +40,10 @@ usage(){
 echo "Usage: backlight [options] [value]
 change backlight
   i         info
-  +         add (+10)
-  ++        add (+ 5)
-  -         subtract (-10)
-  --        subtract (- 5)
+  +         add 10%
+  ++        add  5%
+  -         subtract 10%
+  --        subtract  5%
   s         set [value]
   --help    display this help and exit"
 exit 0
