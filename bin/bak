@@ -4,14 +4,11 @@
 usage(){
 echo "Usage: bak [filename] ...
 create file.bak, default exec \"$cpmv\".
-  -mv       mv filename filename.bak
-  --help	display this help and exit"
+  -mv           mv filename filename.bak
+  -h, --help    display this help and exit"
 exit 0
 }
-if [[ $1 == "--help" || -z $1 ]]; then
-    usage
-    exit 0
-fi
+[[ $1 == "-h" || $1 == "--help" ]] && usage
 
 cpmv="cp -r"
 

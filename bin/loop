@@ -4,11 +4,12 @@
 usage(){
 echo "Usage: loop [times] [command]
 loop exec command
-  time		执行次数(default 5)
-  command	执行命令
-  --help	display this help and exit"
+  time            执行次数(default 5)
+  command         执行命令
+  -h, --help      display this help and exit"
 exit 0
 }
+[[ $1 == "-h" || $1 == "--help" ]] && usage
 
 evalit(){
     if [ $cnt = 1 ];then
@@ -22,6 +23,5 @@ evalit(){
 }
 
 cnt=$1
-[[ $1 = "--help" || -z $2 ]] && usage && exit
 shift
 evalit $@

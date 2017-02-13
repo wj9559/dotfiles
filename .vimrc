@@ -7,7 +7,7 @@ set showmode
 filetype on
 syntax on                     "语法高亮
 set tabstop=4
-set expandtab
+set expandtab                 "将tab转为space,转换正在编辑的文件用 %retab!
 set history=50
 set nolinebreak
 set backspace=indent,eol,start

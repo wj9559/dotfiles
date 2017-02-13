@@ -5,12 +5,13 @@ usage(){
 echo "Usage: template [filename.filetype] ...
 create file by template. Template in ~/Template
   list [default]
-  --help			display this help and exit"
+  -h, --help			display this help and exit"
 exit 0
 }
+[[ $1 == "-h" || $1 == "--help" ]] && usage
 
 list(){
-echo "--help,		display this help and exit"
+echo "-h, --help,		display this help and exit"
 echo
 echo "Template list:"
 ls ~/Template
@@ -40,7 +41,6 @@ done
 
 select=${1:-list}
 case $select in
-list	) list;;
---help	) usage;;
-*		) createForeach $@;;
+list      ) list;;
+*         ) createForeach $@;;
 esac

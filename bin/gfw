@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
+usage(){
+echo "Usage: gfw [on | off | toggle | --help]
+Fuck great fire wall
+  on
+  off
+  info
+  toggle (default)
+  -h, --help                display this help and exit"
+exit 0
+}
+[[ $1 == "-h" || $1 == "--help" ]] && usage
+
 info(){
 pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"
 pidof adbyby &>/dev/null && echo "adbyby  :on" || echo "adbyby  :off"
@@ -21,22 +33,10 @@ toggle(){
 pidof lantern && off || on
 }
 
-usage(){
-echo "Usage: gfw [on | off | toggle | --help]
-Fuck great fire wall
-  on
-  off
-  info
-  toggle (default)
-  --help                display this help and exit"
-exit 0
-}
-
 select=${1:-toggle}
 case $select in
 on          ) on &>/dev/null;;
 off         ) off &>/dev/null;;
 info        ) info;;
 toggle      ) pidof lantern &>/dev/null && off || on;;
--h|--help   ) usage;;
 esac

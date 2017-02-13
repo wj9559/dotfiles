@@ -121,7 +121,7 @@ paclfb(){
 }
 
 paclfs(){
-    pacman -Ql $1 | grep -Ee "\.service$" -e "\.socket$" | cut -d" " -f2
+    pacman -Ql $1 | grep -Ee "\.service$" -e "\.socket$" -e "\.timer$" | cut -d" " -f2
 }
 
 gpg-verify(){

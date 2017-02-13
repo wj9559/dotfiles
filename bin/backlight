@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
+usage(){
+echo "Usage: backlight [options] [value]
+change backlight
+  i             info
+  +             add 10%
+  ++            add  5%
+  -             subtract 10%
+  --            subtract  5%
+  s             set [value]
+  -h, --help    display this help and exit"
+exit 0
+}
+[[ $1 == "-h" || $1 == "--help" ]] && usage
+
 type -a light &>/dev/null
 if [[ $? != 0 ]];then
     echo "Please install \"aur/light\""
@@ -36,25 +50,11 @@ light -S $1
 info
 }
 
-usage(){
-echo "Usage: backlight [options] [value]
-change backlight
-  i         info
-  +         add 10%
-  ++        add  5%
-  -         subtract 10%
-  --        subtract  5%
-  s         set [value]
-  --help    display this help and exit"
-exit 0
-}
-
 case ${1:-i} in
-i       ) info;;
-+       ) add;;
-++      ) add-l;;
--       ) subtract;;
---      ) subtract-l;;
-s       ) set $2;;
---help  ) usage;;
+i         ) info;;
++         ) add;;
+++        ) add-l;;
+-         ) subtract;;
+--        ) subtract-l;;
+s         ) set $2;;
 esac

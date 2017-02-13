@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+error_count=0
+ERROR_count=10
+sleeptime=1
+speed_less_then=30
+
+while [[ $error_count -lt $ERROR_count ]]; do
+    sleep $sleeptime
+    if [[ $(netspeed) -lt $speed_less_then ]]; then
+        error_count=$(expr $error_count + 1)
+    fi
+done
+
+bell 2 80
+notify-send --app-name=down --expire-time=0 "download is error"
+exit 2
