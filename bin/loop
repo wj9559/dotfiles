@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: loop [times] [command]
 loop exec command
   time            执行次数(default 5)
@@ -9,7 +9,7 @@ loop exec command
   -h, --help      display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 evalit(){
     if [ $cnt = 1 ];then

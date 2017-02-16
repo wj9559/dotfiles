@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-error_count=0
-ERROR_count=10
-sleeptime=1
-speed_less_then=30
+speed_less_then=${1:-30}
+ERROR_count=${2:-10}
+sleeptime=${3:-1}
 
-while [[ $error_count -lt $ERROR_count ]]; do
+while [[ $count -lt $ERROR_count ]]; do
     sleep $sleeptime
     if [[ $(netspeed) -lt $speed_less_then ]]; then
-        error_count=$(expr $error_count + 1)
+        count=$(expr $count + 1)
     fi
 done
 

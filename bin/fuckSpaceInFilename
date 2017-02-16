@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo 'Usage: fuckSpaceInFilename [replace char]
 Fuck Space In Filename, default remove space.
   -h, --help        display this help and exit'
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 replace="$1"
 #for i in $(seq 2); do

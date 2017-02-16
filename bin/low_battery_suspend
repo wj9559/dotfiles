@@ -2,7 +2,7 @@
 
 # virtualbox will get battery info when running, acpi process becomes uninterruptible sleep.
 pidof VirtualBox &>/dev/null && exit 2
-usage(){
+_usage(){
   cat << EOF
 Usage: low_battery_suspend ['warning' 1-100] ['suspend' 1-'warning']
 
@@ -12,7 +12,7 @@ EOF
 exit
 }
 if [[ -z $1 || $1 -lt 1 || $1 -lt $2 || $1 -gt 100 ]]; then
-  usage
+  _usage
 fi
 
 low_battery_audio="~/Music/other/android-N-audio/ui/LowBattery.ogg"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: search [key] [site] [browser]
 Quick search in CLI
   b,  bing     [default]   Bing
@@ -23,7 +23,7 @@ Quick search in CLI
   -h, --help               display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 key=$(echo $1 | tr " " "+")
 

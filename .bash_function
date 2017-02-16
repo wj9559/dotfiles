@@ -3,11 +3,11 @@
 # ~/.bash_function
 #
 
-EC() {
+EC(){
     echo -ne '\e[01;33m'$?'\e[m'
 }
 
-calc() {
+calc(){
     echo "scale=3;$@" | bc -l
 }
 
@@ -77,7 +77,8 @@ ffmpegcut(){
 	if [[ $# -ne 3 ]]; then
 		echo "ffmpegCut [start] [second] [filename]"
 	else
-		ffmpeg -ss $1 -t $2 -i $3 -acodec copy cut_$3
+		ffmpeg -ss $1 -t $2 -i $3 -c copy cut_$3
+		#ffmpeg -ss $1 -t $2 -i $3 -acodec copy cut_$3
 	fi
 }
 

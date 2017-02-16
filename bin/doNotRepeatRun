@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 processName=$1
-usage(){
+_usage(){
 echo "Usage: doNotRepeatRun [app name]
 Don't repeat run app"
 }
-[[ -z $1 ]] && usage
+[[ -z $1 ]] && _usage
 
 # 启动命令与进程名不符的请按格式放在这里
 [ "$processName" = "google-chrome" ] && processName=chrome

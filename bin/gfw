@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: gfw [on | off | toggle | --help]
 Fuck great fire wall
   on
@@ -11,7 +11,7 @@ Fuck great fire wall
   -h, --help                display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 info(){
 pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"

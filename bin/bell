@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: bell [count] [volume]
 bell
   -h, --help   display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 #for i in $@; do [[ $i == '--help' || $i == '-h' ]] && _exit;done
 
 COUNT=$(expr ${1:-1} \- 1)

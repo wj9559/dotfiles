@@ -29,5 +29,5 @@ for line in $(seq 1 $(wc -l < $page_url)); do
 done
 grep -E "^https?://" $video_url_tmp > $video_url
 mpv --speed 2 --playlist=$video_url &>/dev/null
-rm $page_url_tmp
+rm $page_url_tmp &>/dev/null
 rm $video_url_tmp

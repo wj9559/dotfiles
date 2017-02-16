@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: template [filename.filetype] ...
 create file by template. Template in ~/Template
   list [default]
   -h, --help			display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 list(){
 echo "-h, --help,		display this help and exit"

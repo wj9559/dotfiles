@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: bak [filename] ...
 create file.bak, default exec \"$cpmv\".
   -mv           mv filename filename.bak
   -h, --help    display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 cpmv="cp -r"
 

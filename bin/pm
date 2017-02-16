@@ -4,7 +4,7 @@ lock(){
     vlock -a
 }
 
-usage(){
+_usage(){
 echo "Usage: pm [ l s h r p --help ]
 Power management
   l,        lock
@@ -22,5 +22,5 @@ s) systemctl suspend;;
 h) systemctl hibernate;;
 r) systemctl reboot;;
 p) systemctl poweroff;;
---help) usage;;
+--help) _usage;;
 esac

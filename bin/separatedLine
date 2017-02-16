@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-usage(){
+_usage(){
 echo "Usage: separatedLine [rows] [color] [separator]
 generate separated line
   rows          number
@@ -9,7 +9,7 @@ generate separated line
   -h, --help    display this help and exit"
 }
 if [[ $1 == "--help" || $1 == "-h" ]]; then
-usage
+_usage
 exit
 fi
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-usage(){
+_usage(){
 echo "Usage: volume [options] [value]
 change backlight
   i              info
@@ -12,7 +12,7 @@ change backlight
   -h, --help     display this help and exit"
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
 
 type -a pactl &>/dev/null
 if [[ $? != 0 ]];then

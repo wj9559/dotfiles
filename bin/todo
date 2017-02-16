@@ -6,7 +6,7 @@ if [[ ! -f $TODOFILE ]]; then
     touch $TODOFILE
 fi
 
-usage(){
+_usage(){
 echo "Usage: todo [todo]
 simple todo list
   -h, --help            display this help and exit
@@ -19,25 +19,25 @@ simple todo list
 exit 0
 }
 
-remove(){
+_remove(){
     nl $TODOFILE
     eval printf %.0s- {1..${COLUMNS:-$(tput cols)}}; echo
     read -p "Type a number to remove: " number
     sed -i ${number}d $TODOFILE
 }
 
-write(){
+_write(){
     printf "%s\n" "$*" >> $TODOFILE
     sed -i "/^$/d" $TODOFILE
 }
 
 case ${1} in
 ""              ) echo -e "  -h|--help          display help\n" && nl $TODOFILE;;
--h|--help       ) usage;;
+-h|--help       ) _usage;;
 -l|--list       ) nl $TODOFILE;;
 -s|--show       ) sed -n ${2}p $TODOFILE;;
--r|--remove     ) remove;;
+-r|--remove     ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE;;
 -e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
 --clear         ) > $TODOFILE;;
-*               ) write $*;;
+*               ) _write $*;;
 esac

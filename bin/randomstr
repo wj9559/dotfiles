@@ -3,7 +3,7 @@
 # DATE=$(date +%Y%m%d%H%M%S)
 # $RANDOM
 # $$
-usage(){
+_usage(){
 echo 'Usage: randomstr [LENGTH] [CHARMODE]
 generate random string, default length=12, char_mode=alphabet & digit
   -h, --help        display this help and exit
@@ -20,7 +20,7 @@ char mode:
           right-hand   右手模式 67890-=^&*()_+yuiop[]\{}|hjkl;:nm,./<>?'
 exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
  
 LENGTH=${1:-12}
 CHARMODE="${2:-[:alnum:]}"
