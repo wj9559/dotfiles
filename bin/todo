@@ -9,11 +9,11 @@ fi
 _usage(){
 echo "Usage: todo [todo]
 simple todo list
-  -h, --help            display this help and exit
-  -l, --list            display the todo-list
-  -s, --show            display the specified row in the todo-list
-  -r, --remove          remove an item from the todo-list
-  -e, --edit            direct edit todo.file
+  h, --help            display this help and exit
+  l, --list            display the todo-list
+  s, --show   [line]   display the specified row in the todo-list
+  r, --remove [line]   remove an item from the todo-list
+  e, --edit            direct edit todo.file
   --clear               clear the todo-list
   other                 add an item to the todo-list"
 exit 0
@@ -33,11 +33,11 @@ _write(){
 
 case ${1} in
 ""              ) echo -e "  -h|--help          display help\n" && nl $TODOFILE;;
--h|--help       ) _usage;;
--l|--list       ) nl $TODOFILE;;
--s|--show       ) sed -n ${2}p $TODOFILE;;
--r|--remove     ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE;;
--e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
+h|--help       ) _usage;;
+l|--list       ) nl $TODOFILE;;
+s|--show       ) sed -n ${2}p $TODOFILE;;
+r|--remove     ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE;;
+e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
 --clear         ) > $TODOFILE;;
 *               ) _write $*;;
 esac

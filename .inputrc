@@ -1,12 +1,12 @@
-# do not bell on tab-completion 
-set bell-style none 
- 
-set meta-flag on 
-set input-meta on 
-set convert-meta off 
-set output-meta on 
- 
-$if mode=emacs 
+# do not bell on tab-completion
+set bell-style none
+
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
+
+$if mode=emacs
 
 # for linux console and RH/Debian xterm
 "\e[1~": beginning-of-line

@@ -35,7 +35,7 @@ fi
 if [ -n "$DISPLAY" ]; then
     export BROWSER=chromium
 else 
-    export BROWSER=elinks
+    export BROWSER=w3m
 fi
 
 #export http_proxy=http://10.203.0.1:5187

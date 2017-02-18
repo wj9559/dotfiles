@@ -192,12 +192,23 @@ while true; do
 done
 }
 
-#cdtmp(){
-#local tmpdir=/tmp/$(whoami)_tmp/$(randomstr)
-#mkdir -p $tmpdir
-#cd $tmpdir
-#ln -s $tmpdir ../last
-#}
+linkfind(){
+local exclude path file="$(realpath "$1")"
+if [[ $(stat --format=%h "$file") == 1 ]]; then
+    echo find symbolic link 
+    path="${2:-/}"
+    find "$path" -path /proc -prune -o -lname "$file" -print
+else
+    echo find hard link
+    inode=$(stat --format=%i "$file")
+    path="${2:-$(df -a --output=target "$file" | sed -n 2p)}"
+    if exclude=$(df -a --output=target | grep "$path.\+"); then
+        find "$path" "$(for i in $exclude; do echo -n "-path $i -prune -o "; done)" -inum $inode -print
+    else
+        find "$path" -inum "$inode" -print
+    fi
+fi
+}
 
 
 #-----------------------------------------------------------
