@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec /usr/bin/electron /home/wj/git/keep &

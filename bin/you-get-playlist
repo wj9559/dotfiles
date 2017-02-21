@@ -10,7 +10,9 @@ video_url=$tmpdir/video_url.$DATE
 video_url_tmp=$video_url.tmp
 
 if [[ -n $1 ]]; then
-    page_url="$1"
+    page_url="$(realpath "$1")"
+    ln -fs $page_url $tmpdir/page_url.last
+    ln -fs $video_url $tmpdir/video_url.last
 else
     ln -fs $page_url $tmpdir/page_url.last
     ln -fs $video_url $tmpdir/video_url.last
@@ -28,7 +30,7 @@ for line in $(seq 1 $(wc -l < $page_url)); do
     || todo you-get -i $url
 done
 grep -E "^https?://" $video_url_tmp > $video_url
-smplayer --playlist=$video_url &>/dev/null
+smplayer $(cat $video_url) &>/dev/null
 #mpv --speed 2 --playlist=$video_url &>/dev/null
 rm $page_url_tmp &>/dev/null
 rm $video_url_tmp

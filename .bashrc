@@ -47,3 +47,4 @@ fi
 
 export phonedir=/sdcard/9559wj/
 export phonetermux=/data/data/com.termux/files/home/
+export tmplast=/tmp/tmp_$(whoami)/last/

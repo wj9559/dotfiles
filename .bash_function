@@ -83,6 +83,7 @@ ffmpegcut(){
 }
 
 gitpull(){
+local gitdir gitrepo
 for gitdir in $@; do
 	for gitrepo in `ls -p $gitdir | grep "/$"`; do
 		cd $gitdir/$gitrepo
@@ -92,8 +93,6 @@ for gitdir in $@; do
 	done
 done
 [[ $# == 0 ]] && gitpull ~/git
-unset gitdir
-unset gitrepo
 }
 
 decompress(){
