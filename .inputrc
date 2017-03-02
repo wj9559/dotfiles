@@ -1,9 +1,7 @@
 # do not bell on tab-completion
-set bell-style none
-
 set meta-flag on
-set input-meta on
 set convert-meta off
+set input-meta on
 set output-meta on
 
 $if mode=emacs
@@ -37,7 +35,12 @@ $endif
 
 
 
+
+set bell-style none
+set visible-stats on
 set show-all-if-ambiguous on
 set completion-ignore-case On
+#set match-hidden-files off
+#set mark-symlinked-directories on
 "\e[A":history-search-backward
 "\e[B":history-search-forward

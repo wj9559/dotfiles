@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
 
 # DATE=$(date +%Y%m%d%H%M%S)
 # $RANDOM

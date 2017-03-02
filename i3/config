@@ -11,10 +11,11 @@ set $3 3
 set $4 4
 set $5 5
 set $6 6
-set $7 7
+set $7 7:
 set $8 8:
 set $9 9:
 set $0 10:
+# 图标查询 http://fontawesome.io/cheatsheet/
 
 font pango:Monaco 8
 floating_modifier $mod
@@ -94,9 +95,9 @@ bindsym Mod1+Shift+0 move container to workspace $0, workspace $0
 
 mode "resize" {
     bindsym $left resize shrink width 10 px or 10 ppt
-    bindsym $down resize grow height 10 px or 10 ppt
-    bindsym $up resize shrink height 10 px or 10 ppt
-    bindsym $right resize grow width 10 px or 10 ppt
+    bindsym $down resize grow height  10 px or 10 ppt
+    bindsym $up resize shrink height  10 px or 10 ppt
+    bindsym $right resize grow width  10 px or 10 ppt
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -154,10 +155,11 @@ exec --no-startup-id roxterm
 new_window pixel 1
 hide_edge_borders both
 workspace_auto_back_and_forth yes
-#default_orientation horizontal | vertical | auto 
+#default_orientation horizontal | vertical | auto   # according to monitors
 #focus_on_window_activation smart|urgent|focus|none
 #workspace_layout default|tabbed|stacking
 #force_display_urgency_hint 500 ms
+#force_focus_wrapping yes | no
 
 bindsym $mod+t border toggle
 bindsym $mod+x sticky toggle
@@ -201,21 +203,21 @@ bindsym Print exec --no-startup-id ~/bin/screenshot root
 bindsym $mod+Print exec --no-startup-id ~/bin/screenshot active
 bindsym $mod+Shift+Print exec --no-startup-id ~/bin/screenshot select
 
+
 # Move to workspace
-# assign [instance|class="firefox"] firefox
-
-# Layout	边框类型，窗口布局，大小调整，自动移到工作去等，多项定义用,隔开
-# for_window [instance|class|workspace|title|window_role|="gedit|vim"] move container to workspace $WS5, workspace $WS5, layout tabbed, sticky enable
-# for_window [title="x200: ~/work"] floating enable
-
-# 图标查询 http://fontawesome.io/cheatsheet/
+# assign [instance|class="firefox"] 8:browser
+assign [class="Atom|Code|Gvim"] $7
 assign [class="Firefox|Chromium|Opera"] $8
 assign [class="VirtualBox"] $9
 assign [class="smplayer|mpv"] $0
 
-for_window [class="Firefox|Chromium|Opera|smplayer|mpv"] border pixel 0,focus
-for_window [class="VirtualBox"] floating enable,border normal,focus
-for_window [title="force-floating$"] floating enable,border pixel 1,focus
+# Layout	边框类型，窗口布局，大小调整，自动移到工作去等，多项定义用,隔开
+# for_window [instance|class|workspace|title|window_role|="gedit|vim"] move container to workspace $WS5, workspace $WS5, layout tabbed, sticky enable
+# for_window [title="x200: ~/work"] floating enable
+for_window [class="VirtualBox"] floating enable, border normal, focus
+for_window [title="force-floating$"] floating enable, border pixel 1, focus
+for_window [workspace="$7|$8|$0"] layout tabbed, border pixel 0, focus
+#for_window [class="Firefox|Chromium|Opera|smplayer|mpv|Atom|Code|Gvim"] border pixel 0, focus
 #for_window [window_role="pop-up"] floating enable
 #for_window [window_role="task_dialog"] floating enable
 #for_window [class="(?i)test"] kill

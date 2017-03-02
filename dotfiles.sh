@@ -28,7 +28,7 @@ $lncp $BASEDIR/Template/ ~/
 $lncp $BASEDIR/bin/ ~/
 # --------------------------
 $lncp $BASEDIR/dunst/ ~/.config/
-$lncp $BASEDIR/fcitx ~/.config/
+$lncp $BASEDIR/fcitx/ ~/.config/
 $lncp $BASEDIR/fontconfig/ ~/.config/
 $lncp $BASEDIR/htop/ ~/.config/
 $lncp $BASEDIR/i3/ ~/.config/

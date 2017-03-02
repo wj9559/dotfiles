@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# author: wujian(github.com/wj9559)
 
 tmpdir=/tmp/you-get-playlist
 mkdir $tmpdir &>/dev/null

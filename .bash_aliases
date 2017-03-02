@@ -8,10 +8,18 @@ alias yis='yi -s -t zh'
 alias py='python3'
 alias py2='python2'
 alias py3='python3'
-alias l='ls -F --color=auto'
-alias la='ls -FA --color=auto'
-alias ll='ls -FAlh --color=auto'
+if ls --color ~ &>/dev/null; then
+    lsColorFlag="--color=auto"
+else
+    lsColorFlag="-G"
+    export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
+fi
+alias l="ls -F $lsColorFlag"
+alias la="ls -FA $lsColorFlag"
+alias ll="ls -FAlh $lsColorFlag"
 alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 alias mkdir='mkdir -pv'
 alias du1='du -d1 -h'
 alias bc='bc -ql'
@@ -23,6 +31,8 @@ alias inotify='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e modify
 alias inotify-ao='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e access,open'
 alias axel='axel --alternate --num-connections=10'
 alias ping='ping -c 5'
+alias hd="hexdump -C"
+alias path='echo -e ${PATH//:/\\n}'
 #alias rm='rm -I'
 #alias cp='cp -ir'
 #alias mv='mv -i'
@@ -50,7 +60,7 @@ alias yaoi='yaourt -Si'
 alias usetips='vless ~/backup/useTips'
 alias errors="journalctl --priority=0..3 --catalog -n"
 alias uninterruptibleSleep='ps -eo stat,args | grep "^D"'
-alias ipaddress='ifconfig | grep -P "192.168(\.\d{1,3}){2}" | awk "{print \$2}";curl -s ipinfo.io/ip'
+alias ipaddress="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }';echo;curl -s ipinfo.io/ip"
 alias websiteget='wget -Erkp --no-parent --random-wait -U mozilla'
 alias acpi='bDir="/sys/class/power_supply/BAT0";[ -e $bDir ] || bDir="/sys/class/power_supply/BAT1";echo $(cat $bDir/status)\ $(cat $bDir/capacity)%;unset bDir'
 alias caffeine='xset s off'
@@ -66,7 +76,10 @@ alias pss='echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIM
 alias histg='history | grep'
 alias listen='lsof -P -i -n'
 alias port='netstat -tulanp'
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias cdtmp='mkcd /tmp/tmp_$(whoami)/$(randomstr);ln -sfn $PWD ../last'
 alias cdtmpl='cd /tmp/tmp_$(whoami)/last &>/dev/null;if [[ $? != 0 ]];then cdtmp;fi'
 alias clamscan='clamscan --recursive --infected --log ~/clamav.log'
+type git &>/dev/null && alias diff='git diff --no-index --color-words'

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+date1=$(date +%s)
 speed_less_then=${1:-30}
 ERROR_count=${2:-10}
 sleeptime=${3:-1}
@@ -11,6 +12,10 @@ while [[ $count -lt $ERROR_count ]]; do
     fi
 done
 
+if [[ $(expr $(date +%s) - $date1) -gt 120 ]];then
+downloading-error
+exit
+fi
 bell 2 80
 notify-send --app-name=down --expire-time=0 "download is error"
 exit 2

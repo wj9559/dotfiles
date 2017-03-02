@@ -17,6 +17,7 @@ Quick search in CLI
   ---------------------------------------
   f,  firefox  [default]   firefox
   c,  chromium             chromium
+  ci, chromiumi            chromium-incognito
   o,  opera                opera
   e,  elinks               elinks
   w,  w3m                  w3m
@@ -44,11 +45,12 @@ esac
 # -----------------------browser----------------------
 # force-browser
 case $3 in
-f|firefox  ) fb=firefox;;
-c|chromium ) fb=chromium;;
-o|opera    ) fb=opera;;
-e|elinks   ) fb=elinks;;
-w|w3m      ) fb=w3m;;
+f|firefox    ) fb=firefox;;
+c|chromium   ) fb=chromium;;
+ci|chromiumi ) fb="chromium --incognito";;
+o|opera      ) fb=opera;;
+e|elinks     ) fb=elinks;;
+w|w3m        ) fb=w3m;;
 esac
 
 # running-browser

@@ -4,7 +4,7 @@
 
 [[ $- != *i* ]] && return
 
-shopt -s checkwinsize
+[ -n "$DISPLAY" ] && shopt -s checkwinsize
 #shopt -s no_empty_cmd_completion
 shopt -s histappend
 shopt -s autocd
@@ -14,11 +14,11 @@ trap EC ERR
 #PS1='\[\e[1;32m\]\u\[\e[m\]:\[\e[1;34m\]\w\[\e[m\]\$ '
 [ -n "$SSH_CLIENT" ] && PS1='\[\e[1;34m\]\W\[\e[1;32m\] SSH\$\[\e[m\] ' || PS1='\[\e[1;34m\]\W\[\e[1;32m\]\$\[\e[m\] '
 
-[[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
-[[ -f ~/.bash_function ]] && source ~/.bash_function
-[[ -f /usr/share/autojump/autojump.bash ]] && source /usr/share/autojump/autojump.bash
-[[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
+[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+[ -r ~/.bash_aliases ] && source ~/.bash_aliases
+[ -r ~/.bash_function ] && source ~/.bash_function
+[ -r /usr/share/autojump/autojump.bash ] && source /usr/share/autojump/autojump.bash
+[ -r /usr/share/doc/pkgfile/command-not-found.bash ] && source /usr/share/doc/pkgfile/command-not-found.bash
 
 export HISTSIZE=-10
 export HISTFILESIZE=-10
@@ -29,9 +29,7 @@ export HISTIGNORE='pwd:l:ls:ll:cls:bash:incognitoshell:todo*:'
 export EDITOR=vim
 export VISUAL=vim
 export BUILDDIR=/tmp/makepkg makepkg
-if [ "$TERM" == "xterm" ]; then
-	export TERM=xterm-256color
-fi
+[ "$TERM" == "xterm" ] && export TERM=xterm-256color
 if [ -n "$DISPLAY" ]; then
     export BROWSER=chromium
 else 
@@ -48,3 +46,8 @@ fi
 export phonedir=/sdcard/9559wj/
 export phonetermux=/data/data/com.termux/files/home/
 export tmplast=/tmp/tmp_$(whoami)/last/
+
+
+complete -F _command insh
+complete -F _command doNotRepeatRun
+[ -r ~/.ssh/config ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
