@@ -3,7 +3,7 @@
 
 _usage(){
 echo "Usage: template [filename.filetype] ...
-create file by template. Template in ~/Template
+create file by template. Templates in ~/Templates
   list [default]
   -h, --help			display this help and exit"
 exit 0
@@ -13,19 +13,19 @@ exit 0
 list(){
 echo "-h, --help,		display this help and exit"
 echo
-echo "Template list:"
-ls ~/Template
+echo "Templates list:"
+ls ~/Templates/
 }
 
 create(){
 name=$(echo $1 | cut -d. -f1)
 type=$(echo $1 | cut -d. -f2)
-cp ~/Template/$type $1 &> /dev/null
+cp ~/Templates/$type $1 &> /dev/null
 
 if [[ $? -eq 0 ]]; then
 	echo "create '$1'"
 else
-	echo "please create '.$type' Template" >&2
+	echo "please create '.$type' Templates" >&2
 	return 2
 fi
 }

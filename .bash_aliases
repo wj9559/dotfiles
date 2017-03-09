@@ -76,10 +76,12 @@ alias pss='echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIM
 alias histg='history | grep'
 alias listen='lsof -P -i -n'
 alias port='netstat -tulanp'
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias sniff="sudo ngrep -d 'wlo1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i wlo1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias cdtmp='mkcd /tmp/tmp_$(whoami)/$(randomstr);ln -sfn $PWD ../last'
 alias cdtmpl='cd /tmp/tmp_$(whoami)/last &>/dev/null;if [[ $? != 0 ]];then cdtmp;fi'
 alias clamscan='clamscan --recursive --infected --log ~/clamav.log'
 type git &>/dev/null && alias diff='git diff --no-index --color-words'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias tracepath=mtr

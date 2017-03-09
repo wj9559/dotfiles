@@ -21,7 +21,7 @@ _get_volume(){
 STATE=$(volume | grep -o "on\|off")
 VOLUME=$(volume | grep -Po "\d+")
 }
-_max_volume(){
+_set_volume(){
 volume s $1
 if [[ $STATE == 'off' ]];then
 volume m
@@ -36,7 +36,7 @@ fi
 
 if [[ -n $2 ]]; then
     _get_volume
-    _max_volume $2 &>/dev/null
+    _set_volume $2 &>/dev/null
     _bell
     _restore_volume &>/dev/null
 else

@@ -96,7 +96,27 @@ done
 [[ $# == 0 ]] && gitpull ~/git
 }
 
+compress(){
+local file="$1"
+[[ ${file:(-1)} == "/" ]] && file=${file%/*}
+case $2 in
+    rar          ) rar a     "$file".rar "$file"      ;;
+    zip          ) zip -r    "$file".zip "$file"      ;;
+    7z           ) 7z a      "$file".7z  "$file"      ;;
+    tar          ) tar cf   "$file".tar "$file"      ;;
+    tbz2|tar.bz2 ) tar cjf  "$file".tar.bz2 "$file"  ;;
+    bz2          ) bzip2 -zk "$file"                  ;;
+    tgz|tar.gz   ) tar czf  "$file".tar.gz "$file"   ;;
+    gz           ) gzip -k   "$file"                  ;;
+    tar.Z        ) tar cZf  "$file".tar.Z "$file"    ;;
+    tar.xz       ) tar cJf  "$file".tar.xz "$file"   ;;
+    xz           ) xz -k     "$file"                  ;;
+    *            ) tar czf  "$file".tar.gz "$file"   ;;
+esac
+}
+
 decompress(){
+local file
 for file in $@; do
     case $file in
         # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
@@ -144,8 +164,8 @@ gitup(){
     local commitMessage="timeline"
     [[ -n "$1" ]] && commitMessage="$1"
 
-    git add .
-    git commit -m "$commitMessage"
+    git add --all
+    git commit --message="$commitMessage"
     git push
 }
 
@@ -159,6 +179,15 @@ while true; do
     echo -ne '\e[1;32m'$CMD' \e[0m'
     read KEY
     $CMD $KEY
+done
+}
+
+loop(){
+local count=$1
+local i
+shift
+for i in $(seq $count); do
+    eval $@
 done
 }
 

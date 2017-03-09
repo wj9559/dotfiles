@@ -24,7 +24,7 @@ $lncp $BASEDIR/.vim/ ~/
 $lncp $BASEDIR/.vimrc ~/
 $lncp $BASEDIR/.xinitrc ~/
 $lncp $BASEDIR/.xserverrc ~/
-$lncp $BASEDIR/Template/ ~/
+$lncp $BASEDIR/Templates/ ~/
 $lncp $BASEDIR/bin/ ~/
 # --------------------------
 $lncp $BASEDIR/dunst/ ~/.config/
