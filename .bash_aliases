@@ -3,8 +3,7 @@
 #
 
 alias sudo='sudo '
-alias cls='echo -ne "\033c"'
-alias yis='yi -s -t zh'
+alias cls='echo -ne "\033c"; tmux clear-history; echo -ne "\033c"'
 alias py='python3'
 alias py2='python2'
 alias py3='python3'

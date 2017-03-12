@@ -12,6 +12,9 @@ calc(){
 #    echo "scale=3;$@" | bc -l
 }
 
+yis(){
+    yi -s "$(echo "$*" | tr '\n' ' ')"
+}
 mkcd(){
 	mkdir "$@" && cd "$_"
 }
@@ -170,24 +173,20 @@ gitup(){
 }
 
 insh(){
-if [[ $(type -t $1) == alias ]]; then
-    local CMD="$(aliased $1) ${@:2}"
-else
-    local CMD=$@
-fi
 while true; do
-    echo -ne '\e[1;32m'$CMD' \e[0m'
+    echo -ne '\e[1;32m'$@' \e[0m'
     read KEY
-    $CMD $KEY
+    eval $@ $KEY
 done
 }
 
 loop(){
-local count=$1
-local i
-shift
-for i in $(seq $count); do
-    eval $@
+for i in $(seq $1); do
+    if [ $i -ne 1 ]; then
+        sleep $2
+    fi
+    eval ${@:3}
+    separatedLine 1 yellow -
 done
 }
 
