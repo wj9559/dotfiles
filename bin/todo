@@ -22,7 +22,7 @@ exit 0
 
 _remove(){
     nl $TODOFILE
-    eval printf %.0s- {1..${COLUMNS:-$(tput cols)}}; echo
+    printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
     read -p "Type a number to remove: " number
     sed -i ${number}d $TODOFILE
 }

@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+_usage(){
+echo "Usage: netspeed [iface] [-human]
+print the current netspeed
+  iface         lo,eno1,wlo1...
+  -human         print human readable sizes
+  -h, --help    display this help and exit"
+exit 0
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage
+
 sleeptime="0.1"
 iface=${1:-wlo1}
 type=" "
@@ -21,24 +31,20 @@ TXBN=$(_get_tx)
 RXDIF=$(echo "$((RXBN - RXB)) / 1024 / ${sleeptime}" | bc )
 TXDIF=$(echo "$((TXBN - TXB)) / 1024 / ${sleeptime}" | bc )
 
-if [[ $2 == '-h' ]]; then
-if [ $RXDIF -gt 1024 ]; then
-	RXDIF=$(echo "scale=1;${RXDIF} / 1024" | bc)
-	RXDIF_UNIT="M/s"
-else
-	RXDIF_UNIT="K/s"
-fi
-
-if [ $TXDIF -gt 1024 ]; then
-	TXDIF=$(echo "scale=1;${TXDIF} / 1024" | bc)
-	TXDIF_UNIT="M/s"
-else
-	TXDIF_UNIT="K/s"
-fi
-
-# NOTE: '%5.01' for fixed length always
-#printf " ${RXDIF}${RXDIF_UNIT}  ${TXDIF}${TXDIF_UNIT}"
-echo " ${RXDIF}${RXDIF_UNIT}  ${TXDIF}${TXDIF_UNIT}"
+if [[ $2 == '-human' ]]; then
+    if [ $RXDIF -gt 1024 ]; then
+    	RXDIF=$(echo "scale=1;${RXDIF} / 1024" | bc)
+    	RXDIF_UNIT="M/s"
+    else
+    	RXDIF_UNIT="K/s"
+    fi
+    if [ $TXDIF -gt 1024 ]; then
+    	TXDIF=$(echo "scale=1;${TXDIF} / 1024" | bc)
+    	TXDIF_UNIT="M/s"
+    else
+    	TXDIF_UNIT="K/s"
+    fi
+    printf " ${RXDIF}${RXDIF_UNIT}  ${TXDIF}${TXDIF_UNIT}"
 else
     if [[ $2 == 't' ]]; then
         echo $TXDIF

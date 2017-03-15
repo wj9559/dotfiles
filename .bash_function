@@ -100,8 +100,13 @@ done
 }
 
 compress(){
-local file="$1"
-[[ ${file:(-1)} == "/" ]] && file=${file%/*}
+_usage(){
+echo "Usage: compress [file] [compression_format]
+compress file to \"file.compression_format\"
+  -h, --help            display this help and exit"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+local file="${1%/}"
 case $2 in
     rar          ) rar a     "$file".rar "$file"      ;;
     zip          ) zip -r    "$file".zip "$file"      ;;
@@ -119,6 +124,12 @@ esac
 }
 
 decompress(){
+_usage(){
+echo "Usage: decompress [file.compression_format]
+decompress \"file.compression_format\"
+  -h, --help            display this help and exit"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 local file
 for file in $@; do
     case $file in
@@ -154,7 +165,8 @@ gpg-verify(){
     local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
     echo RSA=$RSA
 
-    gpg --no-default-keyring --keyring $gpg --keyserver pgp.mit.edu --recv-keys $RSA
+    gpg --no-default-keyring --keyring $gpg --keyserver https://pgp.mit.edu --recv-keys $RSA
+    #gpg --no-default-keyring --keyring $gpg --keyserver hkp://keys.gnupg.net --recv-keys $RSA
     separatedLine
     gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
@@ -173,21 +185,59 @@ gitup(){
 }
 
 insh(){
-while true; do
-    echo -ne '\e[1;32m'$@' \e[0m'
-    read KEY
-    eval $@ $KEY
+_usage(){
+echo "Usage: insh [command]
+execution the command after entering the parameter
+  [KEY]                 Specify a placeholder
+  -h, --help            display this help and exit"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+local i KEY
+for i in $(seq 1 $#); do
+    if [[ "$(eval echo \$$i)" == "[KEY]" ]]; then
+        local index=$i
+    fi
 done
+if [ ! -z $index ];then
+    local a_index=$(expr $index + 1)
+    local b_index=$(expr $index - 1)
+    while true; do
+        echo -ne '\e[1;32m'${@:1:$b_index} [KEY] ${@:$a_index:$#}' \e[0m'
+        read KEY
+        eval ${@:1:$b_index} $KEY ${@:$a_index:$#}
+    done
+else
+    while true; do
+        echo -ne '\e[1;32m'$@' \e[0m'
+        read KEY
+        eval $@ $KEY
+    done
+fi
 }
 
 loop(){
-for i in $(seq $1); do
-    if [ $i -ne 1 ]; then
-        sleep $2
-    fi
-    eval ${@:3}
-    separatedLine 1 yellow -
-done
+_usage(){
+echo "Usage: loop [count] -s[sleep-time] [command]...
+loop execution the command
+  -s[sleep-time]        after sleep time execution command,default 0
+  -h, --help            display this help and exit"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+if [[ "$2" == -s* ]]; then
+    local sleeptime=$(echo $2 | cut -c 3-)
+    for i in $(seq $1); do
+        if [ $i -ne 1 ]; then
+            sleep $sleeptime
+        fi
+        eval ${@:3}
+        separatedLine 1 yellow -
+    done
+else
+    for i in $(seq $1); do
+        eval ${@:2}
+        separatedLine 1 yellow -
+    done
+fi
 }
 
 aliased(){
@@ -196,8 +246,7 @@ aliased(){
 }
 
 shacheck(){
-local BYTE=$(echo -n $2 | wc -c)
-local CMD
+local CMD BYTE=$(echo -n $2 | wc -c)
 case $BYTE in
 32  ) CMD=md5sum   ;;
 40  ) CMD=sha1sum  ;;
@@ -221,7 +270,9 @@ done
 }
 
 linkfind(){
-local exclude path file="$(realpath "$1")"
+#find symbolic: 只能找到目标(target)是文件的实际路径(realpath)的
+#find hard    : 文件所在是用--bind挂载的会出错
+local i inode exclude path file="$(realpath "$1")"
 if [[ $(stat --format=%h "$file") == 1 ]]; then
     echo find symbolic link 
     path="${2:-/}"
@@ -229,9 +280,9 @@ if [[ $(stat --format=%h "$file") == 1 ]]; then
 else
     echo find hard link
     inode=$(stat --format=%i "$file")
-    path="${2:-$(df -a --output=target "$file" | sed -n 2p)}"
+    path=${2:-$(df -a --output=target "$file" | sed -n 2p)}
     if exclude=$(df -a --output=target | grep "$path.\+"); then
-        find "$path" "$(for i in $exclude; do echo -n "-path $i -prune -o "; done)" -inum $inode -print
+        find $path $(for i in $exclude; do echo -n -path $i -prune -o; done) -inum $inode -print
     else
         find "$path" -inum "$inode" -print
     fi

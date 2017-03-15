@@ -44,10 +44,11 @@ alias pacy='sudo pacman -Sy'
 alias pacu='sudo pacman -Syu'
 alias pacuc='pacy --logfile /dev/null &>/dev/null ;pacman -Qu'
 alias pacr='sudo pacman -Rns'
+alias paccc='sudo paccache -rvk 3'
+
 alias pacs='pacman -Ss'
 alias paci='pacman -Si'
 alias pacqs='yaourt -Qs'
-alias paccc='sudo paccache -rvk 3'
 alias paclo='pacman -Qdtq'
 alias paclf='pacman -Ql'
 # yaourt
