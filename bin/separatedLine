@@ -16,7 +16,7 @@ fi
 
 reset_color='\e[0m'
 
-rows=${1:-2}
+rows=${1:-1}
 cols=$(tput cols)
 let cols*=$rows
 
@@ -32,7 +32,7 @@ case ${2:-yellow} in
     white	) color='\e[1;37m';;
 esac
 
-[[ -z $3 ]] && separator=# || separator=$3
+[[ -z $3 ]] && separator=- || separator=$3
 
 echo -ne $color
 eval printf %.0s$separator {1..$cols}

@@ -93,7 +93,7 @@ for gitdir in $@; do
 		cd $gitdir/$gitrepo
 		pwd
 		git pull
-        separatedLine 1
+        separatedLine
 	done
 done
 [[ $# == 0 ]] && gitpull ~/git
@@ -230,12 +230,12 @@ if [[ "$2" == -s* ]]; then
             sleep $sleeptime
         fi
         eval ${@:3}
-        separatedLine 1 yellow -
+        separatedLine
     done
 else
     for i in $(seq $1); do
         eval ${@:2}
-        separatedLine 1 yellow -
+        separatedLine
     done
 fi
 }
@@ -256,7 +256,7 @@ case $BYTE in
 128 ) CMD=sha512sum;;
 esac
 
-$CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $CMD: WARNING: 1 computed checksum did NOT match
+$CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $1: FAILED
 }
 
 ifdown(){

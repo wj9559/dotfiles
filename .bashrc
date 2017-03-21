@@ -11,8 +11,9 @@ shopt -s autocd
 set -o notify 
 #set -o vi
 trap EC ERR
-#PS1='\[\e[1;32m\]\u\[\e[m\]:\[\e[1;34m\]\w\[\e[m\]\$ '
-[ -n "$SSH_CLIENT" ] && PS1='\[\e[1;34m\]\W\[\e[1;32m\] SSH\$\[\e[m\] ' || PS1='\[\e[1;34m\]\W\[\e[1;32m\]\$\[\e[m\] '
+[ -n "$SSH_CLIENT" ] && \
+PS1='\n\[\e[1;34m\]\w\[\e[1;32m\]\nSSH\$\[\e[m\] ' || \
+PS1='\n\[\e[1;34m\]\w\[\e[1;32m\]\n\$\[\e[m\] '
 
 [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
