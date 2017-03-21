@@ -12,8 +12,8 @@ set -o notify
 #set -o vi
 trap EC ERR
 [ -n "$SSH_CLIENT" ] && \
-PS1='\n\[\e[1;34m\]\w\[\e[1;32m\]\nSSH\$\[\e[m\] ' || \
-PS1='\n\[\e[1;34m\]\w\[\e[1;32m\]\n\$\[\e[m\] '
+PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]SSH\$\[\e[m\] ' || \
+PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]\$\[\e[m\] '
 
 [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 [ -r ~/.bash_aliases ] && source ~/.bash_aliases
