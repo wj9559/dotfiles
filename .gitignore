@@ -18,3 +18,7 @@ fcitx/*
 !fcitx/conf
 
 .vim/.netrwhist
+
+roxterm.sourceforge.net/*
+!roxterm.sourceforge.net/Global
+!roxterm.sourceforge.net/Profiles/Default

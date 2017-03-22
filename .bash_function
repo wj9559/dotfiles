@@ -31,6 +31,10 @@ cl(){
 	cd "$1" && l
 }
 
+cdd(){
+    cd $(dirname $1)
+}
+
 incognitoshell(){
     if [[ -z $(echo $SHELLOPTS | grep -o history) ]]; then
         set -o history

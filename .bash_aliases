@@ -66,7 +66,7 @@ alias acpi='bDir="/sys/class/power_supply/BAT0";[ -e $bDir ] || bDir="/sys/class
 alias caffeine='xset s off'
 alias trA2a='tr [:upper:] [:lower:]'
 alias tra2A='tr [:lower:] [:upper:]'
-alias ps1='echo -e "\e[01;31m\t `volume`    `backlight`     `acpi`    `date "+%F_%a %T"`\n\e[00;36m `pwd`\e[m "'
+alias ps1='echo -e "\e[01;31m\t `backlight`    `volume`     `acpi`    `date "+%y-%m-%d_%a %T"`\e[m"'
 alias pkgfile='pkgfile -v'
 alias load='uptime | cut -d, -f3- | cut -d" " -f5-'
 alias snapperlist='for name in `ls /etc/snapper/configs/`; do separatedLine;snapper --iso -c $name list;done'
