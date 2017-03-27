@@ -5,8 +5,8 @@ _usage(){
 echo "Usage: volume [options] [value]
 change backlight
   i              info
-  +              add      5%
-  -              subtract 5%
+  +              increase  5%
+  -              decrease  5%
   s              set [value]
   m              toggle mute
   -h, --help     display this help and exit"
@@ -24,12 +24,12 @@ info(){
 amixer | grep -A10 'Master' | sed -rn 's/.*\[([0-9]+%)\].*\[(on|off)\]/\2 \1/p' | sed -n '1p'
 }
 
-add(){
+increase(){
 pactl set-sink-volume 0 +5%
 info
 }
 
-subtract(){
+decrease(){
 pactl set-sink-volume 0 -5%
 info
 }
@@ -46,8 +46,8 @@ info
 
 case ${1:-i} in
 i         ) info;;
-+         ) add;;
--         ) subtract;;
++         ) increase;;
+-         ) decrease;;
 s         ) set $2;;
 m         ) mute;;
 esac

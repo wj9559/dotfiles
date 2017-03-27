@@ -6,3 +6,4 @@
 
 alias ranger-list='ranger -r ~/.config/ranger-list/'
 alias ykdlp='ykdl.py -p smplayer'
+alias chromiumt='chromium --user-data-dir=$HOME/.config/chromium-tmp &>/dev/null &'
