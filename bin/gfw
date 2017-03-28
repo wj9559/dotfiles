@@ -9,9 +9,8 @@ Fuck great fire wall
   info
   toggle (default)
   -h, --help                display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 info(){
 pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"

@@ -17,7 +17,6 @@ simple todo list
   e, --edit            direct edit todo.file
   --clear               clear the todo-list
   other                 add an item to the todo-list"
-exit 0
 }
 
 _remove(){
@@ -34,7 +33,7 @@ _write(){
 
 case ${1} in
 ""             ) echo -e "  h|--help          display help\n" && nl $TODOFILE;;
-h|--help       ) _usage;;
+h|--help       ) _usage;exit;;
 l|--list       ) nl $TODOFILE;;
 s|--show       ) sed -n ${2}p $TODOFILE;;
 r|--remove     ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE;;

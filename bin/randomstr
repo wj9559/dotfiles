@@ -19,9 +19,8 @@ char mode:
           [:print:]    所有可打印字符(包括空格)
           left-hand    左手模式 `12345~!@#$%qwertasdfgzxcvb
           right-hand   右手模式 67890-=^&*()_+yuiop[]\{}|hjkl;:nm,./<>?'
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
  
 LENGTH=${1:-12}
 CHARMODE="${2:-[:alnum:]}"

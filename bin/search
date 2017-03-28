@@ -22,9 +22,8 @@ Quick search in CLI
   e,  elinks               elinks
   w,  w3m                  w3m
   -h, --help               display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 key=$(echo $1 | tr " " "+")
 

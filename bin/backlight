@@ -11,9 +11,8 @@ change backlight
   --            subtract  5%
   s             set [value]
   -h, --help    display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 type -a light &>/dev/null
 if [[ $? != 0 ]];then

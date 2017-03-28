@@ -6,9 +6,8 @@ echo "Usage: bak [filename] ...
 create file.bak, default exec \"$cpmv\".
   -mv           mv filename filename.bak
   -h, --help    display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 if [[ $1 == "-mv" ]]; then
     cpmv=mv

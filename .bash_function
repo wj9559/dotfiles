@@ -423,7 +423,7 @@ hl() {
 #H_COLORS_FG="bold black on_rgb520","bold red on_rgb025"
 #H_COLORS_BG="underline bold rgb520","underline bold rgb025"
     _usage() {
-        echo "usage: YOUR_COMMAND | h [-idn] args...
+        echo "usage: YOUR_COMMAND | hl [-idn] args...
     -i : ignore case
     -d : disable regexp
     -n : invert colors"

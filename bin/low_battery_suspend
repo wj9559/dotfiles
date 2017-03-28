@@ -9,10 +9,9 @@ Usage: low_battery_suspend ['warning' 1-100] ['suspend' 1-'warning']
   Takes a percentage which is compared against the actual battery percentage.
   If the actual battery percentage <= provided percentage, then alert, even suspend the system.
 EOF
-exit
 }
 if [[ -z $1 || $1 -lt 1 || $1 -lt $2 || $1 -gt 100 ]]; then
-  _usage
+  _usage;exit
 fi
 
 low_battery_audio="~/Music/other/android-N-audio/ui/LowBattery.ogg"

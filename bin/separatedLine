@@ -9,10 +9,7 @@ generate separated line
   separator     any, eg: -, =, #, !, \~, \*
   -h, --help    display this help and exit"
 }
-if [[ $1 == "--help" || $1 == "-h" ]]; then
-_usage
-exit
-fi
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 reset_color='\e[0m'
 

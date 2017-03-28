@@ -201,9 +201,9 @@ bindsym $mod+XF86MonBrightnessUp exec --no-startup-id light -A 5
 bindsym $mod+XF86MonBrightnessDown exec --no-startup-id light -U 5
 
 bindsym $mod+Delete exec --no-startup-id $Locker && systemctl suspend
-bindsym Print exec --no-startup-id ~/bin/screenshot root
-bindsym $mod+Print exec --no-startup-id ~/bin/screenshot active
-bindsym $mod+Shift+Print exec --no-startup-id ~/bin/screenshot select
+bindsym Print exec --no-startup-id screenshot root
+bindsym $mod+Print exec --no-startup-id screenshot active
+bindsym $mod+Shift+Print exec --no-startup-id screenshot select
 
 
 # Move to workspace

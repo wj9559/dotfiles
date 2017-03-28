@@ -6,9 +6,8 @@ print the current netspeed
   iface         lo,eno1,wlo1...
   -human         print human readable sizes
   -h, --help    display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 sleeptime="0.1"
 iface=${1:-wlo1}

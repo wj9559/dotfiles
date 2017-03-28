@@ -5,9 +5,8 @@ _usage(){
 echo 'Usage: fuckSpaceInFilename [replace char]
 Fuck Space In Filename, default remove space.
   -h, --help        display this help and exit'
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 replace="$1"
 #for i in $(seq 2); do

@@ -6,9 +6,8 @@ echo "Usage: template [filename.filetype] ...
 create file by template. Templates in ~/Templates
   list [default]
   -h, --help			display this help and exit"
-exit 0
 }
-[[ $1 == "-h" || $1 == "--help" ]] && _usage
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 list(){
 echo "-h, --help,		display this help and exit"
