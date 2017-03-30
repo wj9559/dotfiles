@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 tmp=${TMPDIR-/tmp}/pacman-disowned-$UID-$$
 db=$tmp/db

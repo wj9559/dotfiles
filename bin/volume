@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: volume [options] [value]
+echo "\
+Usage: volume [options] [value]
 change backlight
   i              info
   +              increase  5%

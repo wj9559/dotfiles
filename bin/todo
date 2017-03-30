@@ -8,7 +8,8 @@ if [[ ! -f $TODOFILE ]]; then
 fi
 
 _usage(){
-echo "Usage: todo [todo]
+echo "\
+Usage: todo [todo]
 simple todo list
   h, --help            display this help and exit
   l, --list            display the todo-list

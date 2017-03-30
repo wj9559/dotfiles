@@ -3,7 +3,8 @@
 
 BASEDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 _usage(){
-echo "Usage: gen-chromapp.sh [filename] [URL] [protocol]
+echo "\
+Usage: gen-chromapp.sh [filename] [URL] [protocol]
 gen chromapp
   l, --list    display the chromapp list
   h, --help    display this help and exit"

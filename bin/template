@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: template [filename.filetype] ...
+echo "\
+Usage: template [filename.filetype]...
 create file by template. Templates in ~/Templates
   list [default]
   -h, --help			display this help and exit"
@@ -40,6 +41,8 @@ done
 
 select=${1:-list}
 case $select in
-list      ) list;;
-*         ) createForeach $@;;
+list ) list;;
+*    ) createForeach $@;;
 esac
+echo 1
+

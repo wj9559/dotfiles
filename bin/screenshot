@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 _usage(){
-echo "Usage: screenshot [options]
+echo "\
+Usage: screenshot [options]
 screenshot script for X
   root
   active

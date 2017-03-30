@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: separatedLine [rows] [color] [separator]
+echo "\
+Usage: separatedLine [rows] [color] [separator]
 generate separated line
   rows          number
   color         red, blue, green, yellow, white, black, purple, cyan

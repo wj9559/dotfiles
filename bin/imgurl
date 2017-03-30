@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 _usage(){
-echo "Usage: imgurl [-s] /path/to/file
+echo "\
+Usage: imgurl [-s] /path/to/file
 get url of img.
   -s, --screenshot    use ~/Pictures/Screenshots/last.png
   -h, --help          display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
+[[ $# == 0 ]] && _usage && exit
 
 if [[ $1 == '-s' || $1 == '--screenshot' ]]; then
     img=~/Pictures/Screenshots/last.png
@@ -17,5 +19,4 @@ else
     fi
 fi
 
-res=$(curl -s -F name=@$img https://img.vim-cn.com/)
-echo $res | xclip -selection clipboard
+curl -s -F name=@$img https://img.vim-cn.com

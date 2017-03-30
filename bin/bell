@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: bell [count] [volume]
+echo "\
+Usage: bell [count] [volume]
 bell
   -h, --help   display this help and exit"
 }

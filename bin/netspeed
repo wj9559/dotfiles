@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 _usage(){
-echo "Usage: netspeed [iface] [-human]
+echo "\
+Usage: netspeed [iface] [-human]
 print the current netspeed
   iface         lo,eno1,wlo1...
   -human         print human readable sizes

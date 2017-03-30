@@ -5,8 +5,9 @@
 # $RANDOM
 # $$
 _usage(){
-echo 'Usage: randomstr [LENGTH] [CHARMODE]
-generate random string, default length=12, char_mode=alphabet & digit
+echo "\
+Usage: randomstr [LENGTH] [CHARMODE]
+generate random string, default length=12, char_mode=[:alnum:]
   -h, --help        display this help and exit
 char mode:
           [:digit:]    所有数字
@@ -17,8 +18,8 @@ char mode:
           [:punct:]    所有标点符号
           [:graph:]    所有可打印字符(除了空格)
           [:print:]    所有可打印字符(包括空格)
-          left-hand    左手模式 `12345~!@#$%qwertasdfgzxcvb
-          right-hand   右手模式 67890-=^&*()_+yuiop[]\{}|hjkl;:nm,./<>?'
+          left-hand    左手模式 \`12345~!@#$%qwertasdfgzxcvb
+          right-hand   右手模式 67890-=^&*()_+yuiop[]\{}|hjkl;:nm,./<>?"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
  

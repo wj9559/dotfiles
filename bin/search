@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: search [key] [site] [browser]
+echo "\
+Usage: search [key] [site] [browser]
 Quick search in CLI
   b,  bing     [default]   Bing
   g,  google               Google
@@ -24,6 +25,7 @@ Quick search in CLI
   -h, --help               display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
+[[ $# == 0 ]] && _usage && exit
 
 key=$(echo $1 | tr " " "+")
 

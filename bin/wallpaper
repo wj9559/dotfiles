@@ -1,17 +1,33 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-filepath=~/Pictures/Wallpaper/bing/`date +%Y-%m`/bing_`date +%Y-%m-%d`.jpg
-
-[ -e `dirname $filepath` ] || mkdir -pv `dirname $filepath`
-
-size=`stat -c %s $filepath 2>/dev/null`
-
-if [[ ! -e "$filepath" || $size -lt 40000 ]] ; then
-	xmlUrl="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=zh-CN"
-	picUrl='http://www.bing.com'$(curl -s $xmlUrl | grep -oP "<urlBase>(.*)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)_1366x768.jpg
-	wget --tries=4 -qO $filepath $picUrl
-#	curl -so $filepath $picUrl
+source output.sh
+if ! pingtest; then
+    err Network Unavailable
+    feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
+    exit 2
 fi
 
+resolution=$(xrandr | grep primary | awk '{match($0,"([0-9])*x([0-9])*",a)}END{print a[0]}')
+
+bing(){
+    filepath=~/Pictures/Wallpaper/bing/$(date +%Y-%m)/bing_$(date +%Y-%m-%d).jpg
+	xmlUrl="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=zh-CN"
+	picUrl="http://www.bing.com"$(curl -s $xmlUrl | grep -oP "<urlBase>(.*)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)_$resolution.jpg
+}
+
+unsplash(){
+    category_list=(buildings food nature people technology objects)
+    category="category/"${category_list[$(randomstr 1 012345)]}
+    key=random  #key: random, $category, user/$user, user/$user/likes, daily, weekly
+    #featured="?{KEYWORD},{KEYWORD}"
+    api="https://source.unsplash.com/"$key/$resolution/$featured
+    picUrl="$(curl -sI $api -w %{redirect_url} | tail -n1)"
+    filepath=~/Pictures/Wallpaper/unsplash/$(echo "$picUrl" | grep -oP "photo-\d{13}-.{12}").$resolution.jpg
+}
+
+[ -z $1 ] && unsplash || $1
+
+mkdir -pv $(dirname $filepath)
+wget --no-clobber --tries=4 -qO $filepath $picUrl
 feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png

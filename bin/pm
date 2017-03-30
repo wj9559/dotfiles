@@ -5,7 +5,8 @@ lock(){
 }
 
 _usage(){
-echo "Usage: pm [ l s h r p --help ]
+echo "\
+Usage: pm [ l s h r p --help ]
 Power management
   l,        lock
   s,        suspend (default)

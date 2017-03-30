@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: gfw [on | off | toggle | --help]
+echo "\
+Usage: gfw [on | off | toggle | --help]
 Fuck great fire wall
   on
   off

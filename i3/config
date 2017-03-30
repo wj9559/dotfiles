@@ -216,9 +216,8 @@ assign [class="smplayer|mpv"] $0
 # Layout	边框类型，窗口布局，大小调整，自动移到工作去等，多项定义用,隔开
 # for_window [instance|class|workspace|title|window_role|="gedit|vim"] move container to workspace $WS5, workspace $WS5, layout tabbed, sticky enable
 # for_window [title="x200: ~/work"] floating enable
-for_window [class="VirtualBox"] floating enable, border normal, focus
 for_window [title="force-floating$"] floating enable, border pixel 1, focus
-for_window [workspace="$7|$8|$0"] layout tabbed, border pixel 0, focus
+for_window [workspace="$7|$8|$9|$0"] layout tabbed, border pixel 0, focus
 #for_window [class="Firefox|Chromium|Opera|smplayer|mpv|Atom|Code|Gvim"] border pixel 0, focus
 #for_window [window_role="pop-up"] floating enable
 #for_window [window_role="task_dialog"] floating enable

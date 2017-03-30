@@ -2,9 +2,10 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo 'Usage: fuckSpaceInFilename [replace char]
+echo "\
+Usage: fuckSpaceInFilename [replace char]
 Fuck Space In Filename, default remove space.
-  -h, --help        display this help and exit'
+  -h, --help        display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 

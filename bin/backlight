@@ -2,7 +2,8 @@
 # author: wujian(github.com/wj9559)
 
 _usage(){
-echo "Usage: backlight [options] [value]
+echo "\
+Usage: backlight [options] [value]
 change backlight
   i             info
   +             add 10%

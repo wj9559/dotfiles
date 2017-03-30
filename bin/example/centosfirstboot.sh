@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #################################################
 #   author  huachao
 #   date    2015-12-09

@@ -76,7 +76,7 @@ i3-save-tree-function(){
 tempaliases(){
 	if [[ $1 == e ]]; then
 		vim ~/.bash_aliases.temp
-	else	
+	else
 		source ~/.bash_aliases.temp
 	fi
 }
@@ -103,60 +103,68 @@ done
 [[ $# == 0 ]] && gitpull ~/git
 }
 
-compress(){
+tarc(){
 _usage(){
-echo "Usage: compress [file] [compression_format]
+echo "Usage: tarc [compression_format] [file]...
 compress file to \"file.compression_format\"
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
-local file="${1%/}"
-case $2 in
-    rar          ) rar a     "$file".rar "$file"      ;;
-    zip          ) zip -r    "$file".zip "$file"      ;;
-    7z           ) 7z a      "$file".7z  "$file"      ;;
-    tar          ) tar cf   "$file".tar "$file"      ;;
-    tbz2|tar.bz2 ) tar cjf  "$file".tar.bz2 "$file"  ;;
-    bz2          ) bzip2 -zk "$file"                  ;;
-    tgz|tar.gz   ) tar czf  "$file".tar.gz "$file"   ;;
-    gz           ) gzip -k   "$file"                  ;;
-    tar.Z        ) tar cZf  "$file".tar.Z "$file"    ;;
-    tar.xz       ) tar cJf  "$file".tar.xz "$file"   ;;
-    xz           ) xz -k     "$file"                  ;;
-    *            ) tar czf  "$file".tar.gz "$file"   ;;
+[[ $# == 0 ]] && _usage && return
+local format=$1
+local name="${2%/}"
+if [[ $# > 2 ]]; then
+    name="$name"..$(randomstr 6)
+fi
+shift
+case $format in
+    zip          ) zip -qr    "$name".zip     "$@" ;;
+    rar          ) rar a -idq "$name".rar     "$@" ;;
+    7z           ) 7z a -bso0 "$name".7z      "$@" ;;
+    tar          ) tar -cf    "$name".tar     "$@" ;;
+    tgz |tar.gz  ) tar -czf   "$name".tar.gz  "$@" ;;
+    tbz2|tar.bz2 ) tar -cjf   "$name".tar.bz2 "$@" ;;
+    tar.xz       ) tar -cJf   "$name".tar.xz  "$@" ;;
+    tar.Z        ) tar -cZf   "$name".tar.Z   "$@" ;;
+    gz           ) gzip -k    "$@"                 ;;
+    bz2          ) bzip2 -zk  "$@"                 ;;
+    xz           ) xz -k      "$@"                 ;;
+    *            ) tar -czf   "$name".tar.gz  "$@" ;;
 esac
 }
 
-decompress(){
+tarx(){
 _usage(){
-echo "Usage: decompress [file.compression_format]
+echo "Usage: tarx [file.compression_format]
 decompress \"file.compression_format\"
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+[[ $# == 0 ]] && _usage && return
 local file
-for file in $@; do
-    case $file in
+for (( i = 1; i <= $#; i += 1 )); do
+    eval file=\$$i
+    case "$file" in
         # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
-        *.rar            ) unrar x $file    ;; # rar a     name.rar name
-        *.zip            ) unzip $file      ;; # zip -r    name.zip name
-        *.7z             ) 7z x $file       ;; # 7z a      name.7z  name
-        *.tar            ) tar xvf $file    ;; # tar cvf   name.tar name
-        *.tbz2|*.tar.bz2 ) tar xjvf $file   ;; # tar cjvf  name.tar.bz2 name
-        *.bz2            ) bunzip2 -k $file ;; # bzip2 -zk filename
-        *.tgz|*.tar.gz   ) tar xzvf $file   ;; # tar czvf  name.tar.gz name
-        *.gz             ) gunzip -k $file  ;; # gzip -k   filename
-        *.tar.Z          ) tar xZvf $file   ;; # tar cZvf  name.tar.Z name
-        *.Z              ) uncompress $file ;; # compress  name
-        *.tar.xz         ) tar xJvf $file   ;; # tar cJvf  name.tar.xz name
-        *.xz             ) xz -kd $file     ;; # xz -k     filename
-        *                ) echo "'$file' cannot be extracted via decompress()" ;;
+        *.zip            ) unzip -q     "$file" ;;
+        *.rar            ) unrar x -idq "$file" ;;
+        *.7z             ) 7z x         "$file" ;;
+        *.tar            ) tar -xf      "$file" ;;
+        *.tgz |*.tar.gz  ) tar -xzf     "$file" ;;
+        *.tbz2|*.tar.bz2 ) tar -xjf     "$file" ;;
+        *.tar.xz         ) tar -xJf     "$file" ;;
+        *.tar.Z          ) tar -xZf     "$file" ;;
+        *.gz             ) gunzip -k    "$file" ;;
+        *.bz2            ) bunzip2 -k   "$file" ;;
+        *.xz             ) xz -kd       "$file" ;;
+        *.Z              ) uncompress   "$file" ;;
+        *                ) echo         "$file" cannot be extracted;;
     esac
 done
 }
 
 paclfb(){
-    pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4 
+    pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4
 }
 
 paclfs(){
@@ -278,7 +286,7 @@ linkfind(){
 #find hard    : 文件所在是用--bind挂载的会出错
 local i inode exclude path file="$(realpath "$1")"
 if [[ $(stat --format=%h "$file") == 1 ]]; then
-    echo find symbolic link 
+    echo find symbolic link
     path="${2:-/}"
     find "$path" -path /proc -prune -o -lname "$file" -print
 else
@@ -370,40 +378,6 @@ gz(){
     printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
 
-
-targz(){
-    local tmpFile="${@%/}.tar"
-    tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
-
-    size=$(
-        stat -f"%z" "${tmpFile}" 2> /dev/null; # macOS `stat`
-        stat -c"%s" "${tmpFile}" 2> /dev/null;  # GNU `stat`
-    )
-
-    local cmd
-    if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
-        # the .tar file is smaller than 50 MB and Zopfli is available; use it
-        cmd="zopfli"
-    else
-        if hash pigz 2> /dev/null; then
-            cmd="pigz"
-        else
-            cmd="gzip"
-        fi
-    fi
-
-    echo "Compressing .tar ($((size / 1000)) kB) using \`${cmd}\`…"
-    "${cmd}" -v "${tmpFile}" || return 1
-    [ -f "${tmpFile}" ] && rm "${tmpFile}"
-
-    zippedSize=$(
-        stat -f"%z" "${tmpFile}.gz" 2> /dev/null; # macOS `stat`
-        stat -c"%s" "${tmpFile}.gz" 2> /dev/null; # GNU `stat`
-    )
-
-    echo "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully."
-}
-
 treee(){
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
@@ -468,7 +442,7 @@ hl() {
         done
         IFS="$OLD_IFS"
     else
-        _COLORS_FG=( 
+        _COLORS_FG=(
                 "underline bold red" \
                 "underline bold green" \
                 "underline bold yellow" \
@@ -488,7 +462,7 @@ hl() {
         done
         IFS="$OLD_IFS"
     else
-        _COLORS_BG=(            
+        _COLORS_BG=(
                 "bold on_red" \
                 "bold on_green" \
                 "bold black on_yellow" \

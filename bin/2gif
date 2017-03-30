@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 palette="/tmp/palette.png"
 filters="fps=10,scale=$3:-1:flags=lanczos"
 
 if [ "$#" == "0" ]; then
-	echo "Usage: `basename $0` [source dest compression] {start[hh:mm:ss] duration[ss]}"
+	echo "\
+Usage: `basename $0` [source dest compression] {start[hh:mm:ss] duration[ss]}"
 	echo ""
 	echo "Eg: `basename $0` cat.mp4 cat.gif 400 80"
 	echo "creates cat.gif at 400 pixels using level 80 compression"
