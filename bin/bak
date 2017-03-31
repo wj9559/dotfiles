@@ -11,16 +11,9 @@ create file.bak, default exec \"$cpmv\".
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
 
-if [[ $1 == "-mv" ]]; then
-    cpmv=mv
-    shift
-else
-    cpmv="cp -a"
-fi
-
 _create(){
 var=${1%/}
-$cpmv $var{,.bak} &> /dev/null
+$cpmv "$var"{,.bak} &> /dev/null
 
 if [[ $? -eq 0 ]]; then
 	echo "create '$var.bak'"
@@ -30,9 +23,18 @@ else
 fi
 }
 
+if [[ $1 == "-mv" ]]; then
+    cpmv=mv
+    shift
+else
+    cpmv="cp -a"
+fi
 exitcode=0
-for file in $@; do
-    _create $file
+
+for i in $(seq $#); do
+    file=$1
+    shift
+    _create "$file"
     [[ $? == 2 ]] && let exitcode++
 done
 [[ $exitcode -gt 0 ]] && exit 2 || exit 0

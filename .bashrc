@@ -16,10 +16,12 @@ PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]SSH\$\[\e[m\] ' || \
 PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]\$\[\e[m\] '
 
 [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-[ -r ~/.bash_aliases ] && source ~/.bash_aliases
-[ -r ~/.bash_function ] && source ~/.bash_function
-[ -r /usr/share/autojump/autojump.bash ] && source /usr/share/autojump/autojump.bash
-[ -r /usr/share/doc/pkgfile/command-not-found.bash ] && source /usr/share/doc/pkgfile/command-not-found.bash
+for file in \
+~/.bash_{aliases,function} \
+/usr/share/autojump/autojump.bash \
+/usr/share/doc/pkgfile/command-not-found.bash; do
+    [ -r $file ] && source $file
+done && unset file
 
 export HISTSIZE=-10
 export HISTFILESIZE=-10

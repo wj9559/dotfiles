@@ -113,7 +113,7 @@ compress file to \"file.compression_format\"
 [[ $# == 0 ]] && _usage && return
 local format=$1
 local name="${2%/}"
-if [[ $# > 2 ]]; then
+if [ $# -gt 2 ]; then
     name="$name"..$(randomstr 6)
 fi
 shift
@@ -135,15 +135,16 @@ esac
 
 tarx(){
 _usage(){
-echo "Usage: tarx [file.compression_format]
+echo "Usage: tarx [file.compression_format]...
 decompress \"file.compression_format\"
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
 local file
-for (( i = 1; i <= $#; i += 1 )); do
-    eval file=\$$i
+for i in $(seq $#); do
+    file=$1
+    shift
     case "$file" in
         # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
         *.zip            ) unzip -q     "$file" ;;
@@ -158,7 +159,7 @@ for (( i = 1; i <= $#; i += 1 )); do
         *.bz2            ) bunzip2 -k   "$file" ;;
         *.xz             ) xz -kd       "$file" ;;
         *.Z              ) uncompress   "$file" ;;
-        *                ) echo         "$file" cannot be extracted;;
+        *                ) echo         "$file" cannot be extracted >&2 ;;
     esac
 done
 }
@@ -204,27 +205,12 @@ execution the command after entering the parameter
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
-local i KEY
-for i in $(seq 1 $#); do
-    if [[ "$(eval echo \$$i)" == "[KEY]" ]]; then
-        local index=$i
-    fi
+local KEY
+while true; do
+    echo -ne '\e[1;32m'$@' \e[0m'
+    read KEY
+    eval $@ $KEY
 done
-if [ ! -z $index ];then
-    local a_index=$(expr $index + 1)
-    local b_index=$(expr $index - 1)
-    while true; do
-        echo -ne '\e[1;32m'${@:1:$b_index} [KEY] ${@:$a_index:$#}' \e[0m'
-        read KEY
-        eval ${@:1:$b_index} $KEY ${@:$a_index:$#}
-    done
-else
-    while true; do
-        echo -ne '\e[1;32m'$@' \e[0m'
-        read KEY
-        eval $@ $KEY
-    done
-fi
 }
 
 loop(){

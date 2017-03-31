@@ -8,7 +8,6 @@ bell
   -h, --help   display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
-#for i in $@; do [[ $i == '--help' || $i == '-h' ]] && _exit;done
 
 COUNT=$(expr ${1:-1} \- 1)
 PLAYER=play
