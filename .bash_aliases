@@ -86,3 +86,4 @@ type git &>/dev/null && alias diff='git diff --no-index --color-words'
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias tracepath=mtr
 alias xclipc='xclip -selection clipboard'
+alias chromiumt='chromium --user-data-dir=$HOME/.config/chromium-tmp &>/dev/null &'

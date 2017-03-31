@@ -4,7 +4,7 @@
 #
 
 EC(){
-    printf "\e[01;33m%3d\e[m "
+    printf " \e[01;33m"%3.d"\e[m " $?
 }
 
 calc(){
