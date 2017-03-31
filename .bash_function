@@ -4,7 +4,7 @@
 #
 
 EC(){
-    echo -ne '\e[01;33m'$?'\e[m'
+    printf "\e[01;33m%3d\e[m "
 }
 
 calc(){
@@ -105,7 +105,8 @@ done
 
 tarc(){
 _usage(){
-echo "Usage: tarc [compression_format] [file]...
+echo "\
+Usage: tarc [compression_format] [file]...
 compress file to \"file.compression_format\"
   -h, --help            display this help and exit"
 }
@@ -135,7 +136,8 @@ esac
 
 tarx(){
 _usage(){
-echo "Usage: tarx [file.compression_format]...
+echo "\
+Usage: tarx [file.compression_format]...
 decompress \"file.compression_format\"
   -h, --help            display this help and exit"
 }
@@ -199,28 +201,41 @@ gitup(){
 
 insh(){
 _usage(){
-echo "Usage: insh [command]
+echo 'Usage: insh [command]...
 execution the command after entering the parameter
-  [KEY]                 Specify a placeholder
-  -h, --help            display this help and exit"
+  \${KEY}               specify a placeholder
+  -h, --help            display this help and exit'
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+[[ $# == 0 ]] && _usage && return
 local KEY
-while true; do
-    echo -ne '\e[1;32m'$@' \e[0m'
-    read KEY
-    eval $@ $KEY
-done
+if [[ "$*" == *\$KEY* ]]; then
+    while true; do
+        echo -ne '\e[1;32m'$@' \e[0m'
+        read -e KEY
+        eval $@
+        separatedLine
+    done
+else
+    while true; do
+        echo -ne '\e[1;32m'$@' \e[0m'
+        read -e KEY
+        eval $@ $KEY
+        separatedLine
+    done
+fi
 }
 
 loop(){
 _usage(){
-echo "Usage: loop [count] -s[sleep-time] [command]...
+echo "\
+Usage: loop [count] -s[sleep-time] [command]...
 loop execution the command
   -s[sleep-time]        after sleep time execution command,default 0
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
+[[ $# == 0 ]] && _usage && return
 if [[ "$2" == -s* ]]; then
     local sleeptime=$(echo $2 | cut -c 3-)
     for i in $(seq $1); do

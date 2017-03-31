@@ -1,7 +1,52 @@
 [user]
 	name = wujian
 	email = 9559wj@gmail.com
+
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	l = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    s = status --short
+    ca = !git add --all && git commit --all --verbose
+
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+
+    # Show the diff between the latest commit and the current state
+    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+    di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
 [core]
 	editor = vim
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[diff]
+    indentHeuristic = true
+[diff "bin"]
+    textconv = hexdump -v -C
+
+[help]
+    autocorrect = 1
+
+# URL shorthands
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+    insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"

@@ -17,7 +17,7 @@ PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]\$\[\e[m\] '
 
 [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 for file in \
-~/.bash_{aliases,function} \
+~/.bash_{aliases,function,prompt} \
 /usr/share/autojump/autojump.bash \
 /usr/share/doc/pkgfile/command-not-found.bash; do
     [ -r $file ] && source $file

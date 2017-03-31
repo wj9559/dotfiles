@@ -36,7 +36,6 @@ for i in $@; do
 create $i
 [[ $? == 2 ]] && let exitcode++
 done
-[[ $exitcode -gt 0 ]] && exit 2 || exit 0
 }
 
 select=${1:-list}
@@ -44,5 +43,9 @@ case $select in
 list ) list;;
 *    ) createForeach $@;;
 esac
-echo 1
 
+if [[ $exitcode -gt 0 ]]; then
+    exit 2
+elif [[ $# == 1 ]]; then
+    rifle $1
+fi

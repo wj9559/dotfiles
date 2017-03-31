@@ -3,31 +3,38 @@
 
 source output.sh
 if ! pingtest; then
-    err Network Unavailable
+    warn Network Unavailable
     feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
     exit 2
 fi
 
 resolution=$(xrandr | grep primary | awk '{match($0,"([0-9])*x([0-9])*",a)}END{print a[0]}')
+wallpaperDir=~/Pictures/Wallpaper
 
 bing(){
-    filepath=~/Pictures/Wallpaper/bing/$(date +%Y-%m)/bing_$(date +%Y-%m-%d).jpg
+    filepath=$wallpaperDir/bing/$(date +%Y-%m)/bing_$(date +%Y-%m-%d).jpg
 	xmlUrl="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=zh-CN"
 	picUrl="http://www.bing.com"$(curl -s $xmlUrl | grep -oP "<urlBase>(.*)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)_$resolution.jpg
 }
 
 unsplash(){
-    category_list=(buildings food nature people technology objects)
-    category="category/"${category_list[$(randomstr 1 012345)]}
+    categoryList=(buildings food nature people technology objects)
+    category="category/"${categoryList[$(randomstr 1 012345)]}
     key=random  #key: random, $category, user/$user, user/$user/likes, daily, weekly
     #featured="?{KEYWORD},{KEYWORD}"
     api="https://source.unsplash.com/"$key/$resolution/$featured
     picUrl="$(curl -sI $api -w %{redirect_url} | tail -n1)"
-    filepath=~/Pictures/Wallpaper/unsplash/$(echo "$picUrl" | grep -oP "photo-\d{13}-.{12}").$resolution.jpg
+    picName=$(echo "$picUrl" | cut -d/ -f4- | cut -d? -f1 | tr / -)
+    filepath=$wallpaperDir/unsplash/$picName.$resolution.jpg
 }
 
-[ -z $1 ] && unsplash || $1
+case ${1:-unsplash} in
+-rm      ) rm $(realpath $wallpaperDir/last.png);unsplash ;;
+bing     ) bing ;;
+unsplash ) unsplash ;;
+esac
 
 mkdir -pv $(dirname $filepath)
 wget --no-clobber --tries=4 -qO $filepath $picUrl
 feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
+ln -srf $filepath $wallpaperDir/last.png

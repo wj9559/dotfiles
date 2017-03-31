@@ -23,7 +23,7 @@ simple todo list
 _remove(){
     nl $TODOFILE
     printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
-    read -p "Type a number to remove: " number
+    read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
     sed -i ${number}d $TODOFILE
 }
 

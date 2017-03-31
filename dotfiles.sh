@@ -10,6 +10,7 @@ $lncp $BASEDIR/.bash_aliases ~/
 $lncp $BASEDIR/.bash_aliases.temp ~/
 $lncp $BASEDIR/.bash_function ~/
 $lncp $BASEDIR/.bash_profile ~/
+$lncp $BASEDIR/.bash_prompt ~/
 $lncp $BASEDIR/.bashrc ~/
 $lncp $BASEDIR/.dircolors ~/
 $lncp $BASEDIR/.fbtermrc ~/
