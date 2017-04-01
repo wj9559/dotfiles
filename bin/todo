@@ -6,6 +6,7 @@ TODOFILE=~/.todo
 if [[ ! -f $TODOFILE ]]; then
     touch $TODOFILE
 fi
+sed -i "/^$/d" $TODOFILE
 
 _usage(){
 echo "\
@@ -15,30 +16,33 @@ simple todo list
   l, --list            display the todo-list
   s, --show   [line]   display the specified row in the todo-list
   r, --remove [line]   remove an item from the todo-list
-  e, --edit            direct edit todo.file
-  --clear               clear the todo-list
-  other                 add an item to the todo-list"
+  e, --edit            direct edit $TODOFILE
+  --clear              clear the todo-list
+  other                add an item to the todo-list"
 }
 
 _remove(){
     nl $TODOFILE
     printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
-    read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
-    sed -i ${number}d $TODOFILE
+    #read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
+    #sed -i ${number}d $TODOFILE
+    read -p "Type any number to remove (delim:' '): " numbers
+    for number in $numbers; do
+        sed -i ${number}'c\\' $TODOFILE
+    done
 }
 
 _write(){
     printf "%s\n" "$*" >> $TODOFILE
-    sed -i "/^$/d" $TODOFILE
 }
 
 case ${1} in
-""             ) echo -e "  h|--help          display help\n" && nl $TODOFILE;;
-h|--help       ) _usage;exit;;
-l|--list       ) nl $TODOFILE;;
-s|--show       ) sed -n ${2}p $TODOFILE;;
-r|--remove     ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE;;
-e|--edit       ) ${EDITOR:-nano} $TODOFILE;;
---clear        ) > $TODOFILE;;
-*              ) _write $*;;
+""         ) echo -e "  h|--help          display help\n" && $0 --list ;;
+h|--help   ) _usage;exit ;;
+l|--list   ) nl $TODOFILE ;;
+s|--show   ) sed -n ${2}p $TODOFILE ;;
+r|--remove ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE ;;
+e|--edit   ) ${EDITOR:-nano} $TODOFILE ;;
+--clear    ) > $TODOFILE ;;
+*          ) _write "$*" ;;
 esac

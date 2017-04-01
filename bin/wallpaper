@@ -1,6 +1,35 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
+_usage(){
+echo "\
+Usage: wallpaper [OPTION] [unsplash OPTION]
+use feh set desktop wallpaper
+[OPTION]
+  bing          daily wallpaper with bing
+  unsplash      wallpaper with unsplash (default)
+  -rm           remove the latest one wallpaper and exec unsplash
+  -h, --help    display this help and exit
+
+[unsplash OPTION] if [OPTION] = unsplash or -rm
+  category:  buildings, food, nature(default), people, technology, objects
+  user    :  user, user/likes   (change userList to what you need !!!)
+  key     :  random, daily, weekly
+  collection: COLLECTION-ID, eg. 190727
+NOT SUPPORT category/daily, user/daily, category/weekly, user/weekly
+            daily and weekly can't specify a size
+
+example:
+  wallpaper                     # unsplash random nature
+  wallpaper bing                # bing
+  wallpaper unsplash food       # unsplash random food
+  wallpaper unsplash daily      # unsplash random from daily
+  wallpaper unsplash random     # unsplash random from a category
+  wallpaper unsplash 190727     # unsplash random from collection 190727 
+  wallpaper unsplash user/likes # unsplash random from specific user likes"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
+
 source output.sh
 if ! pingtest; then
     warn Network Unavailable
@@ -18,20 +47,39 @@ bing(){
 }
 
 unsplash(){
-    categoryList=(buildings food nature people technology objects)
-    category="category/"${categoryList[$(randomstr 1 012345)]}
-    key=random  #key: random, $category, user/$user, user/$user/likes, daily, weekly
+    # change userList to what you need !!!
+    userList=(erondu jackie)
+
+    user="user/"${userList[$(( $RANDOM % ${#userList[@]} ))]}
+    category=(buildings food nature people technology objects)
+
+    if [[ ${category[@]} == *$1* ]]; then
+        key="category/${1:-nature}"
+    elif [[ $1 == user* ]]; then
+        key=$(eval echo \$$1)
+    elif [[ $1 =~ ^[0-9]+$ ]]; then
+        key="collection/$1"
+    elif [[ $1 == random ]]; then
+        key=$1
+    else
+        key=$1
+        unset resolution
+    fi
+
     #featured="?{KEYWORD},{KEYWORD}"
     api="https://source.unsplash.com/"$key/$resolution/$featured
+
     picUrl="$(curl -sI $api -w %{redirect_url} | tail -n1)"
     picName=$(echo "$picUrl" | cut -d/ -f4- | cut -d? -f1 | tr / -)
+    #picID=$(curl -s https://unsplash.com/search/$picName | grep -oP "photo=\w+" | cut -d= -f2 | head -n1)
     filepath=$wallpaperDir/unsplash/$picName.$resolution.jpg
 }
 
-case ${1:-unsplash} in
--rm      ) rm $(realpath $wallpaperDir/last.png);unsplash ;;
+case $1 in
+-rm      ) rm $(realpath $wallpaperDir/last.png);unsplash $2 ;;
 bing     ) bing ;;
-unsplash ) unsplash ;;
+unsplash ) unsplash $2 ;;
+*        ) unsplash $1 ;;
 esac
 
 mkdir -pv $(dirname $filepath)
