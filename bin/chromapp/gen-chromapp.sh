@@ -2,7 +2,7 @@
 # author: wujian(github.com/wj9559)
 
 BASEDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-_usage(){
+_usage() {
 echo "\
 Usage: gen-chromapp.sh [filename] [URL] [protocol]
 gen chromapp

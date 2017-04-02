@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: bell [count] [volume]
 bell
@@ -12,21 +12,21 @@ bell
 COUNT=$(expr ${1:-1} \- 1)
 PLAYER=play
 
-_bell(){
+_bell() {
 $PLAYER /usr/share/sounds/freedesktop/stereo/complete.oga repeat $COUNT &>/dev/null
 }
 
-_get_volume(){
+_get_volume() {
 STATE=$(volume | grep -o "on\|off")
 VOLUME=$(volume | grep -Po "\d+")
 }
-_set_volume(){
+_set_volume() {
 volume s $1
 if [[ $STATE == 'off' ]];then
 volume m
 fi
 }
-_restore_volume(){
+_restore_volume() {
 volume s $VOLUME
 if [[ $STATE == 'off' ]];then
 volume m

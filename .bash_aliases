@@ -60,7 +60,6 @@ alias yaoi='yaourt -Si'
 alias usetips='vless ~/backup/useTips'
 alias errors="journalctl --priority=0..3 --catalog -n"
 alias uninterruptibleSleep='ps -eo stat,args | grep "^D"'
-#alias ipaddress="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }';echo;curl -s ipinfo.io/ip"
 alias ipaddress="ifconfig -a | grep 'inet6\?' | awk '{print \$2}';echo;curl -s ipinfo.io/ip"
 alias websiteget='wget -Erkp --no-parent --random-wait -U mozilla'
 alias acpi='bDir="/sys/class/power_supply/BAT0";[ -e $bDir ] || bDir="/sys/class/power_supply/BAT1";echo $(cat $bDir/status)\ $(cat $bDir/capacity)%;unset bDir'

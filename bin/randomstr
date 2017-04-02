@@ -4,7 +4,7 @@
 # DATE=$(date +%Y%m%d%H%M%S)
 # $RANDOM
 # $$
-_usage(){
+_usage() {
 echo "\
 Usage: randomstr [LENGTH] [CHARMODE]
 generate random string, default length=12, char_mode=[:alnum:]

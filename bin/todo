@@ -2,13 +2,10 @@
 # author: wujian(github.com/wj9559)
 
 TODOFILE=~/.todo
-
-if [[ ! -f $TODOFILE ]]; then
-    touch $TODOFILE
-fi
+touch $TODOFILE
 sed -i "/^$/d" $TODOFILE
 
-_usage(){
+_usage() {
 echo "\
 Usage: todo [todo]
 simple todo list
@@ -21,7 +18,7 @@ simple todo list
   other                add an item to the todo-list"
 }
 
-_remove(){
+_remove() {
     nl $TODOFILE
     printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
     #read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
@@ -32,7 +29,7 @@ _remove(){
     done
 }
 
-_write(){
+_write() {
     printf "%s\n" "$*" >> $TODOFILE
 }
 

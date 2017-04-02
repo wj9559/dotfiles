@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_usage(){
+_usage() {
 echo "\
 Usage: imgurl [-s] /path/to/file
 get url of img.

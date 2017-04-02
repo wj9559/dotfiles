@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: volume [options] [value]
 change backlight
@@ -20,26 +20,26 @@ if [[ $? != 0 ]];then
     exit 1
 fi
 
-info(){
+info() {
 amixer | grep -A10 'Master' | sed -rn 's/.*\[([0-9]+%)\].*\[(on|off)\]/\2 \1/p' | sed -n '1p'
 }
 
-increase(){
+increase() {
 pactl set-sink-volume 0 +5%
 info
 }
 
-decrease(){
+decrease() {
 pactl set-sink-volume 0 -5%
 info
 }
 
-set(){
+set() {
 pactl set-sink-volume 0 $1%
 info
 }
 
-mute(){
+mute() {
 pactl set-sink-mute 0 toggle
 info
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: wallpaper [OPTION] [unsplash OPTION]
 use feh set desktop wallpaper
@@ -40,13 +40,13 @@ fi
 resolution=$(xrandr | grep primary | awk '{match($0,"([0-9])*x([0-9])*",a)}END{print a[0]}')
 wallpaperDir=~/Pictures/Wallpaper
 
-bing(){
+bing() {
     filepath=$wallpaperDir/bing/$(date +%Y-%m)/bing_$(date +%Y-%m-%d).jpg
 	xmlUrl="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=zh-CN"
 	picUrl="http://www.bing.com"$(curl -s $xmlUrl | grep -oP "<urlBase>(.*)</urlBase>" | cut -d ">" -f 2 | cut -d "<" -f 1)_$resolution.jpg
 }
 
-unsplash(){
+unsplash() {
     # change userList to what you need !!!
     userList=(erondu jackie)
 

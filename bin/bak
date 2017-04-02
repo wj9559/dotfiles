@@ -1,22 +1,30 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+#mv file.bak file ${file%.*}
+
+cpmv="cp -a"
+_usage() {
 echo "\
-Usage: bak [file]...
-create file.bak, default exec \"$cpmv\".
-  -mv           mv filename filename.bak
+Usage: bak [OPTION] SOURCE...
+create SOURCE.bak, default exec \"$cpmv SOURCE...\".
+  -mv           mv SOURCE SOURCE.bak
+
+  -P            bak the SOURCE on the physical directory
+  -H            follow symbolic links in SOURCE
+  -L            always follow symbolic links in SOURCE
+
   -h, --help    display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
 
-_create(){
+_create() {
 var=${1%/}
-$cpmv "$var"{,.bak} &> /dev/null
+$cpmv "$var" "$var.bak" &> /dev/null
 
 if [[ $? -eq 0 ]]; then
-	echo "create '$var.bak'"
+	echo create "'$var.bak'"
 else
 	echo "bak: cannot access '$1': No such file or directory" >&2
 	return 2
@@ -26,15 +34,32 @@ fi
 if [[ $1 == "-mv" ]]; then
     cpmv=mv
     shift
-else
-    cpmv="cp -a"
 fi
+if [[ $1 == "-H" ]]; then
+    cpmv="$cpmv -Hr"
+    shift
+elif [[ $1 == "-L" ]]; then
+    cpmv="$cpmv -Lr"
+    shift
+fi
+
 exitcode=0
 
-for i in $(seq $#); do
-    file=$1
+if [[ $1 == "-P" ]]; then
     shift
-    _create "$file"
-    [[ $? == 2 ]] && let exitcode++
-done
-[[ $exitcode -gt 0 ]] && exit 2 || exit 0
+    for i in $(seq $#); do
+        file=$(realpath "$1")
+        shift
+        _create "$file"
+        [[ $? == 2 ]] && let exitcode++
+    done
+else
+    for i in $(seq $#); do
+        file=$1
+        shift
+        _create "$file"
+        [[ $? == 2 ]] && let exitcode++
+    done
+fi
+
+exit $exitcode

@@ -2,7 +2,7 @@
 
 # virtualbox will get battery info when running, acpi process becomes uninterruptible sleep.
 pidof VirtualBox &>/dev/null && exit 2
-_usage(){
+_usage() {
   cat << EOF
 Usage: low_battery_suspend ['warning' 1-100] ['suspend' 1-'warning']
 

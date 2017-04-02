@@ -8,7 +8,7 @@
 
 flagFile="/root/centos6-init.executed"
 
-precheck(){
+precheck() {
 
     if [[ "$(whoami)" != "root" ]]; then
     echo "please run this script as root ." >&2
@@ -32,23 +32,23 @@ precheck(){
     
 }
 
-yum_update(){
+yum_update() {
     yum -y update
     #update system at 5:40pm daily
     echo "40 3 * * * root yum -y update && yum clean packages" >> /etc/crontab
 }
 
-permission_config(){
+permission_config() {
     #chattr +i /etc/shadow
     #chattr +i /etc/passwd
 }
 
-selinux(){
+selinux() {
     sed -i 's/SELINUX=disabled/SELINUX=enforcing/g' /etc/sysconfig/selinux
     setenforce 1
 }
 
-stop_services(){
+stop_services() {
     for server in `chkconfig --list |grep 3:on|awk '{print $1}'`
     do
         chkconfig --level 3 $server off
@@ -60,7 +60,7 @@ stop_services(){
     done
 }
 
-limits_config(){
+limits_config() {
 cat >> /etc/security/limits.conf <<EOF
 * soft nproc 65535
 * hard nproc 65535
@@ -70,7 +70,7 @@ EOF
 echo "ulimit -SH 65535" >> /etc/rc.local
 }
 
-sysctl_config(){
+sysctl_config() {
 sed -i 's/net.ipv4.tcp_syncookies.*$/net.ipv4.tcp_syncookies = 1/g' /etc/sysctl.conf
 sed -i 's/net.ipv4.ip_forward.*$/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf
 cat >> /etc/sysctl.conf <<EOF
@@ -93,7 +93,7 @@ EOF
 sysctl -p
 }
 
-sshd_config(){
+sshd_config() {
     if [ ! -f "/root/.ssh/id_rsa.pub" ]; then
     ssh-keygen -t rsa -P '' -f /root/.ssh/id_rsa
     cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
@@ -108,7 +108,7 @@ sshd_config(){
     /etc/init.d/sshd restart
 }
 
-time_config(){
+time_config() {
     #timezone
     echo "TZ='Asia/Shanghai'; export TZ" >> /etc/profile
 
@@ -122,7 +122,7 @@ time_config(){
     /sbin/service crond restart
 }
 
-iptables(){
+iptables() {
 cat > /etc/sysconfig/iptables << EOF
 # Firewall configuration written by system-config-securitylevel
 # Manual customization of this file is not recommended.
@@ -147,7 +147,7 @@ EOF
 source /etc/profile
 }
 
-other(){
+other() {
     # initdefault
     sed -i 's/^id:.*$/id:3:initdefault:/' /etc/inittab
     /sbin/init q
@@ -159,7 +159,7 @@ other(){
     sed -i '4a auth        required      pam_tally2.so deny=5 unlock_time=180' /etc/pam.d/system-auth
 }
 
-vsftpd_setup(){
+vsftpd_setup() {
     yum -y install vsftpd
     mv /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
     touch /etc/vsftpd/chroot_list
@@ -208,7 +208,7 @@ EOF
     service vsftpd restart
 }
  
-main(){
+main() {
     precheck
     
     printf "\033[32m================%40s================\033[0m\n" "updating the system            "

@@ -3,23 +3,23 @@
 # ~/.bash_function
 #
 
-EC(){
+EC() {
     printf " \e[01;33m"%3.d"\e[m " $?
 }
 
-calc(){
+calc() {
     python3 -c "print($*)"
 #    echo "scale=3;$@" | bc -l
 }
 
-yis(){
+yis() {
     yi -s "$(echo "$*" | tr '\n' ' ')"
 }
-mkcd(){
+mkcd() {
 	mkdir "$@" && cd "$_"
 }
 
-alarm(){
+alarm() {
 	date +%F_%T
 	sleep ${1}m
 	espeak "$1 miutes" &>/dev/null
@@ -27,15 +27,15 @@ alarm(){
 	bell 4
 }
 
-cl(){
+cl() {
 	cd "$1" && l
 }
 
-cdd(){
+cdd() {
     cd $(dirname $1)
 }
 
-incognitoshell(){
+incognitoshell() {
     if [[ -z $(echo $SHELLOPTS | grep -o history) ]]; then
         set -o history
         echo -e incognito: '\e[1;33m'off
@@ -45,7 +45,7 @@ incognitoshell(){
     fi
 }
 
-proxyshell(){
+proxyshell() {
     if [[ $http_proxy == 127.0.0.1:8787 ]]; then
         unset http_proxy && unset https_proxy
         echo -e proxy: '\e[1;33m'off
@@ -55,7 +55,7 @@ proxyshell(){
     fi
 }
 
-langswitch(){
+langswitch() {
 	if [[ $LANG == zh_CN.UTF-8 ]]; then
 		export LANGUAGE=en_US && export LANG=en_US.UTF-8
 		echo -e language: '\e[1;33m'en
@@ -65,15 +65,15 @@ langswitch(){
 	fi
 }
 
-new(){
+new() {
 	roxterm -e bash -c "$1;exec bash" &>/dev/null
 }
 
-i3-save-tree-function(){
+i3-save-tree-function() {
 	i3-save-tree --workspace $1 | tail -n +2 | fgrep -v "// splitv" | fgrep -v "// splith" | fgrep -v "// tabbed" | sed "s|//||g" > ~/.config/i3/workspace-$1.json
 }
 
-tempaliases(){
+tempaliases() {
 	if [[ $1 == e ]]; then
 		vim ~/.bash_aliases.temp
 	else
@@ -81,7 +81,7 @@ tempaliases(){
 	fi
 }
 
-ffmpegcut(){
+ffmpegcut() {
 	if [[ $# -ne 3 ]]; then
 		echo "ffmpegCut [start] [second] [filename]"
 	else
@@ -90,7 +90,7 @@ ffmpegcut(){
 	fi
 }
 
-gitpull(){
+gitpull() {
 local gitdir gitrepo
 for gitdir in $@; do
 	for gitrepo in `ls -p $gitdir | grep "/$"`; do
@@ -103,8 +103,8 @@ done
 [[ $# == 0 ]] && gitpull ~/git
 }
 
-tarc(){
-_usage(){
+tarc() {
+_usage() {
 echo "\
 Usage: tarc [compression_format] [file]...
 compress file to \"file.compression_format\"
@@ -113,29 +113,29 @@ compress file to \"file.compression_format\"
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
 local format=$1
-local name="${2%/}"
+local name=${2%/}
 if [ $# -gt 2 ]; then
-    name="$name"..$(randomstr 6)
+    name=$name-$(randomstr 6)
 fi
 shift
 case $format in
-    zip          ) zip -qr    "$name".zip     "$@" ;;
-    rar          ) rar a -idq "$name".rar     "$@" ;;
-    7z           ) 7z a -bso0 "$name".7z      "$@" ;;
-    tar          ) tar -cf    "$name".tar     "$@" ;;
-    tgz |tar.gz  ) tar -czf   "$name".tar.gz  "$@" ;;
-    tbz2|tar.bz2 ) tar -cjf   "$name".tar.bz2 "$@" ;;
-    tar.xz       ) tar -cJf   "$name".tar.xz  "$@" ;;
-    tar.Z        ) tar -cZf   "$name".tar.Z   "$@" ;;
+    zip          ) zip -qr    "$name".$format "$@" ;;
+    rar          ) rar a -idq "$name".$format "$@" ;;
+    7z           ) 7z a -bso0 "$name".$format "$@" ;;
+    tar          ) tar -cf    "$name".$format "$@" ;;
+    tgz |tar.gz  ) tar -czf   "$name".$format "$@" ;;
+    tbz2|tar.bz2 ) tar -cjf   "$name".$format "$@" ;;
+    tar.xz       ) tar -cJf   "$name".$format "$@" ;;
+    tar.Z        ) tar -cZf   "$name".$format "$@" ;;
     gz           ) gzip -k    "$@"                 ;;
-    bz2          ) bzip2 -zk  "$@"                 ;;
-    xz           ) xz -k      "$@"                 ;;
+    bz2          ) bzip2 -kz  "$@"                 ;;
+    xz           ) xz -kz     "$@"                 ;;
     *            ) tar -czf   "$name".tar.gz  "$@" ;;
 esac
 }
 
-tarx(){
-_usage(){
+tarx() {
+_usage() {
 echo "\
 Usage: tarx [file.compression_format]...
 decompress \"file.compression_format\"
@@ -147,34 +147,38 @@ local file
 for i in $(seq $#); do
     file=$1
     shift
+    mkcd "$file".tarx
     case "$file" in
         # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
-        *.zip            ) unzip -q     "$file" ;;
-        *.rar            ) unrar x -idq "$file" ;;
-        *.7z             ) 7z x         "$file" ;;
-        *.tar            ) tar -xf      "$file" ;;
-        *.tgz |*.tar.gz  ) tar -xzf     "$file" ;;
-        *.tbz2|*.tar.bz2 ) tar -xjf     "$file" ;;
-        *.tar.xz         ) tar -xJf     "$file" ;;
-        *.tar.Z          ) tar -xZf     "$file" ;;
-        *.gz             ) gunzip -k    "$file" ;;
-        *.bz2            ) bunzip2 -k   "$file" ;;
-        *.xz             ) xz -kd       "$file" ;;
-        *.Z              ) uncompress   "$file" ;;
+        *.zip            ) unzip -q     ../"$file" ;;
+        *.rar            ) unrar x -idq ../"$file" ;;
+        *.7z             ) 7z x         ../"$file" ;;
+        *.tar            ) tar -xf      ../"$file" ;;
+        *.tgz |*.tar.gz  ) tar -xzf     ../"$file" ;;
+        *.tbz2|*.tar.bz2 ) tar -xjf     ../"$file" ;;
+        *.tar.xz         ) tar -xJf     ../"$file" ;;
+        *.tar.Z          ) tar -xZf     ../"$file" ;;
+        *.gz             ) gzip -kd     ../"$file" ;;
+        *.bz2            ) bzip2 -kd    ../"$file" ;;
+        *.xz             ) xz -kd       ../"$file" ;;
+        *.Z              ) uncompress   ../"$file" ;;
         *                ) echo         "$file" cannot be extracted >&2 ;;
     esac
+    cd ../
+    rmdir --ignore-fail-on-non-empty "$file".tarx
+    separatedLine
 done
 }
 
-paclfb(){
+paclfb() {
     pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4
 }
 
-paclfs(){
+paclfs() {
     pacman -Ql $1 | grep -Ee "\.service$" -e "\.socket$" -e "\.timer$" | cut -d" " -f2
 }
 
-gpg-verify(){
+gpg-verify() {
     local sig=$1
     local gpg=$2.gpg
     local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
@@ -186,11 +190,11 @@ gpg-verify(){
     gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
 }
 
-you-get-play(){
+you-get-play() {
     you-get --format=mp4 --player ${2:-smplayer} "$1" || you-get --player ${2:-smplayer} "$1"
 }
 
-gitup(){
+gitup() {
     local commitMessage="timeline"
     [[ -n "$1" ]] && commitMessage="$1"
 
@@ -199,8 +203,8 @@ gitup(){
     git push
 }
 
-insh(){
-_usage(){
+insh() {
+_usage() {
 echo 'Usage: insh [command]...
 execution the command after entering the parameter
   \${KEY}               specify a placeholder
@@ -209,7 +213,7 @@ execution the command after entering the parameter
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
 local KEY
-if [[ "$*" == *\$KEY* ]]; then
+if [[ "$*" == *\${KEY}* ]]; then
     while true; do
         echo -ne '\e[1;32m'$@' \e[0m'
         read -e KEY
@@ -226,8 +230,8 @@ else
 fi
 }
 
-loop(){
-_usage(){
+loop() {
+_usage() {
 echo "\
 Usage: loop [count] -s[sleep-time] [command]...
 loop execution the command
@@ -253,12 +257,12 @@ else
 fi
 }
 
-aliased(){
+aliased() {
     local aliasStr=$(type $1 | cut -d\` -f2)
     echo ${aliasStr%\'*}
 }
 
-shacheck(){
+shacheck() {
 local CMD BYTE=$(echo -n $2 | wc -c)
 case $BYTE in
 32  ) CMD=md5sum   ;;
@@ -272,7 +276,7 @@ esac
 $CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $1: FAILED
 }
 
-ifdown(){
+ifdown() {
 while true; do
     if [[ ! $(pidof $1) ]]; then
         bell 2
@@ -282,7 +286,7 @@ while true; do
 done
 }
 
-linkfind(){
+linkfind() {
 #find symbolic: 只能找到目标(target)是文件的实际路径(realpath)的
 #find hard    : 文件所在是用--bind挂载的会出错
 local i inode exclude path file="$(realpath "$1")"
@@ -303,7 +307,7 @@ fi
 }
 
 # Syntax-highlight JSON strings or files
-json(){
+json() {
     if [ -t 0 ]; then # argument
         python -mjson.tool <<< "$*" | pygmentize -l javascript
     else # pipe
@@ -312,7 +316,7 @@ json(){
 }
 
 # UTF-8-encode a string of Unicode symbols
-escape(){
+escape() {
     printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
     # print a newline unless we’re piping the output to another program
     if [ -t 1 ]; then
@@ -321,7 +325,7 @@ escape(){
 }
 
 # Decode \x{ABCD}-style Unicode escape sequences
-unidecode(){
+unidecode() {
     perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
     # print a newline unless we’re piping the output to another program
     if [ -t 1 ]; then
@@ -329,7 +333,7 @@ unidecode(){
     fi
 }
 
-codepoint(){
+codepoint() {
     perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
     # print a newline unless we’re piping the output to another program
     if [ -t 1 ]; then
@@ -338,7 +342,7 @@ codepoint(){
 }
 
 # Show all the names (CNs and SANs) listed in the SSL certificate for a given domain
-getcertnames(){
+getcertnames() {
     if [ -z "${1}" ]; then
         echo "ERROR: No domain specified."
         return 1
@@ -371,7 +375,7 @@ getcertnames(){
 }
 
 # Compare original and gzipped file size
-gz(){
+gz() {
     local origsize=$(wc -c < "$1")
     local gzipsize=$(gzip -c "$1" | wc -c)
     local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
@@ -379,11 +383,11 @@ gz(){
     printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"
 }
 
-treee(){
+treee() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-dataurl(){
+dataurl() {
     local mimeType=$(file -b --mime-type "$1");
     if [[ $mimeType == text/* ]]; then
         mimeType="${mimeType}";

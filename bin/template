@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: template [filename.filetype]...
 create file by template. Templates in ~/Templates
@@ -10,14 +10,14 @@ create file by template. Templates in ~/Templates
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-list(){
+list() {
 echo "-h, --help,		display this help and exit"
 echo
 echo "Templates list:"
 ls ~/Templates/
 }
 
-create(){
+create() {
 name=$(echo $1 | cut -d. -f1)
 type=$(echo $1 | cut -d. -f2)
 cp ~/Templates/$type $1 &> /dev/null
@@ -30,8 +30,9 @@ else
 fi
 }
 
-createForeach(){
 exitcode=0
+
+createForeach() {
 for i in $@; do
 create $i
 [[ $? == 2 ]] && let exitcode++
@@ -44,8 +45,8 @@ list ) list;;
 *    ) createForeach $@;;
 esac
 
-if [[ $exitcode -gt 0 ]]; then
-    exit 2
+if [[ $exitcode != 0 ]]; then
+    exit $exitcode
 elif [[ $# == 1 ]]; then
     rifle $1
 fi

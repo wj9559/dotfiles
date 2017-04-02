@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-lock(){
+lock() {
     vlock -a
 }
 
-_usage(){
+_usage() {
 echo "\
 Usage: pm [ l s h r p --help ]
 Power management

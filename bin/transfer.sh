@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_usage(){
+_usage() {
 echo "\
 Usage: transfer.sh /path/to/file"
 }

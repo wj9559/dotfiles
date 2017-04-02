@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: gfw [on | off | toggle | --help]
 Fuck great fire wall
@@ -13,23 +13,23 @@ Fuck great fire wall
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-info(){
+info() {
 pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"
 pidof adbyby &>/dev/null && echo "adbyby  :on" || echo "adbyby  :off"
 }
-on(){
+on() {
 echo "switch to on" 
 doNotRepeatRun adbyby &
 doNotRepeatRun lantern -headless &
 }
 
-off(){
+off() {
 echo "switch to off"
 killall -q lantern 
 killall -q adbyby
 }
 
-toggle(){
+toggle() {
 pidof lantern && off || on
 }
 

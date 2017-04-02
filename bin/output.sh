@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-err(){
+err() {
     echo `tput bold; tput setaf 1`"[-] ERROR: ${*}"`tput sgr0` >&2
 }
 
-warn(){
+warn() {
     echo `tput bold; tput setaf 1`"[!] WARNING: ${*}"`tput sgr0` >&2
 }
 
-msg(){
+msg() {
     echo `tput bold; tput setaf 2`"[+] ${*}"`tput sgr0`
 }

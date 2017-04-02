@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #cut/join videos using ffmpeg without quality loss
  
-_usage(){
+_usage() {
 echo "\
 Usage: $0 c[ut] [start]  [second] <File>
   eg.  $0 cut   10       80       example.mp4

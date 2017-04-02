@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_usage(){
+_usage() {
 echo "\
 Usage: netspeed [iface] [-human]
 print the current netspeed
@@ -14,11 +14,11 @@ sleeptime="0.1"
 iface=${1:-wlo1}
 type=" "
 
-_get_rx(){
+_get_rx() {
 cat /sys/class/net/"$iface"/statistics/rx_bytes
 #ifstat -j $iface | grep -Po "rx_bytes\":\d+" | cut -d: -f2
 }
-_get_tx(){
+_get_tx() {
 cat /sys/class/net/"$iface"/statistics/tx_bytes
 #ifstat -j $iface | grep -Po "tx_bytes\":\d+" | cut -d: -f2
 }

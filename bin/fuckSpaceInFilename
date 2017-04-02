@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # author: wujian(github.com/wj9559)
 
-_usage(){
+_usage() {
 echo "\
 Usage: fuckSpaceInFilename [replace char]
 Fuck Space In Filename, default remove space.
