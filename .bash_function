@@ -97,9 +97,16 @@ done
 tarc() {
 _usage() {
 echo "\
-Usage: tarc [compression_format] [file]...
-compress file to \"file.compression_format\"
-  -h, --help            display this help and exit"
+Usage: tarc [ARCHIVE] [FILE]...
+   or: tarc [FORMAT] [FILE]...
+
+compress FILEs
+  -h, --help            display this help and exit
+
+example: 
+  tarc ~/backup/bash.7z ~/.bash{rc,_aliases,_function,_profile}
+  tarc tar.gz ../file1 ../../file2 /tmp/file3
+"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
@@ -139,8 +146,8 @@ esac
 tarx() {
 _usage() {
 echo "\
-Usage: tarx [file.compression_format]...
-decompress \"file.compression_format\"
+Usage: tarx [FILE]...
+decompress FILEs
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
@@ -203,7 +210,7 @@ gitup() {
 
     git add --all
     git commit --message="$commitMessage"
-    git push
+    git push --all
 }
 
 insh() {
@@ -302,7 +309,7 @@ else
     inode=$(stat --format=%i "$file")
     path=${2:-$(df -a --output=target "$file" | sed -n 2p)}
     if exclude=$(df -a --output=target | grep "$path.\+"); then
-        find $path $(for i in $exclude; do echo -n -path $i -prune -o; done) -inum $inode -print
+        find $path $(for i in $exclude; do echo -n "-path $i -prune -o "; done) -inum $inode -print
     else
         find "$path" -inum "$inode" -print
     fi

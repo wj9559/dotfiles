@@ -17,8 +17,8 @@ Usage: $0 j[oin] <FileType>
 case "$1" in
 c|cut)
     [[ -z $4 ]] && _usage && exit
-    fname=$(echo $4 | cut -d. -f1)
-    ftype=$(echo $4 | cut -d. -f2)
+    fname=${4%.*}
+    ftype=${4##*.}
     ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$2-$3.$ftype;;
 
 j|join)

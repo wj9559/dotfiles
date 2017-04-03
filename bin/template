@@ -11,21 +11,22 @@ create file by template. Templates in ~/Templates
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 list() {
-echo "-h, --help,		display this help and exit"
-echo
-echo "Templates list:"
+echo "\
+-h, --help,		display this help and exit
+
+Templates list:"
 ls ~/Templates/
 }
 
 create() {
-name=$(echo $1 | cut -d. -f1)
-type=$(echo $1 | cut -d. -f2)
-cp ~/Templates/$type $1 &> /dev/null
+fname=${1%.*}
+ftype=${1##*.}
+cp ~/Templates/$ftype $1 &> /dev/null
 
 if [[ $? -eq 0 ]]; then
 	echo "create '$1'"
 else
-	echo "please create '.$type' Templates" >&2
+	echo "please create '$ftype' Templates" >&2
 	return 2
 fi
 }
@@ -41,8 +42,8 @@ done
 
 select=${1:-list}
 case $select in
-list ) list;;
-*    ) createForeach $@;;
+list ) list; exit       ;;
+*    ) createForeach $@ ;;
 esac
 
 if [[ $exitcode != 0 ]]; then
