@@ -8,8 +8,7 @@ Usage: transfer.sh /path/to/file"
 [[ $# == 0 ]] && _usage && exit
 
 file=$1
-basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g') 
-tmpfile=$(mktemp -t transferXXX)
+basefile=$(basename "$file" | tr [:punct:] _ | tr " " _)
 
 if tty -s; then 
     if [ ! -r $file ]; then
@@ -20,14 +19,11 @@ if tty -s; then
     if [ -d $file ]; then
         tarfile=$(mktemp -t transferXXX.tar)
         tar -chf $tarfile $file
-        curl --progress-bar --upload-file "$tarfile" "https://transfer.sh/$basefile.tar" > $tmpfile
+        curl --progress-bar --upload-file "$tarfile" "https://transfer.sh/$basefile.tar"
         rm $tarfile
     else
-        curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" > $tmpfile
+        curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile"
     fi
 else 
-    curl --progress-bar --upload-file "-" "https://transfer.sh/$basefile" > $tmpfile
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$basefile"
 fi
-
-cat $tmpfile
-rm $tmpfile

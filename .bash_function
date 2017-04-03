@@ -81,15 +81,6 @@ tempaliases() {
 	fi
 }
 
-ffmpegcut() {
-	if [[ $# -ne 3 ]]; then
-		echo "ffmpegCut [start] [second] [filename]"
-	else
-		ffmpeg -ss $1 -t $2 -i $3 -c copy cut_$3
-		#ffmpeg -ss $1 -t $2 -i $3 -acodec copy cut_$3
-	fi
-}
-
 gitpull() {
 local gitdir gitrepo
 for gitdir in $@; do
@@ -119,18 +110,29 @@ if [ $# -gt 2 ]; then
 fi
 shift
 case $format in
-    zip          ) zip -qr    "$name".$format "$@" ;;
-    rar          ) rar a -idq "$name".$format "$@" ;;
-    7z           ) 7z a -bso0 "$name".$format "$@" ;;
-    tar          ) tar -cf    "$name".$format "$@" ;;
-    tgz |tar.gz  ) tar -czf   "$name".$format "$@" ;;
-    tbz2|tar.bz2 ) tar -cjf   "$name".$format "$@" ;;
-    tar.xz       ) tar -cJf   "$name".$format "$@" ;;
-    tar.Z        ) tar -cZf   "$name".$format "$@" ;;
-    gz           ) gzip -k    "$@"                 ;;
-    bz2          ) bzip2 -kz  "$@"                 ;;
-    xz           ) xz -kz     "$@"                 ;;
-    *            ) tar -czf   "$name".tar.gz  "$@" ;;
+    zip              ) zip -qr    "$name".$format "$@" ;;
+    rar              ) rar a -idq "$name".$format "$@" ;;
+    7z               ) 7z a -bso0 "$name".$format "$@" ;;
+    tar              ) tar -cf    "$name".$format "$@" ;;
+    tgz |tar.gz      ) tar -czf   "$name".$format "$@" ;;
+    tbz2|tar.bz2     ) tar -cjf   "$name".$format "$@" ;;
+    tar.xz           ) tar -cJf   "$name".$format "$@" ;;
+    tar.Z            ) tar -cZf   "$name".$format "$@" ;;
+    gz               ) gzip -k    "$@"                 ;;
+    bz2              ) bzip2 -kz  "$@"                 ;;
+    xz               ) xz -kz     "$@"                 ;;
+    *.zip            ) zip -qr    $format "$@"         ;;
+    *.rar            ) rar a -idq $format "$@"         ;;
+    *.7z             ) 7z a -bso0 $format "$@"         ;;
+    *.tar            ) tar -cf    $format "$@"         ;;
+    *.tgz |*.tar.gz  ) tar -czf   $format "$@"         ;;
+    *.tbz2|*.tar.bz2 ) tar -cjf   $format "$@"         ;;
+    *.tar.xz         ) tar -cJf   $format "$@"         ;;
+    *.tar.Z          ) tar -cZf   $format "$@"         ;;
+    *.gz             ) gzip -c    "$1" > $format       ;;
+    *.bz2            ) bzip2 -cz  "$1" > $format       ;;
+    *.xz             ) xz -cz     "$1" > $format       ;;
+    *                ) tar -czf   "$name".tar.gz  "$@" ;;
 esac
 }
 
@@ -143,29 +145,30 @@ decompress \"file.compression_format\"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
-local file
-for i in $(seq $#); do
-    file=$1
+local j file basename
+for j in $(seq $#); do
+    file=$(realpath -s "$1")
     shift
-    mkcd "$file".tarx
+    basename=$(basename "$file")
+    mkcd "$basename.tarx"
     case "$file" in
         # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
-        *.zip            ) unzip -q     ../"$file" ;;
-        *.rar            ) unrar x -idq ../"$file" ;;
-        *.7z             ) 7z x         ../"$file" ;;
-        *.tar            ) tar -xf      ../"$file" ;;
-        *.tgz |*.tar.gz  ) tar -xzf     ../"$file" ;;
-        *.tbz2|*.tar.bz2 ) tar -xjf     ../"$file" ;;
-        *.tar.xz         ) tar -xJf     ../"$file" ;;
-        *.tar.Z          ) tar -xZf     ../"$file" ;;
-        *.gz             ) gzip -kd     ../"$file" ;;
-        *.bz2            ) bzip2 -kd    ../"$file" ;;
-        *.xz             ) xz -kd       ../"$file" ;;
-        *.Z              ) uncompress   ../"$file" ;;
+        *.zip            ) unzip -q     "$file" ;; # || unzip -O gbk -q "$file" ;;
+        *.rar            ) unrar x -idq "$file" ;;
+        *.7z             ) 7z x         "$file" ;;
+        *.tar            ) tar -xf      "$file" ;;
+        *.tgz |*.tar.gz  ) tar -xzf     "$file" ;;
+        *.tbz2|*.tar.bz2 ) tar -xjf     "$file" ;;
+        *.tar.xz         ) tar -xJf     "$file" ;;
+        *.tar.Z          ) tar -xZf     "$file" ;;
+        *.gz             ) gzip -kd     "$file" ;;
+        *.bz2            ) bzip2 -kd    "$file" ;;
+        *.xz             ) xz -kd       "$file" ;;
+        *.Z              ) uncompress   "$file" ;;
         *                ) echo         "$file" cannot be extracted >&2 ;;
     esac
     cd ../
-    rmdir --ignore-fail-on-non-empty "$file".tarx
+    rmdir --ignore-fail-on-non-empty "$basename.tarx"
     separatedLine
 done
 }
