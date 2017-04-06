@@ -8,7 +8,7 @@ Usage: transfer.sh /path/to/file"
 [[ $# == 0 ]] && _usage && exit
 
 file=$1
-basefile=$(basename "$file" | tr [:punct:] _ | tr " " _)
+basefile=$(basename "$file" | tr -s '\\/|`;"?~!@#$^&*()<>[]{}'"'[:space:]" _)
 
 if tty -s; then 
     if [ ! -r $file ]; then

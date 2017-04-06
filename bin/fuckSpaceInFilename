@@ -9,14 +9,9 @@ Fuck Space In Filename, default remove space.
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-replace="$1"
-#for i in $(seq 2); do
-if [[ -n $1 ]]; then
-    find . -iname \*\ \* -execdir rename " " "$replace" {} \;
-else
-    find . -iname \*\ \* -execdir rename " " "" {} \;
-fi
-#done
+find . -name \*\ \* -execdir rename " " "$1" {} \;
 
-num=$(find . -iname \*\ \* | wc -l)
-[[ $num -ne 0 ]] && echo 'Please once again.' || exit 0
+num=$(find . -name \*\ \* | wc -l)
+if [[ $num -ne 0 ]];then
+    $0
+fi

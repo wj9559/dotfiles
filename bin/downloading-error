@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
 
-date1=$(date +%s)
+count=0
 speed_less_then=${1:-30}
 ERROR_count=${2:-10}
 sleeptime=${3:-1}
+average=3
+
+_averageSpeed() {
+    netspeed=0
+    for i in $(seq $average); do
+        let netspeed+=$(netspeed)
+        sleep $sleeptime
+    done
+    let netspeed/=average
+}
 
 while [[ $count -lt $ERROR_count ]]; do
-    sleep $sleeptime
-    if [[ $(netspeed) -lt $speed_less_then ]]; then
-        count=$(expr $count + 1)
+    _averageSpeed
+    if [[ $netspeed -lt $speed_less_then ]]; then
+        let count+=1
     fi
 done
 
-if [[ $(expr $(date +%s) - $date1) -gt 120 ]];then
-downloading-error
-exit
-fi
-bell 2 80
+bell 2 60
 notify-send --app-name=down --expire-time=0 "download is error"
 exit 2

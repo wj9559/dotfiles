@@ -3,7 +3,7 @@
 
 #mv file.bak file ${file%.*}
 
-cpmv="cp -a"
+cpmv="cp -a --reflink=auto"
 _usage() {
 echo "\
 Usage: bak [OPTION] SOURCE...

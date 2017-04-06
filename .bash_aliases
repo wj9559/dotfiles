@@ -16,6 +16,7 @@ fi
 alias l="ls -F $lsColorFlag"
 alias la="ls -FA $lsColorFlag"
 alias ll="ls -FAlh $lsColorFlag"
+    unset lsColorFlag
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'

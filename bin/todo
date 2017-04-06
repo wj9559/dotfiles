@@ -19,7 +19,7 @@ simple todo list
 }
 
 _remove() {
-    nl $TODOFILE
+    nl -s ". " $TODOFILE
     printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
     #read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
     #sed -i ${number}d $TODOFILE
@@ -36,7 +36,7 @@ _write() {
 case ${1} in
 ""         ) echo -e "  h|--help          display help\n" && $0 --list ;;
 h|--help   ) _usage;exit ;;
-l|--list   ) nl $TODOFILE ;;
+l|--list   ) nl -s ". " $TODOFILE ;;
 s|--show   ) sed -n ${2}p $TODOFILE ;;
 r|--remove ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE ;;
 e|--edit   ) ${EDITOR:-nano} $TODOFILE ;;

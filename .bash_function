@@ -124,7 +124,6 @@ case $format in
     tgz |tar.gz      ) tar -czf   "$name".$format "$@" ;;
     tbz2|tar.bz2     ) tar -cjf   "$name".$format "$@" ;;
     tar.xz           ) tar -cJf   "$name".$format "$@" ;;
-    tar.Z            ) tar -cZf   "$name".$format "$@" ;;
     gz               ) gzip -k    "$@"                 ;;
     bz2              ) bzip2 -kz  "$@"                 ;;
     xz               ) xz -kz     "$@"                 ;;
@@ -135,7 +134,6 @@ case $format in
     *.tgz |*.tar.gz  ) tar -czf   $format "$@"         ;;
     *.tbz2|*.tar.bz2 ) tar -cjf   $format "$@"         ;;
     *.tar.xz         ) tar -cJf   $format "$@"         ;;
-    *.tar.Z          ) tar -cZf   $format "$@"         ;;
     *.gz             ) gzip -c    "$1" > $format       ;;
     *.bz2            ) bzip2 -cz  "$1" > $format       ;;
     *.xz             ) xz -cz     "$1" > $format       ;;
@@ -167,11 +165,9 @@ for j in $(seq $#); do
         *.tgz |*.tar.gz  ) tar -xzf     "$file" ;;
         *.tbz2|*.tar.bz2 ) tar -xjf     "$file" ;;
         *.tar.xz         ) tar -xJf     "$file" ;;
-        *.tar.Z          ) tar -xZf     "$file" ;;
         *.gz             ) gzip -kd     "$file" ;;
         *.bz2            ) bzip2 -kd    "$file" ;;
         *.xz             ) xz -kd       "$file" ;;
-        *.Z              ) uncompress   "$file" ;;
         *                ) echo         "$file" cannot be extracted >&2 ;;
     esac
     cd ../
@@ -210,7 +206,7 @@ gitup() {
 
     git add --all
     git commit --message="$commitMessage"
-    git push --all
+    git push
 }
 
 insh() {
@@ -286,14 +282,24 @@ esac
 $CMD "$1" | grep -i $2 &>/dev/null && echo $1: OK || echo $1: FAILED
 }
 
-ifdown() {
-while true; do
-    if [[ ! $(pidof $1) ]]; then
-        bell 2
-        notify-send --app-name=$1 --expire-time=0 "$1 is over."
-        exit
-    fi
+pidoff() {
+local pid
+if ! pid=$(pgrep $1); then return 2; fi
+if [[ $(echo $pid | wc -w) != 1 ]]; then
+    local line tmpfile=$(mktemp)
+    ps -o args,user,tname,%cpu,%mem,stat $pid > $tmpfile
+    echo -n "      	"; head -n1 $tmpfile; sed -i 1d $tmpfile; nl -s ". " $tmpfile
+    read -p 'Type a line number to check: ' -n $(wc -l < $tmpfile | wc -L) line
+    rm $tmpfile
+    pid=(0 $pid); pid=${pid[$line]}
+    echo
+fi
+echo 'run in background: [Ctrl + c], !!&'
+while ps $pid &>/dev/null ; do
+    sleep 2
 done
+bell 2
+notify-send --app-name=$1 --expire-time=0 "$1 is over."
 }
 
 linkfind() {
