@@ -6,6 +6,7 @@
 
 PATH=$PATH:~/bin
 PATH=$PATH:~/bin/chromapp
+PATH=$PATH:~/script
 export PATH
 
 #[[ ! $TERM =~ screen ]] && SHELL=tmux fbterm

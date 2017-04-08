@@ -15,7 +15,7 @@ trap EC ERR
 
 [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 for file in \
-~/.bash_{aliases,function,prompt} \
+~/.bash_{aliases,function,prompt,private} \
 /usr/share/autojump/autojump.bash \
 /usr/share/doc/pkgfile/command-not-found.bash; do
     [ -r $file ] && source $file

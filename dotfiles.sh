@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
 BASEDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-lncp="ln -sfn"
+lncp="ln -srfn"
 lncp=${*:-$lncp}
 mkdir ~/.config &>/dev/null
 
 $lncp $BASEDIR/.Xmodmap ~/
 $lncp $BASEDIR/.bash_aliases ~/
-$lncp $BASEDIR/.bash_aliases.temp ~/
 $lncp $BASEDIR/.bash_function ~/
 $lncp $BASEDIR/.bash_profile ~/
 $lncp $BASEDIR/.bash_prompt ~/

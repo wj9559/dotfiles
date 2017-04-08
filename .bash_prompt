@@ -68,7 +68,7 @@ b_purple="\e[1;35m"
 b_cyan="\e[1;36m"
 b_white="\e[1;37m"
 
-if [[ "${USER}" == "root" ]]; then
+if [[ $EUID == 0 ]]; then
 	userStyle="${b_red}"
     symbolStyle="${b_red}"
 else

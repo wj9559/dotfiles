@@ -31,17 +31,11 @@ else
 fi
 }
 
-if [[ $1 == "-mv" ]]; then
-    cpmv=mv
-    shift
-fi
-if [[ $1 == "-H" ]]; then
-    cpmv="$cpmv -Hr"
-    shift
-elif [[ $1 == "-L" ]]; then
-    cpmv="$cpmv -Lr"
-    shift
-fi
+case $1 in
+-mv ) cpmv="mv";        shift ;;
+-H  ) cpmv="$cpmv -Hr"; shift ;;
+-L  ) cpmv="$cpmv -Lr"; shift ;;
+esac
 
 exitcode=0
 
