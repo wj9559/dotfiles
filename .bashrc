@@ -17,6 +17,7 @@ trap EC ERR
 for file in \
 ~/.bash_{aliases,function,prompt,private} \
 /usr/share/autojump/autojump.bash \
+/usr/share/fzf/{completion,key-bindings}.bash \
 /usr/share/doc/pkgfile/command-not-found.bash; do
     [ -r $file ] && source $file
 done && unset file

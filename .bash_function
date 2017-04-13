@@ -405,21 +405,31 @@ dataurl() {
     echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
+whoneeds(){
+    pactree --reverse --linear --unique --depth 1 $1 | sed 1d
+}
+
+encrypt-ccrypt(){
+    ccrypt -e < "$1" > "${2:-$1.cpt}"
+}
+decrypt-ccrypt(){
+    ccrypt -d < "$1" > "${2:-${1%.cpt}}"
+}
+
 encrypt-openssl(){
-local out=${2:-$1.e}
-openssl aes-256-cbc -e -salt -in "$1" -out "$out" $3
+    openssl aes-256-cbc -e -salt -in "$1" -out "${2:-$1.aes}" $3
 }
 
 decrypt-openssl(){
-local out=${2:-$1.d}
-openssl aes-256-cbc -d -in "$1" -out "$out" $3
+    openssl aes-256-cbc -d -in "$1" -out "${2:-${1%.aes}}" $3
 }
 
 
 #-----------------------------------------------------------
+# https://github.com/paoloantinori/hhighlighter
+
 hl() {
-#H_COLORS_FG="bold black on_rgb520","bold red on_rgb025"
-#H_COLORS_BG="underline bold rgb520","underline bold rgb025"
+
     _usage() {
         echo "usage: YOUR_COMMAND | hl [-idn] args...
     -i : ignore case
@@ -430,8 +440,7 @@ hl() {
     local _OPTS
 
     # detect pipe or tty
-    if [[ -t 0 ]]
-	then
+    if [[ -t 0 ]]; then
         _usage
         return
     fi

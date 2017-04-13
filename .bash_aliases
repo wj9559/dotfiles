@@ -87,3 +87,4 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 alias xclipc='xclip -selection clipboard'
 alias gzipt='gzip -vc >/dev/null'
 alias ffprobe-show='ffprobe -v quiet -print_format json -show_format -show_streams'
+alias cpprogress='rsync -avPh'
