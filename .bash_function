@@ -177,11 +177,11 @@ done
 }
 
 paclfb() {
-    pacman -Ql $1 | grep -E "/usr/bin/.+" | cut -d/ -f4
+    pacman -Ql $1 | grep /bin/ | grep -v "/$" | cut -d" " -f2
 }
 
 paclfs() {
-    pacman -Ql $1 | grep -Ee "\.service$" -e "\.socket$" -e "\.timer$" | cut -d" " -f2
+    pacman -Ql $1 | grep "\.service$\|\.socket$\|\.timer$" | cut -d" " -f2
 }
 
 gpg-verify() {

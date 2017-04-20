@@ -19,7 +19,7 @@ c|cut)
     [[ -z $4 ]] && _usage && exit
     fname=${4%.*}
     ftype=${4##*.}
-    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$2-$3.$ftype -v 16
+    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$2-$3.$ftype -v error
     ;;
 
 j|join)
@@ -28,7 +28,8 @@ j|join)
     for f in $(ls -v *.$2); do
         echo "file '$f'" >> $tmpfile
     done
-    ffmpeg -f concat -i $tmpfile -acodec copy -vcodec copy output.$(date +%s).$2 -v 16
+    vi $tmpfile
+    ffmpeg -f concat -i $tmpfile -acodec copy -vcodec copy output.$(date +%Y%m%d%H%M%S).$2 -v error
     rm $tmpfile
     ;;
 *)

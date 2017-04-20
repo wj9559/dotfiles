@@ -2,5 +2,6 @@
 
 timeout=${1:-5}
 target=${2:-www.baidu.com}
+killtime=${3:-10}
 
-ping -c3 -i.2 -W$timeout $target &>/dev/null
+timeout $killtime ping -c3 -i.2 -W$timeout $target &>/dev/null

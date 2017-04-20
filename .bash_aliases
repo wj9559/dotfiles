@@ -25,14 +25,14 @@ alias time='/usr/bin/time'
 
 
 if ls --color ~ &>/dev/null; then
-    lsColorFlag="--color=auto"
+    lsColorFlag='--color=auto'
 else
-    lsColorFlag="-G"
+    lsColorFlag='-G'
     export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
-alias l="ls -F $lsColorFlag"
-alias la="ls -FA $lsColorFlag"
-alias ll="ls -FAlh $lsColorFlag"
+alias l='ls -F '$lsColorFlag
+alias la='ls -FA '$lsColorFlag
+alias ll='ls -FAlh '$lsColorFlag
     unset lsColorFlag
 
 alias pacs='pacman -Ss'
@@ -57,11 +57,11 @@ alias py3='python3'
 alias du1='du -d1 -h'
 alias inotify='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e modify,delete,create,attrib,move'
 alias inotify-ao='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e access,open'
-alias hd="hexdump -C"
+alias hd='hexdump -C'
 alias path='echo -e ${PATH//:/\\n}'
 alias usetips='vless ~/backup/useTips'
-alias errors="journalctl --priority=0..3 --catalog -n"
-alias uninterruptibleSleep='ps -eo stat,args | grep "^D"'
+alias errors='journalctl --priority=0..3 --catalog -n'
+alias uninterruptibleSleep='ps -eo stat,args | grep "^D\|^Z"'
 alias ipaddress="ifconfig -a | grep -oP 'inet6? (addr:)?\s?(([0-9]{1,3}\.){3}[0-9]{1,3}|[a-fA-F0-9:]+)' | awk '{sub(/inet6? (addr:)? ?/, \"\"); print}'; echo; curl -s ipinfo.io/ip"
 alias websiteget='wget -Erkp --no-parent --random-wait -U mozilla'
 alias caffeine='xset s off'
@@ -77,7 +77,7 @@ alias histg='history | grep'
 alias listen='lsof -P -i -n'
 alias port='netstat -tulanp'
 alias sniff="sudo ngrep -d 'wlo1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i wlo1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias httpdump='sudo tcpdump -i wlo1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias cdtmp='mkcd /tmp/tmp_$(whoami)/$(randomstr); ln -sfn $PWD ../last'
 alias cdtmpl='cd /tmp/tmp_$(whoami)/last &>/dev/null; if [[ $? != 0 ]]; then cdtmp; fi'

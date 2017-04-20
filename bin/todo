@@ -34,7 +34,7 @@ _write() {
 }
 
 case ${1} in
-""         ) echo -e "  h|--help          display help\n" && $0 --list ;;
+""         ) echo -e "  h, --help            display help and exit\n" && $0 --list ;;
 h|--help   ) _usage;exit ;;
 l|--list   ) nl -s ". " $TODOFILE ;;
 s|--show   ) sed -n ${2}p $TODOFILE ;;
