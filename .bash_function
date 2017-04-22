@@ -409,6 +409,16 @@ whoneeds(){
     pactree --reverse --linear --unique --depth 1 $1 | sed 1d
 }
 
+ipaddress(){
+    echo -e "$(\
+    ifconfig -a | grep -oP 'inet6? (addr:)?\s?(([0-9]{1,3}\.){3}[0-9]{1,3}|[a-fA-F0-9:]+)' \
+    | awk '{sub(/inet6? (addr:)? ?/, ""); print}' \
+    | sed /127.0.0.1/d \
+    | sed /::1/d) \
+    \n\n$( \
+    curl -s ipinfo.io/ip)"
+}
+
 encrypt-ccrypt(){
     ccrypt -e < "$1" > "${2:-$1.cpt}"
 }

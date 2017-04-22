@@ -7,15 +7,16 @@ sed -i "/^$/d" $TODOFILE
 
 _usage() {
 echo "\
-Usage: todo [todo]
-simple todo list
+Usage: todo [content]...
+simple implementation of a todo list
   h, --help            display this help and exit
   l, --list            display the todo-list
   s, --show   [line]   display the specified row in the todo-list
   r, --remove [line]   remove an item from the todo-list
   e, --edit            direct edit $TODOFILE
   --clear              clear the todo-list
-  other                add an item to the todo-list"
+
+  string...            add an item to the todo-list"
 }
 
 _remove() {
