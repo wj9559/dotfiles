@@ -6,8 +6,8 @@ echo "\
 Usage: volume [options] [value]
 change backlight
   i              info
-  +              increase  5%
-  -              decrease  5%
+  +              increase  2%
+  -              decrease  2%
   s              set [value]
   m              toggle mute
   -h, --help     display this help and exit"
@@ -25,12 +25,12 @@ amixer | grep -A10 'Master' | sed -rn 's/.*\[([0-9]+%)\].*\[(on|off)\]/\2 \1/p' 
 }
 
 increase() {
-pactl set-sink-volume 0 +5%
+pactl set-sink-volume 0 +2%
 info
 }
 
 decrease() {
-pactl set-sink-volume 0 -5%
+pactl set-sink-volume 0 -2%
 info
 }
 

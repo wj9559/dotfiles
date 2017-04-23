@@ -12,6 +12,15 @@ ranger/tagged
 smplayer/*
 !smplayer/smplayer.ini
 
+mpd/*
+!mpd/config
+
+mpv/*
+!mpv/input.conf
+
+ncmpcpp/*
+!ncmpcpp/config
+
 fcitx/*
 !fcitx/config
 !fcitx/profile

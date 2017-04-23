@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+_mocp(){
+if [[ ! $(pidof mocp) ]]; then
+    mocp --server
+    mocp --play
+else
+    if [[ $(mocp -i | awk '{print $2}') == STOP ]]; then
+         mocp --play
+    else
+         mocp --toggle-pause
+    fi
+fi
+}
+
+_mpd(){
+if [[ ! $(pidof mpd) ]]; then
+    mpd ~/.config/mpd/config
+    mpc --quiet play
+else
+    mpc --quiet toggle
+fi
+}
+
+_ui(){
+    ncmpcpp
+}
+
+case $1 in
+    toggle  ) _mpd ;;
+    ui      ) _ui  ;;
+    *       ) _ui  ;;
+esac

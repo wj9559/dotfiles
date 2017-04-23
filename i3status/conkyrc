@@ -1,13 +1,9 @@
 conky.config = {
-
-    -- 不输出到X
     out_to_x = false,
     out_to_console = true,
     background = false,
     double_buffer = false,
-    -- 刷新时间
     update_interval = 1,
-    -- 运行时间，0为一直运行
     total_run_times = 0,
     -- 强制uft8编码，需xft支持
     override_utf8_locale = false,
@@ -25,7 +21,7 @@ conky.config = {
 
 conky.text = [[
 
-♫ ${exec mocp -Q %song} - ${exec mocp -Q %artist}   \
+♫ ${exec mpc --format "\n[[%title% - ]%artist%]|\n[%file%]" | sed -n 2p | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
 ${if_up eno1} ${downspeed eno1} ${upspeed eno1}$else ${if_up wlo1} ${downspeed wlo1} ${upspeed wlo1}   ${wireless_essid wlo1}$else No Wireless $endif $endif   \
  ${cpu cpu0}% ${hwmon 0 temp 2}°C   \
  ${memperc}%   \

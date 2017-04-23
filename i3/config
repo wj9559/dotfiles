@@ -183,13 +183,13 @@ bindsym $mod+plus scratchpad show
 
 bindsym $mod+b bar mode toggle
 
-bindsym XF86AudioPrev exec --no-startup-id mocp --previous 
-bindsym XF86AudioPlay exec --no-startup-id mocplay
-bindsym XF86AudioNext exec --no-startup-id mocp --next
-bindsym XF86AudioStop exec --no-startup-id mocp --stop
+bindsym XF86AudioPrev exec --no-startup-id mpc prev
+bindsym XF86AudioPlay exec --no-startup-id cplay toggle
+bindsym XF86AudioNext exec --no-startup-id mpc next
+bindsym XF86AudioStop exec --no-startup-id mpc stop
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% 
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +2%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 #bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
 #bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-

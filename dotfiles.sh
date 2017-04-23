@@ -16,7 +16,6 @@ $lncp $BASEDIR/.fbtermrc ~/
 $lncp $BASEDIR/.fonts/ ~/
 $lncp $BASEDIR/.gitconfig ~/
 $lncp $BASEDIR/.inputrc ~/
-$lncp $BASEDIR/.moc/ ~/
 $lncp $BASEDIR/.ngrok ~/
 $lncp $BASEDIR/.screenrc ~/
 $lncp $BASEDIR/.tmux.conf ~/
@@ -34,6 +33,9 @@ $lncp $BASEDIR/htop/ ~/.config/
 $lncp $BASEDIR/i3/ ~/.config/
 $lncp $BASEDIR/i3status/ ~/.config/
 $lncp $BASEDIR/libfm/ ~/.config/
+$lncp $BASEDIR/mpd/ ~/.config/
+$lncp $BASEDIR/mpv/ ~/.config/
+$lncp $BASEDIR/ncmpcpp/ ~/.config/
 $lncp $BASEDIR/pcmanfm/ ~/.config/
 $lncp $BASEDIR/psd/ ~/.config/
 $lncp $BASEDIR/ranger/ ~/.config/
