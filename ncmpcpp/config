@@ -216,7 +216,8 @@ song_status_format = {{%t} - {%a{ "%b"{ (%y)}}}}|{%f}
 #
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
 #
-now_playing_prefix = " $2$4$7$7$/b$9$b"
+now_playing_prefix = "$1 $b$7$5$6$/b$1$1 $9$b"
+#now_playing_prefix = " $2$4$7$7$/b$9$b"
 #now_playing_prefix = $b
 #
 #now_playing_suffix = $/b
@@ -282,7 +283,8 @@ now_playing_prefix = " $2$4$7$7$/b$9$b"
 ##   not available.
 ##
 #
-song_columns_list_format = (50)[white]{t|f:Title} (20)[yellow]{a} (20)[red]{b} (5f)[green]{l}
+song_columns_list_format = (5f)[green]{l} (50)[white]{t|f:Title} (20)[yellow]{a} (20)[red]{b}
+#song_columns_list_format = (50)[white]{t|f:Title} (20)[yellow]{a} (20)[red]{b} (5f)[green]{l}
 #song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
 #
 ##### various settings #####

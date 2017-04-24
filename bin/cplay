@@ -23,6 +23,10 @@ fi
 }
 
 _ui(){
+    if [[ ! $(pidof mpd) ]]; then
+        mpd ~/.config/mpd/config
+        mpc --quiet play
+    fi
     ncmpcpp
 }
 
