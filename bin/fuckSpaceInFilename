@@ -13,5 +13,5 @@ find . -name \*\ \* -execdir rename " " "$1" {} \;
 
 num=$(find . -name \*\ \* | wc -l)
 if [[ $num -ne 0 ]];then
-    $0
+    $0 $1
 fi

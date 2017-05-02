@@ -84,10 +84,10 @@ if has("autocmd")
 endif
 
 "{{ jk移动光标使用视觉行
-vmap j gj
-vmap k gk
-nmap j gj
-nmap k gk
+"vmap j gj
+"vmap k gk
+"nmap j gj
+"nmap k gk
 
 "{{ 自动补全符号
 au FileType c,cpp,h,java,css,js,nginx,scala,go inoremap <buffer> {<CR> {<CR>}<Esc>O

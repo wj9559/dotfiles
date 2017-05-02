@@ -18,6 +18,7 @@ conky.config = {
 --图标查询 http://fontawesome.io/cheatsheet/
 -- / ${fs_free /}   \
 -- ${battery_short}  ${uptime_short}   \
+--♫ ${exec mpc current | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
 
 conky.text = [[
 
