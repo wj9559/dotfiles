@@ -10,8 +10,6 @@ defscrollback 1000
 #	* read
 #	* ctrl+v
 # then press key and display code
-bindkey "^[[D" prev
-bindkey "^[[C" next 
 
 # status line
 hardstatus on
