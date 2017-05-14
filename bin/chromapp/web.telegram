@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 Protocol=https
-URL=play.google.com
+URL=web.telegram.org
 
 if [[ $1 == "-i" || $1 == "--incognito" ]]; then
     chromium --incognito "${@:2}" --app="$Protocol://$URL" &>/dev/null &

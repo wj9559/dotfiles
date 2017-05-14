@@ -86,6 +86,6 @@ unsplash ) unsplash $2 ;;
 esac
 
 mkdir -pv $(dirname $filepath)
-wget --no-clobber --tries=4 -qO $filepath $picUrl
+wget --continue --tries=4 --quiet -O $filepath $picUrl
 feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
 ln -srf $filepath $wallpaperDir/last.png
