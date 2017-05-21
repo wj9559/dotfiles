@@ -36,6 +36,11 @@ cdd() {
     cd $(dirname $1)
 }
 
+pss() {
+    echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
+    ps -aux | grep -v grep | grep -ie $1
+}
+
 incognitoshell() {
     if [[ -z $(echo $SHELLOPTS | grep -o history) ]]; then
         set -o history
@@ -67,19 +72,11 @@ langswitch() {
 }
 
 new() {
-	roxterm -e bash -c "$1;exec bash" &>/dev/null
+    roxterm -e bash -c "$*;exec bash" &>/dev/null
 }
 
 i3-save-tree-function() {
 	i3-save-tree --workspace $1 | tail -n +2 | fgrep -v "// splitv" | fgrep -v "// splith" | fgrep -v "// tabbed" | sed "s|//||g" > ~/.config/i3/workspace-$1.json
-}
-
-tempaliases() {
-	if [[ $1 == e ]]; then
-		vim ~/.bash_aliases.temp
-	else
-		source ~/.bash_aliases.temp
-	fi
 }
 
 gitpull() {
@@ -179,30 +176,29 @@ done
 
 paclf() {
     for i in "$@"; do
-        pkgfile --list $i
-        [ $# -gt 0 ] && separatedLine
+        pkgfile --list $i || pacman -Ql $i
         #pacman --query --list $i 2>/dev/null || pkgfile --list $i
     done
 }
 
 paclfb() {
-    paclf $@ | grep /bin/ | grep -v "/$" | cut -f2
+    paclf $@ | grep /bin/ | grep -v "/$"
 }
 
 paclfs() {
-    paclf $@ | grep "\.service$\|\.socket$\|\.timer$" | cut -f2
+    paclf $@ | grep "\.service$\|\.socket$\|\.timer$"
 }
 
 gpg-verify() {
     local sig=$1
-    local gpg=$2.gpg
-    local RSA=$(gpg --verify $sig 2>&1 | grep RSA | awk '{print $5}')
-    echo RSA=$RSA
+    local keyring=$2.gpg
+    local key=$(gpg --verify $sig 2>&1 | grep 'using.*key ' | awk '{print $5}')
+    echo key=$key
 
-    gpg --no-default-keyring --keyring $gpg --keyserver https://pgp.mit.edu --recv-keys $RSA
-    #gpg --no-default-keyring --keyring $gpg --keyserver hkp://keys.gnupg.net --recv-keys $RSA
+    gpg --no-default-keyring --keyring $keyring --keyserver https://pgp.mit.edu --recv-keys $key
+    #gpg --no-default-keyring --keyring $keyring --keyserver hkp://keys.gnupg.net --recv-keys $key
     separatedLine
-    gpg --verify --verbose --keyring ~/.gnupg/$gpg $sig
+    gpg --verify --verbose --keyring ~/.gnupg/$keyring $sig
 }
 
 you-get-play() {
@@ -278,7 +274,7 @@ aliased() {
     echo ${aliasStr%\'*}
 }
 
-shacheck() {
+checksha() {
 local CMD
 local ckfile=check_sum_file.$(randomstr 10)
 echo "$2  $1" > $ckfile

@@ -19,7 +19,8 @@ c|cut)
     [[ -z $4 ]] && _usage && exit
     fname=${4%.*}
     ftype=${4##*.}
-    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$2-$3.$ftype -v error
+    ftime=$(echo $2_$3 | tr : -)
+    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$ftime.$ftype -v error
     ;;
 
 j|join)
