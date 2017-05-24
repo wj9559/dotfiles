@@ -2,7 +2,7 @@
 
 _usage() {
 echo "\
-Usage: imgurl [-s] /path/to/file
+Usage: imgurl [-s] [FILE]
 get url of img.
   -s, --screenshot    use ~/Pictures/Screenshots/last.png
   -h, --help          display this help and exit"

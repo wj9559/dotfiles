@@ -4,36 +4,35 @@
 BASEDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 _usage() {
 echo "\
-Usage: gen-chromapp.sh [filename] [URL] [protocol]
-gen chromapp
+Usage: gen-chromapp.sh URL [filename]
+Generate a script, runs URL in \"app mode\" with no browser toolbars.
   l, --list    display the chromapp list
   h, --help    display this help and exit"
 exit 0
 }
 
 case $1 in
-l|--list      ) ls $BASEDIR | grep -v gen-chromapp.sh && exit;;
-""|h|--help   ) _usage;;
+l |  --list ) ls $BASEDIR | grep -v $(basename "$0") && exit ;;
+""|h|--help ) _usage ;;
 esac
 
-[[ $# -lt 2 ]] && echo "gen-chromapp.sh --help" && exit 2
+URL=$1
+if [ $# -eq 1 ]; then
+    FILENAME=$BASEDIR/$(echo "$URL" | sed s/^.*:\\/\\/// | tr / _ | head --bytes=255)
+else
+    FILENAME=$BASEDIR/$2
+fi
 
-FILENAME=$BASEDIR/$1
-URL=$2
-Protocol=${3:-http}
-[[ $Protocol == s ]] && Protocol=https
-
-cat << !EOF! > $FILENAME
+cat > $FILENAME << EOF
 #!/usr/bin/env bash
 
-Protocol=$Protocol
-URL=$URL
+URL="$URL"
 
 if [[ \$1 == "-i" || \$1 == "--incognito" ]]; then
-    chromium --incognito "\${@:2}" --app="\$Protocol://\$URL" &>/dev/null &
+    chromium --incognito "\${@:2}" --app="\$URL" &>/dev/null &
 else
-    chromium "\$@" --app="\$Protocol://\$URL" &>/dev/null &
+    chromium "\$@" --app="\$URL" &>/dev/null &
 fi
-!EOF!
+EOF
 
 chmod 755 $FILENAME

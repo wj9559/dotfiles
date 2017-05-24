@@ -95,8 +95,8 @@ done
 tarc() {
 _usage() {
 echo "\
-Usage: tarc [ARCHIVE] [FILE]...
-   or: tarc [FORMAT] [FILE]...
+Usage: tarc ARCHIVE FILE...
+   or: tarc FORMAT FILE...
 
 compress FILEs
   -h, --help            display this help and exit
@@ -142,7 +142,7 @@ esac
 tarx() {
 _usage() {
 echo "\
-Usage: tarx [FILE]...
+Usage: tarx FILE...
 decompress FILEs
   -h, --help            display this help and exit"
 }
@@ -217,7 +217,7 @@ gitup() {
 
 insh() {
 _usage() {
-echo 'Usage: insh [command]...
+echo 'Usage: insh command...
 execution the command after entering the parameter
   \${KEY}               specify a placeholder
   -h, --help            display this help and exit'
@@ -245,9 +245,9 @@ fi
 loop() {
 _usage() {
 echo "\
-Usage: loop [count] -s[sleep-time] [command]...
+Usage: loop COUNT -s[leep-time] command...
 loop execution the command
-  -s[sleep-time]        after sleep time execution command,default 0
+  -s[leep-time]         after sleep time execution command,default 0
   -h, --help            display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return

@@ -10,7 +10,7 @@ alias mkdir='mkdir -pv'
 alias bc='bc -ql'
 alias lsblk='lsblk -o NAME,LABEL,SIZE,TYPE,FSTYPE,MOUNTPOINT'
 alias ping='ping -c 5'
-alias acpi='bDir="/sys/class/power_supply/BAT0"; [ -e $bDir ] || bDir="/sys/class/power_supply/BAT1"; echo $(cat $bDir/status)\ $(cat $bDir/capacity)%; unset bDir'
+alias acpi='echo $(cat /sys/class/power_supply/BAT{0,1}/{status,capacity} 2>/dev/null)%'
 alias pkgfile='pkgfile -v'
 alias tracepath=mtr
 alias time='/usr/bin/time'

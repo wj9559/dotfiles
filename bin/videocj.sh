@@ -3,11 +3,11 @@
  
 _usage() {
 echo "\
-Usage: $0 c[ut] [start]  [second] <File>
+Usage: $0 c[ut] [start]  [second] FILE
   eg.  $0 cut   10       80       example.mp4
   eg.  $0 c     00:00:10 00:01:20 example.mp4
 
-Usage: $0 j[oin] <FileType>
+Usage: $0 j[oin] FILE_TYPE
   eg.  $0 join   avi
   eg.  $0 j      mp4"
 }

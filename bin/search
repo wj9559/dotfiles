@@ -3,8 +3,10 @@
 
 _usage() {
 echo "\
-Usage: search [key] [site] [browser]
+Usage: search KEY [site] [browser]
 Quick search in CLI
+
+site:
   b,  bing     [default]   Bing
   g,  google               Google
   dd, duckduckgo           DuckDuckGo
@@ -16,7 +18,8 @@ Quick search in CLI
   jd                       JD
   al, archlinux-wiki       Archlinux-wiki
   wp, wikipedia            Wikipedia
-  ---------------------------------------
+
+browser
   f,  firefox  [default]   firefox
   c,  chromium             chromium
   ci, chromiumi            chromium-incognito

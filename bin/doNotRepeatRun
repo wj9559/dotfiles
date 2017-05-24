@@ -3,8 +3,8 @@
 processName=$1
 _usage() {
 echo "\
-Usage: doNotRepeatRun [app name]
-Don't repeat run app"
+Usage: doNotRepeatRun command
+Don't repeat run command"
 }
 [[ -z $1 ]] && _usage && exit
 

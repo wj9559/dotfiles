@@ -27,7 +27,7 @@ _ui(){
         mpd ~/.config/mpd/config
         mpc --quiet play
     fi
-    ncmpcpp
+    exec ncmpcpp
 }
 
 case $1 in

@@ -2,7 +2,7 @@
 
 _usage() {
 echo "\
-Usage: transfer.sh /path/to/file"
+Usage: transfer.sh [FILE]"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
