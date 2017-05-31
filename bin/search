@@ -38,7 +38,7 @@ case ${2:-b} in
 b |bing           ) url="https://www.bing.com/search?q=$key" ;;
 g |google         ) url="https://www.google.com/search?q=$key" ;;
 dd|duckduckgo     ) url="https://duckduckgo.com/?q=$key" ;;
-ba|baidu          ) url="https://www.baidu.com/baidu?wd=$key" ;;
+ba|baidu          ) url="https://www.baidu.com/s?wd=$key" ;;
 zh|zhihu          ) url="https://www.zhihu.com/search?q=$key" ;;
 gh|github         ) url="https://github.com/search?q=$key" ;;
 db|douban         ) url="https://www.douban.com/search?q=$key" ;;

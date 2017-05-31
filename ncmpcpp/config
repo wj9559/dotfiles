@@ -335,8 +335,6 @@ playlist_editor_display_mode = columns
 ##
 #progressbar_look = =>
 #
-progressbar_boldness = no
-#
 ## Available values: database, playlist.
 ##
 #default_place_to_search_in = database
@@ -525,9 +523,9 @@ mouse_support = no
 #
 #main_window_highlight_color = yellow
 #
-#progressbar_color = black
+#progressbar_color = black:b
 #
-#progressbar_elapsed_color = green
+#progressbar_elapsed_color = green:b
 #
 #statusbar_color = default
 #

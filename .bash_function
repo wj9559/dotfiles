@@ -8,8 +8,7 @@ EC() {
 }
 
 calc() {
-    python3 -c "print($*)"
-#    echo "scale=3;$@" | bc -l
+    echo "scale=3;$@" | bc -l
 }
 
 yis() {

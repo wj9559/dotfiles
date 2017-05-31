@@ -77,6 +77,7 @@ alias sniff="sudo ngrep -d 'wlo1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump='sudo tcpdump -i wlo1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias cdtmp='mkcd /tmp/tmp_$(whoami)/$(randomstr); ln -sfn $PWD ../last'
+alias cdtmpp='mkcd /tmp/tmp_$(whoami)/$(randomstr)'
 alias cdtmpl='cd /tmp/tmp_$(whoami)/last &>/dev/null; if [[ $? != 0 ]]; then cdtmp; fi'
 alias clamscan='clamscan --recursive --infected --log ~/clamav.log'
 type git &>/dev/null && alias diff='git diff --no-index --color-words'
