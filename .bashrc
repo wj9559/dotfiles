@@ -50,8 +50,7 @@ export phonetermux=/data/data/com.termux/files/home/
 export tmplast=/tmp/tmp_$(whoami)/last/
 
 
-complete -F _command insh
-complete -F _command doNotRepeatRun
+complete -F _command insh doNotRepeatRun helpless
 complete -a aliased
 complete -F _cd cl
 [ -r ~/.ssh/config ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;

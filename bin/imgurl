@@ -19,4 +19,4 @@ else
     fi
 fi
 
-curl -s -F name=@$img https://img.vim-cn.com
+curl -s -F "name=@$img" https://img.vim-cn.com | tee >(xclip &>/dev/null)
