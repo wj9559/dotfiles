@@ -4,7 +4,7 @@
 _usage() {
 echo "\
 Usage: wallpaper [OPTION] [unsplash OPTION]
-use feh set desktop wallpaper
+use feh set wallpaper
 [OPTION]
   bing          daily wallpaper with bing
   unsplash      wallpaper with unsplash (default)
@@ -34,7 +34,7 @@ source output.sh
 _nettest(){
 if ! pingtest; then
     warn Network Unavailable
-    feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
+    feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
     exit 2
 fi
 }
@@ -87,5 +87,5 @@ esac
 
 mkdir -pv $(dirname $filepath)
 wget --continue --tries=4 --quiet -O $filepath $picUrl
-feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg /usr/share/archlinux/wallpaper/archlinux-simplyblack.png
+feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
 ln -srf $filepath $wallpaperDir/last.png

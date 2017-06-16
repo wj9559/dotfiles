@@ -246,10 +246,14 @@ fi
 loop() {
 _usage() {
 echo "\
-Usage: loop COUNT -s[leep-time] command...
+Usage: loop COUNT [-s<sleep-time>] COMMAND...
 loop execution the command
-  -s[leep-time]         after sleep time execution command,default 0
-  -h, --help            display this help and exit"
+  [-s<sleep-time>]      after sleep time execution command,default 0
+  -h, --help            display this help and exit
+
+example:
+  loop 4 ls -al
+  loop 7 -s2 wallpaper"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && return
 [[ $# == 0 ]] && _usage && return
