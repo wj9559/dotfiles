@@ -30,7 +30,7 @@ example:
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-source output.sh
+source ~/bin/output.sh
 _nettest(){
 if ! pingtest; then
     warn Network Unavailable
@@ -72,7 +72,7 @@ unsplash() {
     #featured="?{KEYWORD},{KEYWORD}"
     api="https://source.unsplash.com/"$key/$resolution/$featured
 
-    picUrl="$(curl -sI $api -w %{redirect_url} | tail -n1)"
+    picUrl=$(curl -sI "$api" -w '%{redirect_url}' | tail -n1)
     picName=$(echo "$picUrl" | cut -d/ -f4- | cut -d? -f1 | tr / -)
     #picID=$(curl -s https://unsplash.com/search/$picName | grep -oP "photo=\w+" | cut -d= -f2 | head -n1)
     filepath=$wallpaperDir/unsplash/$picName.$resolution.jpg

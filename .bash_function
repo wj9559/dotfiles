@@ -455,6 +455,10 @@ decrypt-openssl() {
     openssl aes-256-cbc -d -in "$1" -out "${2:-${1%.aes}}" $3
 }
 
+redirect_url() {
+    curl -sI "$1" -w '%{redirect_url}\n' | tail -n 1
+}
+
 
 #-----------------------------------------------------------
 # https://github.com/paoloantinori/hhighlighter
