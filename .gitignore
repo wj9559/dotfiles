@@ -31,3 +31,7 @@ fcitx/*
 roxterm.sourceforge.net/*
 !roxterm.sourceforge.net/Global
 !roxterm.sourceforge.net/Profiles/Default
+
+.fonts/font-awesome/*
+!.fonts/font-awesome/FontAwesome.otf
+!.fonts/font-awesome/fontawesome-preview.pdf

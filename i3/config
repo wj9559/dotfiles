@@ -10,7 +10,7 @@ set $2 2
 set $3 3
 set $4 4
 set $5 5
-set $6 6
+set $6 6:
 set $7 7:
 set $8 8:
 set $9 9:
@@ -208,8 +208,10 @@ bindsym $mod+Shift+Print exec --no-startup-id screenshot select
 
 # Move to workspace
 # assign [instance|class="firefox"] 8:browser
+assign [instance="telegram"] $6
+assign [instance="chromium"] $8
 assign [class="Atom|Code|Gvim"] $7
-assign [class="Firefox|Chromium|Opera"] $8
+assign [class="Firefox|Opera"] $8
 assign [class="VirtualBox"] $9
 assign [class="smplayer|mpv"] $0
 
@@ -217,7 +219,7 @@ assign [class="smplayer|mpv"] $0
 # for_window [instance|class|workspace|title|window_role|="gedit|vim"] move container to workspace $WS5, workspace $WS5, layout tabbed, sticky enable
 # for_window [title="x200: ~/work"] floating enable
 for_window [title="force-floating$"] floating enable, border pixel 1, focus
-for_window [workspace="$7|$8|$9|$0"] layout tabbed, border pixel 0, focus
+for_window [workspace="$6|$7|$8|$9|$0"] layout tabbed, border pixel 0, focus
 #for_window [class="Firefox|Chromium|Opera|smplayer|mpv|Atom|Code|Gvim"] border pixel 0, focus
 #for_window [window_role="pop-up"] floating enable
 #for_window [window_role="task_dialog"] floating enable

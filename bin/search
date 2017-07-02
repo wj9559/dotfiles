@@ -7,9 +7,9 @@ Usage: search KEY [site] [browser]
 Quick search in CLI
 
 site:
-  b,  bing     [default]   Bing
+  b,  bing                 Bing
   g,  google               Google
-  dd, duckduckgo           DuckDuckGo
+  dd, duckduckgo [default] DuckDuckGo
   ba, baidu                Baidu
   zh, zhihu                Zhihu
   gh, github               Github
@@ -20,9 +20,10 @@ site:
   wp, wikipedia            Wikipedia
 
 browser
-  f,  firefox  [default]   firefox
+  f,  firefox              firefox
+  fi, firefoxi             firefox --private-window
   c,  chromium             chromium
-  ci, chromiumi            chromium-incognito
+  ci, chromiumi [default]  chromium-incognito
   o,  opera                opera
   e,  elinks               elinks
   w,  w3m                  w3m
@@ -31,10 +32,10 @@ browser
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
 
-key=$(echo $1 | tr " " "+")
+key=$(echo "$1" | tr " " "+")
 
 # -----------------------site----------------------
-case ${2:-b} in
+case ${2:-duckduckgo} in
 b |bing           ) url="https://www.bing.com/search?q=$key" ;;
 g |google         ) url="https://www.google.com/search?q=$key" ;;
 dd|duckduckgo     ) url="https://duckduckgo.com/?q=$key" ;;
@@ -52,24 +53,31 @@ esac
 # force-browser
 case $3 in
 f|firefox    ) fb="firefox" ;;
+fi|firefoxi  ) fb="firefox --private-window" ;;
 c|chromium   ) fb="chromium" ;;
 ci|chromiumi ) fb="chromium --incognito" ;;
 o|opera      ) fb="opera" ;;
-e|elinks     ) fb="elinks" ;;
-w|w3m        ) fb="w3m" ;;
+e|elinks     ) fb="elinks"; env=console ;;
+w|w3m        ) fb="w3m"; env=console ;;
 esac
 
 # running-browser
 pidof chromium &> /dev/null && rb=chromium
+ps -o args $(pidof chromium) | grep -v grep | grep -q \\--incognito && rb="chromium --incognito"
 pidof opera &> /dev/null && rb=opera
 pidof firefox &> /dev/null && rb=firefox
+ps -o args $(pidof firefox) | grep -v grep | grep -q \\--private-window && rb="firefox --private-window"
 
 # default-browser
-db=${BROWSER:-chromium}
+db=${BROWSER:-"chromium --incognito"}
 
-[[ -n $db ]] && browser=$db
-[[ -n $rb ]] && browser=$rb
-[[ -n $fb ]] && browser=$fb
+[ -n "$db" ] && browser=$db
+[ -n "$rb" ] && browser=$rb
+[ -n "$fb" ] && browser=$fb
 
 # -----------------------run----------------------
-$browser $url &> /dev/null &
+if [[ -n "$DISPLAY" && -z "$env" ]]; then
+    $browser $url &> /dev/null &
+else
+    $browser $url
+fi
