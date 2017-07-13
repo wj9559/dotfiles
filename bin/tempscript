@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+_usage() {
+echo "\
+Usage: tempscript [OPTION]
+create temp shell script
+  bash          bash <script.sh>
+  edit          edit <script.sh>
+  less          less <script.sh>
+  FILE          create FILE and edit
+
+  -h, --help    display this help and exit"
+}
+
+DIR=/tmp/tempscript
+mkdir -p $DIR &> /dev/null
+LASTFILE=$DIR/last.sh
+
+case $1 in
+    -h|--help ) _usage; exit ;;
+    bash      ) $@ $LASTFILE; exit ;;
+    edit      ) ${EDITOR:-vi} $LASTFILE; exit ;;
+    less      ) less $LASTFILE; exit ;;
+    ""        ) FILE=$DIR/$(date +%Y%m%d%H%M%S).sh ;;
+    *         ) FILE=$(realpath -s "$1") ;;
+esac
+
+ln -fs $FILE $LASTFILE
+template $FILE

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-URL="https://twitter.com"
+URL="https://www.facebook.com"
 
 if [[ $1 == "-i" || $1 == "--incognito" ]]; then
     chromium --incognito "${@:2}" --app="$URL" &>/dev/null &

@@ -208,7 +208,7 @@ bindsym $mod+Shift+Print exec --no-startup-id screenshot select
 
 # Move to workspace
 # assign [instance|class="firefox"] 8:browser
-assign [instance="telegram"] $6
+assign [instance="twitter|instagram|telegram"] $6
 assign [instance="chromium"] $8
 assign [class="Atom|Code|Gvim"] $7
 assign [class="Firefox|Opera"] $8

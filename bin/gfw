@@ -20,6 +20,7 @@ pidof adbyby &>/dev/null && echo "adbyby  :on" || echo "adbyby  :off"
 on() {
 echo "switch to on" 
 doNotRepeatRun adbyby &
+rm -rf ~/.lantern
 doNotRepeatRun lantern -headless &
 }
 
