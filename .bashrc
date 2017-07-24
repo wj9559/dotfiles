@@ -45,7 +45,7 @@ fi
 #export rsync_proxy=$http_proxy
 #export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
 
-export phonedir=/sdcard/9559wj/
+export phonedir=/sdcard/adbpu
 export phonetermux=/data/data/com.termux/files/home/
 export tmplast=/tmp/tmp_$(whoami)/last/
 

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+_usage() {
+echo "\
+Usage: tarc ARCHIVE FILE...
+   or: tarc FORMAT FILE...
+
+compress FILEs
+  -h, --help            display this help and exit
+
+example:
+  tarc ~/backup/bash.7z ~/.bash{rc,_aliases,_function,_profile}
+  tarc tar.gz ../file1 ../../file2 /tmp/file3
+"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
+[[ $# == 0 ]] && _usage && exit
+
+format=$1
+name=${2%/}
+if [ $# -gt 2 ]; then
+    name=$name.etc.$(date +%Y%m%d%H%M%S)
+fi
+
+shift
+
+case $format in
+    zip              ) zip -qr    "$name".$format "$@" ;;
+    rar              ) rar a -idq "$name".$format "$@" ;;
+    7z               ) 7z a -bso0 "$name".$format "$@" ;;
+    tar              ) tar -cf    "$name".$format "$@" ;;
+    tgz |tar.gz      ) tar -czf   "$name".$format "$@" ;;
+    tbz2|tar.bz2     ) tar -cjf   "$name".$format "$@" ;;
+    tar.xz           ) tar -cJf   "$name".$format "$@" ;;
+    gz               ) gzip -k    "$@"                 ;;
+    bz2              ) bzip2 -kz  "$@"                 ;;
+    xz               ) xz -kz     "$@"                 ;;
+    *.zip            ) zip -qr    "$format" "$@"       ;;
+    *.rar            ) rar a -idq "$format" "$@"       ;;
+    *.7z             ) 7z a -bso0 "$format" "$@"       ;;
+    *.tar            ) tar -cf    "$format" "$@"       ;;
+    *.tgz |*.tar.gz  ) tar -czf   "$format" "$@"       ;;
+    *.tbz2|*.tar.bz2 ) tar -cjf   "$format" "$@"       ;;
+    *.tar.xz         ) tar -cJf   "$format" "$@"       ;;
+    *.gz             ) gzip -c    "$1" > "$format"     ;;
+    *.bz2            ) bzip2 -cz  "$1" > "$format"     ;;
+    *.xz             ) xz -cz     "$1" > "$format"     ;;
+    *                ) tar -czf   "$name".tar.gz  "$@" ;;
+esac

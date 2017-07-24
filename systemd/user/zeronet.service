@@ -1,0 +1,9 @@
+[Unit]
+Description=Decentralized websites using Bitcoin crypto and the BitTorrent network
+
+[Service]
+ExecStart=/usr/bin/env python2 /opt/zeronet/zeronet.py --config_file %h/.config/zeronet.conf
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

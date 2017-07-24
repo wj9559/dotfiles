@@ -25,7 +25,7 @@ else
     $EDITOR $page_url
 fi
 
-for line in $(seq 1 $(wc -l < $page_url)); do
+for line in $(seq $(wc -l < $page_url)); do
     url=$(sed -n ${line}p $page_url)
     you-get --format=mp4 --url "$url" >> $video_url_tmp 2>/dev/null \
     || you-get --url "$url" >> $video_url_tmp \

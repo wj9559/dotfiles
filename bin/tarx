@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+_usage() {
+echo "\
+Usage: tarx FILE...
+decompress FILEs
+  -h, --help            display this help and exit"
+}
+[[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
+[[ $# == 0 ]] && _usage && exit
+
+for j in $(seq $#); do
+    file=$(realpath -s "$1")
+    shift
+    basename=$(basename "$file")
+    mkdir -v "$basename.tarx" && cd "$basename.tarx"
+    case "$file" in
+        # *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))) ) bsdtar xvf $file;;
+        *.zip            ) unzip -q     "$file" ;; # || unzip -O gbk -q "$file" ;;
+        *.rar            ) unrar x -idq "$file" ;;
+        *.7z             ) 7z x         "$file" ;;
+        *.tar            ) tar -xf      "$file" ;;
+        *.tgz |*.tar.gz  ) tar -xzf     "$file" ;;
+        *.tbz2|*.tar.bz2 ) tar -xjf     "$file" ;;
+        *.tar.xz         ) tar -xJf     "$file" ;;
+        *.gz             ) gzip -kd     "$file" ;;
+        *.bz2            ) bzip2 -kd    "$file" ;;
+        *.xz             ) xz -kd       "$file" ;;
+        *                ) echo         "$file" cannot be extracted >&2 ;;
+    esac
+    cd ../
+    rmdir --ignore-fail-on-non-empty "$basename.tarx"
+    separatedLine
+done

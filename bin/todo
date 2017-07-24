@@ -21,7 +21,7 @@ simple implementation of a todo list
 
 _remove() {
     nl -s ". " $TODOFILE
-    printf %.0s- $(seq 1 ${COLUMNS:-$(tput cols)}); echo
+    printf %.0s- $(seq ${COLUMNS:-$(tput cols)}); echo
     #read -p "Type a number to remove: " -n $(wc -l < $TODOFILE | wc -L) number
     #sed -i ${number}d $TODOFILE
     read -p "Type any number to remove (delim:' '): " numbers

@@ -35,3 +35,5 @@ roxterm.sourceforge.net/*
 .fonts/font-awesome/*
 !.fonts/font-awesome/FontAwesome.otf
 !.fonts/font-awesome/fontawesome-preview.pdf
+
+psd/.psd.conf
