@@ -10,7 +10,7 @@ Usage: transfer.sh FILE
 [[ $# == 0 ]] && _usage && exit
 
 file=$1
-basefile=$(basename "$file" | tr -s '\\/|`;"?~!@#$^&*()<>[]{}'"'[:blank:]" _)
+basefile=$(basename "$file" | tr -s '\\/|`;"?~!@#$^&*()<>[]{}'"'[:space:]" _)
 api=https://transfer.sh
 
 if tty -s; then 
