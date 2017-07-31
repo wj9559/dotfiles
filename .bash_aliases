@@ -31,6 +31,7 @@ else
 fi
 alias l='ls -F '$lsColorFlag
 alias la='ls -FA '$lsColorFlag
+alias ld='ls -F --group-directories-first '$lsColorFlag
 alias ll='ls -FAlh '$lsColorFlag
     unset lsColorFlag
 

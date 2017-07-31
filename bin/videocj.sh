@@ -20,7 +20,7 @@ c|cut)
     fname=${4%.*}
     ftype=${4##*.}
     ftime=$(echo $2_$3 | tr : -)
-    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$ftime.$ftype -v error
+    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$ftime.$ftype -v fatal
     ;;
 
 j|join)
@@ -30,7 +30,7 @@ j|join)
         echo "file '$f'" >> $tmpfile
     done
     vi $tmpfile
-    ffmpeg -f concat -i $tmpfile -acodec copy -vcodec copy output.$(date +%Y%m%d%H%M%S).$2 -v error
+    ffmpeg -f concat -i $tmpfile -acodec copy -vcodec copy output.$(date +%Y%m%d%H%M%S).$2 -v fatal
     rm $tmpfile
     ;;
 *)
