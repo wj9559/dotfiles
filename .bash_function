@@ -37,7 +37,7 @@ cdd() {
 
 pss() {
     echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
-    ps -aux | grep -v "grep.*$1" | grep -Pi $1
+    ps -aux | grep -v "grep.*$1" | grep -Pi $@
 }
 
 incognitoshell() {
@@ -146,15 +146,15 @@ execution the command after entering the parameter
 local KEY
 if [[ "$*" == *\${KEY}* ]]; then
     while true; do
-        echo -ne '\e[1;32m'$@' \e[0m'
-        read -e KEY
+        #echo -ne '\e[1;32m'$@' \e[0m' && read -e KEY
+        read -ep "$@ " KEY
         eval $@
         separatedLine
     done
 else
     while true; do
-        echo -ne '\e[1;32m'$@' \e[0m'
-        read -e KEY
+        #echo -ne '\e[1;32m'$@' \e[0m' && read -e KEY
+        read -ep "$@ " KEY
         eval $@ $KEY
         separatedLine
     done
