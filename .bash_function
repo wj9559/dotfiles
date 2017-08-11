@@ -19,12 +19,19 @@ mkcd() {
 	mkdir "$@" && cd "$_"
 }
 
-alarm() {
+timer() {
 	date +%F_%T
+    echo timer $1 minutes
 	sleep ${1}m
-	espeak "$1 miutes" &>/dev/null
 	date +%F_%T
 	bell 4
+}
+
+stopwatch() {
+    local date=$(date +%s)
+    read -p "Stop? (anyKey) " -n 1
+    local seconds=$(( $(date +%s) - date ))
+    date --date=@$(( seconds + 915120000 )) +%T
 }
 
 cl() {
@@ -147,14 +154,14 @@ local KEY
 if [[ "$*" == *\${KEY}* ]]; then
     while true; do
         #echo -ne '\e[1;32m'$@' \e[0m' && read -e KEY
-        read -ep "$@ " KEY
+        read -ep "$* " KEY
         eval $@
         separatedLine
     done
 else
     while true; do
         #echo -ne '\e[1;32m'$@' \e[0m' && read -e KEY
-        read -ep "$@ " KEY
+        read -ep "$* " KEY
         eval $@ $KEY
         separatedLine
     done

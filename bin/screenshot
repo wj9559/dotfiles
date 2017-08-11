@@ -26,13 +26,13 @@ xprop -id $windowid | sed -n '/WM_CLASS/s/.* = "\([^\"]*\)".*/\1\n/p'
 frame_shot() {
 filename="frame-$SCREENSHOT_TIME.png"
 import -frame "$SCREENSHOT_DIR/$filename"
-ln -sf "$filename" $SCREENSHOT_DIR/last.png
+ln -sf "$filename" $SCREENSHOT_DIR/latest.png
 exit
 }
 select_shot() {
 filename="select-$SCREENSHOT_TIME.png"
 import "$SCREENSHOT_DIR/$filename"
-ln -sf "$filename" $SCREENSHOT_DIR/last.png
+ln -sf "$filename" $SCREENSHOT_DIR/latest.png
 exit
 }
 
@@ -58,4 +58,4 @@ fi
 
 filename="$name-$SCREENSHOT_TIME.png"
 import -border -window $windowid "$SCREENSHOT_DIR/$filename" &
-ln -sf "$filename" $SCREENSHOT_DIR/last.png
+ln -sf "$filename" $SCREENSHOT_DIR/latest.png

@@ -14,40 +14,46 @@ change backlight
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-type -a pactl &>/dev/null
-if [[ $? != 0 ]];then
-    echo "Please install \"libpulse\""
-    exit 1
-fi
+#type -a pactl &>/dev/null
+#if [[ $? != 0 ]];then
+#    echo "Please install \"libpulse\""
+#    exit 1
+#fi
+
+Vcmd(){
+    amixer --quiet set Master $1%$2
+#    pactl set-sink-volume 0 $2$1%
+}
 
 info() {
 amixer | grep -A10 'Master' | sed -rn 's/.*\[([0-9]+%)\].*\[(on|off)\]/\2 \1/p' | sed -n '1p'
 }
 
 increase() {
-pactl set-sink-volume 0 +2%
+Vcmd ${1:-2} +
 info
 }
 
 decrease() {
-pactl set-sink-volume 0 -2%
+Vcmd ${1:-2} -
 info
 }
 
-set() {
-pactl set-sink-volume 0 $1%
+Vset() {
+Vcmd $1
 info
 }
 
 mute() {
-pactl set-sink-mute 0 toggle
+#pactl set-sink-mute 0 toggle
+amixer --quiet set Master toggle
 info
 }
 
 case ${1:-i} in
-i         ) info;;
-+         ) increase;;
--         ) decrease;;
-s         ) set $2;;
-m         ) mute;;
+i ) info;;
++ ) increase $2;;
+- ) decrease $2;;
+s ) Vset $2;;
+m ) mute;;
 esac

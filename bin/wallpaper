@@ -79,7 +79,7 @@ unsplash() {
 }
 
 case $1 in
--rm      ) rm $(realpath $wallpaperDir/last.png);unsplash $2 ;;
+-rm      ) rm $(realpath $wallpaperDir/latest.png);unsplash $2 ;;
 bing     ) bing ;;
 unsplash ) unsplash $2 ;;
 *        ) unsplash $1 ;;
@@ -88,4 +88,4 @@ esac
 mkdir -pv $(dirname $filepath)
 wget --continue --tries=4 --quiet -O $filepath $picUrl
 feh --bg-fill --no-fehbg $filepath || feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
-ln -srf $filepath $wallpaperDir/last.png
+ln -srf $filepath $wallpaperDir/latest.png

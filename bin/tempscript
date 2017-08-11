@@ -14,7 +14,7 @@ create temp shell script
 
 DIR=/tmp/tempscript
 mkdir -p $DIR &> /dev/null
-LASTFILE=$DIR/last.sh
+LASTFILE=$DIR/latest.sh
 
 case $1 in
     -h|--help ) _usage; exit ;;
