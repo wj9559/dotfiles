@@ -29,7 +29,7 @@ precheck() {
     echo -e "\033[31m *6 setup tcp_wrapper and netfilter firewall; \033[0m\n"
     echo -e "\033[31m *7 setup vsftpd; \033[0m\n"
     sleep 5
-    
+
 }
 
 yum_update() {
@@ -53,7 +53,7 @@ stop_services() {
     do
         chkconfig --level 3 $server off
     done
-     
+
     for server in crond network rsyslog sshd iptables
     do
        chkconfig --level 3 $server on
@@ -116,7 +116,7 @@ time_config() {
     if [! -f "/usr/sbin/ntpdate"]; then
         yum -y install ntpdate
     fi
-    
+
     /usr/sbin/ntpdate pool.ntp.org
     echo "30 3 * * * root (/usr/sbin/ntpdate pool.ntp.org && /sbin/hwclock -w) &> /dev/null" >> /etc/crontab
     /sbin/service crond restart
@@ -151,10 +151,10 @@ other() {
     # initdefault
     sed -i 's/^id:.*$/id:3:initdefault:/' /etc/inittab
     /sbin/init q
-    
+
     # PS1
     #echo 'PS1="\[\e[32m\][\[\e[35m\]\u\[\e[m\]@\[\e[36m\]\h \[\e[31m\]\w\[\e[32m\]]\[\e[36m\]$\[\e[m\]"' >> /etc/profile
-     
+
     # Wrong password five times locked 180s
     sed -i '4a auth        required      pam_tally2.so deny=5 unlock_time=180' /etc/pam.d/system-auth
 }
@@ -180,14 +180,14 @@ anon_max_rate=1000000
 data_connection_timeout=60
 idle_session_timeout=600
 # ssl settings
-#ssl_enable=YES             
-#allow_anon_ssl=NO           
-#force_local_data_ssl=YES    
-#force_local_logins_ssl=YES  
-#ssl_tlsv1=YES               
+#ssl_enable=YES
+#allow_anon_ssl=NO
+#force_local_data_ssl=YES
+#force_local_logins_ssl=YES
+#ssl_tlsv1=YES
 #ssl_sslv2=NO
 #ssl_sslv3=NO
-#rsa_cert_file=/etc/vsftpd/vsftpd.pem 
+#rsa_cert_file=/etc/vsftpd/vsftpd.pem
 # server settings
 max_clients=50
 max_per_ip=5
@@ -207,10 +207,10 @@ EOF
     chkconfig --level 3 vsftpd on
     service vsftpd restart
 }
- 
+
 main() {
     precheck
-    
+
     printf "\033[32m================%40s================\033[0m\n" "updating the system            "
     yum_update
 
@@ -222,22 +222,22 @@ main() {
 
     printf "\033[32m================%40s================\033[0m\n" "stopping irrelevant services   "
     stop_services
-    
+
     printf "\033[32m================%40s================\033[0m\n" "/etc/security/limits.config    "
     limits_config
-    
+
     printf "\033[32m================%40s================\033[0m\n" "/etc/sysctl.conf               "
     sysctl_config
 
     printf "\033[32m================%40s================\033[0m\n" "sshd re-configuring            "
     sshd_config
-    
+
     printf "\033[32m================%40s================\033[0m\n" "configuring time               "
     time_config
-    
+
     printf "\033[32m================%40s================\033[0m\n" "configuring firewall           "
 #   iptables
-    
+
     printf "\033[32m================%40s================\033[0m\n" "someother stuff                "
     other
 

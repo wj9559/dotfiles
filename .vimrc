@@ -31,7 +31,7 @@ set showmatch
 set wildmenu
 set autoread                  "文件在vim之外修改后自动重载
 set whichwrap=<,>,[,]         "当光标到行首或行尾，允许左右方向键换行
-set completeopt=longest,menu  "智能补全,弹出菜单，无歧义时才自动填充 
+set completeopt=longest,menu  "智能补全,弹出菜单，无歧义时才自动填充
 "colorscheme pablo
 "set t_Co=256
 "set backspace=2
@@ -67,10 +67,10 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-"按键映射的起始字符 
+"按键映射的起始字符
 let mapleader = ','
-"使用Ctrl-l 和 Ctrl+h 切换标签页  
-nnoremap <C-l> gt 
+"使用Ctrl-l 和 Ctrl+h 切换标签页
+nnoremap <C-l> gt
 nnoremap <C-h> gT
 nnoremap <leader>t : tabe<CR>
 

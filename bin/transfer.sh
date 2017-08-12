@@ -10,15 +10,15 @@ Usage: transfer.sh FILE
 [[ $# == 0 ]] && _usage && exit
 
 file=$1
-basefile=$(basename "$file" | tr -s '\\/|`;"?~!@#$^&*()<>[]{}'"'[:space:]" _)
+basefile=$(basename "$file" | tr -s '\\/|`;"?~!@#$^&*()<>[]{}'"'[:blank:]" _)
 api=https://transfer.sh
 
-if tty -s; then 
+if tty -s; then
     if [ ! -r $file ]; then
         echo "File $file doesn't exists." >&2
         exit 2
     fi
-    
+
     if [ -d $file ]; then
         tarfile=$(mktemp -t transferXXX.tar)
         basefile=$basefile.tar
@@ -28,6 +28,6 @@ if tty -s; then
     else
         curl --progress-bar --upload-file "$file" "$api/$basefile" | tee >(xclip &>/dev/null)
     fi
-else 
+else
     curl --progress-bar --upload-file "-" "$api/$basefile" | tee >(xclip &>/dev/null)
 fi

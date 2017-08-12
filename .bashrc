@@ -8,7 +8,7 @@
 #shopt -s no_empty_cmd_completion
 shopt -s histappend
 shopt -s autocd
-set -o notify 
+set -o notify
 #set -o vi
 trap EC ERR
 #[ -n "$SSH_CLIENT" ] && PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]SSH\$\[\e[m\] ' || PS1='\n\[\e[1;34m\]\w\n\[\e[1;32m\]\$\[\e[m\] '
@@ -34,7 +34,7 @@ export BUILDDIR=/tmp/makepkg makepkg
 [ "$TERM" == "xterm" ] && export TERM=xterm-256color
 if [ -n "$DISPLAY" ]; then
     export BROWSER=chromium
-else 
+else
     export BROWSER=w3m
 fi
 
@@ -47,7 +47,7 @@ fi
 
 export phonedir=/sdcard/adbpu
 export phonetermux=/data/data/com.termux/files/home/
-export tmplast=/tmp/tmp_$(whoami)/last/
+export tmplatest=/tmp/tmp_$(whoami)/latest/
 
 
 complete -F _command insh doNotRepeatRun helpless

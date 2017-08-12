@@ -22,7 +22,7 @@ char mode:
           right-hand   右手模式 67890-=^&*()_+yuiop[]\{}|hjkl;:nm,./<>?"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
- 
+
 LENGTH=${1:-12}
 CHARMODE="${2:-[:alnum:]}"
 if [[ $CHARMODE == 'left-hand' ]]; then

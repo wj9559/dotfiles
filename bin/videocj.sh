@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #cut/join videos using ffmpeg without quality loss
- 
+
 _usage() {
 echo "\
 Usage: $0 c[ut] [start]  [second] FILE
@@ -13,7 +13,7 @@ Usage: $0 j[oin] FILE_TYPE
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
- 
+
 case "$1" in
 c|cut)
     [[ -z $4 ]] && _usage && exit

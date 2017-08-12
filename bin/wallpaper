@@ -25,7 +25,7 @@ example:
   wallpaper unsplash food       # unsplash random food
   wallpaper unsplash daily      # unsplash random from daily
   wallpaper unsplash random     # unsplash random from a category
-  wallpaper unsplash 190727     # unsplash random from collection 190727 
+  wallpaper unsplash 190727     # unsplash random from collection 190727
   wallpaper unsplash user/likes # unsplash random from specific user likes"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit

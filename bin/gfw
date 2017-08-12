@@ -18,7 +18,7 @@ pidof lantern &>/dev/null && echo "lantern :on" || echo "lantern :off"
 pidof adbyby &>/dev/null && echo "adbyby  :on" || echo "adbyby  :off"
 }
 on() {
-echo "switch to on" 
+echo "switch to on"
 doNotRepeatRun adbyby &
 rm -rf ~/.lantern
 doNotRepeatRun lantern -headless &
@@ -26,7 +26,7 @@ doNotRepeatRun lantern -headless &
 
 off() {
 echo "switch to off"
-killall -q lantern 
+killall -q lantern
 killall -q adbyby
 }
 
