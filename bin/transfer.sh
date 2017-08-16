@@ -31,3 +31,5 @@ if tty -s; then
 else
     curl --progress-bar --upload-file "-" "$api/$basefile" | tee >(xclip &>/dev/null)
 fi
+
+echo

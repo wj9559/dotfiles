@@ -222,6 +222,7 @@ esac
 $CMD --check $ckfile &>/dev/null && echo "$CMD: OK" || {
     b2sum --check $ckfile &>/dev/null && echo "b2sum: OK" || {
         echo FAILED >&2
+        rm $ckfile
         return 1
     }
 }
@@ -238,10 +239,11 @@ if [[ $(echo $pid | wc -w) != 1 ]]; then
     ps -o args:38,user,tname,%cpu,%mem,stat $pid > $tmpfile
     echo -n "    "; head -n1 $tmpfile
     sed -i 1d $tmpfile; nl -w2 -s". " $tmpfile
-    L=$(wc -l < $tmpfile | wc -L); rm $tmpfile
+    L=$(wc -l < $tmpfile | wc -L)
     read -p 'Type a line number to check: ' -n $L line
     pid=(0 $pid); pid=${pid[$line]}
-    echo
+    echo -en "\n\n$pid "
+    sed -n "$line p; $line q" $tmpfile; rm $tmpfile
 fi
 while ps $pid &>/dev/null ; do
     sleep 2
@@ -334,7 +336,7 @@ treee() {
 }
 
 dataurl() {
-    local mimeType=$(file -b --mime-type "$1");
+    local mimeType=$(file --brief --dereference --mime-type "$1");
     if [[ $mimeType == text/* ]]; then
         mimeType="${mimeType}";
         #mimeType="${mimeType};charset=utf-8";

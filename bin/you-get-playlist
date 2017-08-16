@@ -13,11 +13,11 @@ video_url_tmp=$video_url.tmp
 
 if [[ -n $1 ]]; then
     page_url="$(realpath "$1")"
-    ln -fs $page_url $tmpdir/page_url.latest
-    ln -fs $video_url $tmpdir/video_url.latest
+    ln -fsr $page_url $tmpdir/page_url.latest
+    ln -fsr $video_url $tmpdir/video_url.latest
 else
-    ln -fs $page_url $tmpdir/page_url.latest
-    ln -fs $video_url $tmpdir/video_url.latest
+    ln -fsr $page_url $tmpdir/page_url.latest
+    ln -fsr $video_url $tmpdir/video_url.latest
 
     echo -n | xclip
     watch -n 0.5 "xclip -o >> $page_url_tmp && echo >> $page_url_tmp"
