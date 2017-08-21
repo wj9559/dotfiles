@@ -4,14 +4,14 @@ _usage() {
 echo "\
 Usage: imgurl [-s] [FILE]
 get url of img.
-  -s, --screenshot    use ~/Pictures/Screenshots/latest.png
+  -s, --screenshot    use \$latestScreenshot
   -h, --help          display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 [[ $# == 0 ]] && _usage && exit
 
 if [[ $1 == '-s' || $1 == '--screenshot' ]]; then
-    img=~/Pictures/Screenshots/latest.png
+    img=$latestScreenshot
 else
     img=$(realpath $1 2>/dev/null)
     if [ $? -ne 0 ]; then

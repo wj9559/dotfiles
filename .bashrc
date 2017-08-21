@@ -47,10 +47,11 @@ fi
 
 export phonedir=/sdcard/adbpu
 export phonetermux=/data/data/com.termux/files/home/
-export tmplatest=/tmp/tmp_$(whoami)/latest/
-
+export latestTmp=/tmp/tmp_$(whoami)/latest/
+export latestScreenshot=~/Pictures/Screenshots/latest.png
+export latestWallpaper=~/Pictures/Wallpaper/latest.png
 
 complete -F _command insh doNotRepeatRun helpless
 complete -a aliased
-complete -F _cd cl
+complete -F _cd cl mkcd
 [ -r ~/.ssh/config ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
