@@ -69,6 +69,7 @@ pidof firefox &> /dev/null && rb=firefox
 ps -o args $(pidof firefox) | grep -v grep | grep -q \\--private-window && rb="firefox --private-window"
 
 # default-browser
+BROWSER="chromium --incognito"
 db=${BROWSER:-"chromium --incognito"}
 
 [ -n "$db" ] && browser=$db

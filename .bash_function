@@ -349,12 +349,12 @@ whoneeds() {
 }
 
 ipaddress() {
-    echo -e "$(\
     ip -a address | grep -oP 'inet6? (addr:)?\s?(([0-9]{1,3}\.){3}[0-9]{1,3}|[a-fA-F0-9:]+)' \
     | awk '{sub(/inet6? (addr:)? ?/, ""); print}' \
     | sed /127.0.0.1/d \
-    | sed /::1/d)\n"
-    echo "$(curl --silent --user-agent curl/ ipinfo.io/ip)"
+    | sed /::1/d
+    echo
+    curl --silent --user-agent curl/ ipinfo.io/ip
 }
 
 encrypt-ccrypt() {

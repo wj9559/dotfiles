@@ -11,6 +11,7 @@ ranger/tagged
 
 smplayer/*
 !smplayer/smplayer.ini
+!smplayer/playlist.ini
 
 mpd/*
 !mpd/config

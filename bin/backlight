@@ -22,7 +22,7 @@ if [[ $? != 0 ]];then
 fi
 
 info() {
-printf %.0f $(light -G)
+printf '%.0f\n' $(light -G)
 }
 
 add() {

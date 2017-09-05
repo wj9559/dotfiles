@@ -18,11 +18,11 @@ conky.config = {
 --图标查询 http://fontawesome.io/cheatsheet/
 -- / ${fs_free /}   \
 -- ${battery_short}  ${uptime_short}   \
---♫ ${exec mpc --format "\n[[%title% - ]%artist%]|\n[%file%]" | sed -n 2p | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
+--♫ ${exec mpc --format "\n[[%title% - ]%artist%]|\n[%file%]" 2>/dev/null | sed -n 2p | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
 
 conky.text = [[
 
-♫ ${exec mpc current | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
+♫ ${exec mpc current 2>/dev/null | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
 ${if_up eno1} ${downspeed eno1} ${upspeed eno1}$else ${if_up wlo1} ${downspeed wlo1} ${upspeed wlo1}   ${wireless_essid wlo1}$else No Wireless $endif $endif   \
  ${cpu cpu0}% ${hwmon 0 temp 2}°C   \
  ${memperc}%   \
