@@ -34,7 +34,7 @@ _debug(){
 
 _selected(){
     for id in $(curl -s "$apiUrl" | jq '.itemList[] | select(.type == "video").data.id'); do
-        if ! grep -q ^$id$ $checkfile; then
+        if ! grep -qw $id $checkfile; then
             idList+="$id "
         fi
     done

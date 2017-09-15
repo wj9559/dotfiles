@@ -1,1 +1,7 @@
-/usr/bin/ydcv
+#!/usr/bin/env bash
+
+if [[ $# == 0 ]]; then
+    exec /usr/bin/ydcv
+else
+    timeout 2 /usr/bin/ydcv "$@" || $0 "$@"
+fi

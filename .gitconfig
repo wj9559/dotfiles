@@ -6,6 +6,7 @@
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     s = status --short
     ca = !git add --all && git commit --all --verbose
+    whatthecommit = !git commit --file=- <<< $(curl -s http://whatthecommit.com/index.txt)
 
     # Show verbose output about tags, branches or remotes
     tags = tag -l

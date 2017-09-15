@@ -161,7 +161,7 @@ workspace_auto_back_and_forth yes
 #force_display_urgency_hint 500 ms
 #force_focus_wrapping yes | no
 
-bindsym $mod+t exec --no-startup-id notify-send --app-name=ydcv "$(ydcv -s \"$(xclip -o | tr '\n' ' ')\" | sed 1d)"
+bindsym $mod+t exec --no-startup-id notify-send --app-name=ydcv "$(yi -s \"$(xclip -o | tr '\n' ' ')\" | sed 1d)"
 bindsym $mod+s exec --no-startup-id search "$(xclip -o | tr '\n' ' ')"
 bindsym $mod+Shift+t border toggle
 bindsym $mod+x sticky toggle

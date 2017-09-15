@@ -25,6 +25,9 @@ timer() {
 	sleep ${1}m
 	date +%F_%T
 	bell 4
+    if [[ -n "$2" ]]; then
+        notify-send "$2"
+    fi
 }
 
 stopwatch() {
@@ -345,7 +348,12 @@ dataurl() {
 }
 
 whoneeds() {
-    pactree --reverse --linear --unique --depth 1 $1 | sed 1d
+    if [[ $1 == '-r' || $1 == '--tree' ]]; then
+        shift
+        pactree --reverse $@
+    else
+        pactree --reverse --unique --depth 1 $1 | sed 1d
+    fi
 }
 
 ipaddress() {
@@ -354,7 +362,7 @@ ipaddress() {
     | sed /127.0.0.1/d \
     | sed /::1/d
     echo
-    curl --silent --user-agent curl/ ipinfo.io/ip
+    curl --silent --user-agent curl/ ip-api.com/json | jq .query | sed s/\"//g
 }
 
 encrypt-ccrypt() {
