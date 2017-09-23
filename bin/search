@@ -10,6 +10,7 @@ site:
   b,  bing                 Bing
   g,  google               Google
   dd, duckduckgo [default] DuckDuckGo
+  ya, yandex               Yandex
   ba, baidu                Baidu
   zh, zhihu                Zhihu
   gh, github               Github
@@ -21,8 +22,10 @@ site:
 
 browser
   f,  firefox              firefox
+  ft, firefoxt             firefox-tmp
   fi, firefoxi             firefox --private-window
   c,  chromium             chromium
+  ct, chromiumt            chromium-tmp
   ci, chromiumi [default]  chromium-incognito
   o,  opera                opera
   e,  elinks               elinks
@@ -39,6 +42,7 @@ case ${2:-duckduckgo} in
 b |bing           ) url="https://www.bing.com/search?q=$key" ;;
 g |google         ) url="https://www.google.com/search?q=$key" ;;
 dd|duckduckgo     ) url="https://duckduckgo.com/?q=$key" ;;
+ya|yandex         ) url="https://www.yandex.com/search/?text=$key" ;;
 ba|baidu          ) url="https://www.baidu.com/s?wd=$key" ;;
 zh|zhihu          ) url="https://www.zhihu.com/search?q=$key" ;;
 gh|github         ) url="https://github.com/search?q=$key" ;;
@@ -53,8 +57,10 @@ esac
 # force-browser
 case $3 in
 f|firefox    ) fb="firefox" ;;
+ft|firefoxt  ) fb="firefox-tmp" ;;
 fi|firefoxi  ) fb="firefox --private-window" ;;
 c|chromium   ) fb="chromium" ;;
+ct|chromiumt ) fb="chromium-tmp" ;;
 ci|chromiumi ) fb="chromium --incognito" ;;
 o|opera      ) fb="opera" ;;
 e|elinks     ) fb="elinks"; env=console ;;
@@ -63,10 +69,10 @@ esac
 
 # running-browser
 pidof chromium &> /dev/null && rb=chromium
-ps -o args $(pidof chromium) | grep -v grep | grep -q \\--incognito && rb="chromium --incognito"
+ps -o args $(pidof chromium) | grep -v grep | grep -q -- --incognito && rb="chromium --incognito"
 pidof opera &> /dev/null && rb=opera
 pidof firefox &> /dev/null && rb=firefox
-ps -o args $(pidof firefox) | grep -v grep | grep -q \\--private-window && rb="firefox --private-window"
+ps -o args $(pidof firefox) | grep -v grep | grep -q -- --private-window && rb="firefox --private-window"
 
 # default-browser
 BROWSER="chromium --incognito"

@@ -18,8 +18,8 @@ export XMODIFIERS="@im=fcitx"
 cd
 xset s 180 &
 xset b off &
-xflux -l 30.53 -g 117.11 &
-wallpaper &
+xflux -l 30.00 -g 118.00 &
+#wallpaper &
 fcitx-autostart &
 xcompmgr &
 
