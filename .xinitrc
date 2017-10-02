@@ -19,7 +19,8 @@ cd
 xset s 180 &
 xset b off &
 xflux -l 30.00 -g 118.00 &
-#wallpaper &
+wallpaper &
+#feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
 fcitx-autostart &
 xcompmgr &
 

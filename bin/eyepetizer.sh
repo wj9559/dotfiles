@@ -17,7 +17,7 @@ download or directly play the eyepetizer selected videos.
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-checkfile="$HOME/videos/eyepetizer.list"
+checkfile="$HOME/Videos/eyepetizer.list"
 apiUrl="http://baobab.kaiyanapp.com/api/v4/tabs/selected"
 tmpdir="$HOME/Desktop/eyepetizer"
 PLAYER=mpv

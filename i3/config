@@ -155,6 +155,8 @@ exec --no-startup-id roxterm
 new_window pixel 1
 hide_edge_borders both
 workspace_auto_back_and_forth yes
+#floating_minimum_size 562 x 362
+#floating_maximum_size 1366 x 768
 #default_orientation horizontal | vertical | auto   # according to monitors
 #focus_on_window_activation smart|urgent|focus|none
 #workspace_layout default|tabbed|stacking

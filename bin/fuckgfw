@@ -3,7 +3,7 @@
 
 _usage() {
 echo "\
-Usage: gfw [OPTION]
+Usage: fuckgfw [OPTION]
 Fuck great fire wall
   on
   off

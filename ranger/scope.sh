@@ -57,9 +57,11 @@ if [ "$preview_images" = "True" ]; then
         # unsupported types.
         image/*)
             exit 7;;
+        application/pdf)
+            pdftoppm -jpeg -singlefile "$path" "${cached//.jpg}" && exit 6;;
         # Image preview for video, disabled by default.:
-        ###video/*)
-        ###    ffmpegthumbnailer -i "$path" -o "$cached" -s 0 && exit 6 || exit 1;;
+        video/*)
+            ffmpegthumbnailer -i "$path" -o "$cached" -s 0 && exit 6 || exit 1;;
     esac
 fi
 
