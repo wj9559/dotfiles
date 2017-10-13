@@ -5,3 +5,4 @@ target=${2:-www.baidu.com}
 killtime=${3:-4}
 
 timeout $killtime ping -c3 -i.2 -W$timeout $target &>/dev/null
+#timeout $killtime curl --connect-timeout $timeout https://www.google.com/generate_204

@@ -3,11 +3,11 @@
 
 _usage() {
 echo "\
-Usage: search KEY [site] [browser]
-Quick search in CLI
+Usage: search KEY [SITE] [BROWSER]
+Quick search
 
-site:
-  b,  bing                 Bing
+SITE:
+  bi, bing                 Bing
   g,  google               Google
   dd, duckduckgo [default] DuckDuckGo
   ya, yandex               Yandex
@@ -15,12 +15,14 @@ site:
   zh, zhihu                Zhihu
   gh, github               Github
   db, douban               Douban
+  dbb,douban-book          Douban Book
+  dbm,douban-movie         Douban Movie
   tb, taobao               Taobao
-  jd                       JD
-  al, archlinux-wiki       Archlinux-wiki
+  jd, jingdong             JD
+  al, archlinux-wiki       Archlinux Wiki
   wp, wikipedia            Wikipedia
 
-browser
+BROWSER:
   f,  firefox              firefox
   ft, firefoxt             firefox-tmp
   fi, firefoxi             firefox --private-window
@@ -30,6 +32,7 @@ browser
   o,  opera                opera
   e,  elinks               elinks
   w,  w3m                  w3m
+
   -h, --help               display this help and exit"
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
@@ -37,9 +40,8 @@ browser
 
 key=$(echo "$1" | tr " " "+")
 
-# -----------------------site----------------------
 case ${2:-duckduckgo} in
-b |bing           ) url="https://www.bing.com/search?q=$key" ;;
+bi|bing           ) url="https://www.bing.com/search?q=$key" ;;
 g |google         ) url="https://www.google.com/search?q=$key" ;;
 dd|duckduckgo     ) url="https://duckduckgo.com/?q=$key" ;;
 ya|yandex         ) url="https://www.yandex.com/search/?text=$key" ;;
@@ -47,13 +49,14 @@ ba|baidu          ) url="https://www.baidu.com/s?wd=$key" ;;
 zh|zhihu          ) url="https://www.zhihu.com/search?q=$key" ;;
 gh|github         ) url="https://github.com/search?q=$key" ;;
 db|douban         ) url="https://www.douban.com/search?q=$key" ;;
+dbb|douban-book   ) url="https://book.douban.com/subject_search?search_text=$key&cat=1001" ;;
+dbm|douban-movie  ) url="https://movie.douban.com/subject_search?search_text=$key&cat=1002" ;;
 tb|taobao         ) url="https://s.taobao.com/search?q=$key" ;;
 jd|jingdong       ) url="https://search.jd.com/Search?keyword=$key" ;;
 al|archlinux-wiki ) url="https://wiki.archlinux.org/index.php?&search=$key" ;;
 wp|wikipedia      ) url="https://zh.wikipedia.org/w/index.php?search=$key" ;;
 esac
 
-# -----------------------browser----------------------
 # force-browser
 case $3 in
 f|firefox    ) fb="firefox" ;;
@@ -82,7 +85,6 @@ db=${BROWSER:-"chromium --incognito"}
 [ -n "$rb" ] && browser=$rb
 [ -n "$fb" ] && browser=$fb
 
-# -----------------------run----------------------
 if [[ -n "$DISPLAY" && -z "$env" ]]; then
     $browser $url &> /dev/null &
 else

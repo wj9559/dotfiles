@@ -9,9 +9,4 @@ Fuck Space In Filename, default remove space.
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-find . -name \*\ \* -execdir rename " " "$1" {} \;
-
-num=$(find . -name \*\ \* | wc -l)
-if [[ $num -ne 0 ]];then
-    $0 $1
-fi
+find . -name \*\ \* -execdir perl-rename $2 "s/ +/$1/g" {} \;

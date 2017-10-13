@@ -362,7 +362,7 @@ ipaddress() {
     | sed /127.0.0.1/d \
     | sed /::1/d
     echo
-    curl --silent --user-agent curl/ ip-api.com/json | jq .query | sed s/\"//g
+    curl --silent --disable ip-api.com/json | jq .query | sed s/\"//g
 }
 
 encrypt-ccrypt() {
