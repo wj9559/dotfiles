@@ -335,7 +335,7 @@ getcertnames() {
 }
 
 treee() {
-    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+    tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less --quit-if-one-screen --RAW-CONTROL-CHARS --LINE-NUMBERS --no-init;
 }
 
 dataurl() {
@@ -510,5 +510,5 @@ Check the content of your H_COLORS_FG and H_COLORS_BG environment variables or u
 
 }
 helpless(){
-    $@ --help 2>&1 | less -RX
+    $@ --help 2>&1 | less --RAW-CONTROL-CHARS --no-init
 }

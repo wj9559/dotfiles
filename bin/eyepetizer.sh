@@ -34,18 +34,18 @@ _debug(){
 
 _selected(){
     for id in $(curl -s "$apiUrl" | jq '.itemList[] | select(.type == "video").data.id'); do
-        if ! grep -qw $id $checkfile; then
+        if ! grep -qw $id $checkfile 2>/dev/null; then
             idList+="$id "
         fi
     done
 }
-_geturl(){
+_getlink(){
     echo "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=$1&editionType=default&source=ucloud"
 }
 
 _selected
 for id in $idList; do
-    _${1:-download} "$(_geturl $id)"
+    _${1:-download} "$(_getlink $id)"
     if [[ $1 != debug && $? == 0 ]]; then
         echo $id >> $checkfile
     fi

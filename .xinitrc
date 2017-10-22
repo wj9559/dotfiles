@@ -23,6 +23,7 @@ wallpaper &
 #feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
 fcitx-autostart &
 xcompmgr &
+doNotRepeatRun adbyby &
 
 [ -f $HOME/.Xmodmap ] && /usr/bin/xmodmap $HOME/.Xmodmap
 
