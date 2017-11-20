@@ -55,7 +55,7 @@ input=$1
 [[ "$input" = "" ]] || [[ $show_help = true ]] && show_help && exit
 
 # Check for ffmpeg before encoding
-type ffmpeg >/dev/null 2>&1 || {
+type ffmpeg > /dev/null 2>&1 || {
   echo "Error: gifgen requires ffmpeg to be installed"
   exit 1
 }

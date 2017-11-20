@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+_usage() {
+echo "\
+Usage: screenshot [options]
+screenshot script for X
+  root
+  active
+  frame
+  select"
+}
+[[ $1 == '-h' || $1 == '--help' ]] && _usage && exit
+
+SCREENSHOT_DIR=~/Pictures/Screenshots/
+SCREENSHOT_TIME=$(date +%Y-%m-%d_%H-%M-%S)
+SCREENSHOT_SOUND=/usr/share/sounds/freedesktop/stereo/screen-capture.oga
+[ -d $SCREENSHOT_DIR ] && mkdir $SCREENSHOT_DIR &> /dev/null
+
+get_id() {
+    xprop | grep "group leader:" | cut -d" " -f7
+}
+get_active_id() {
+    xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d' ' -f5
+}
+get_name() {
+    xprop -id $windowid | sed -n '/WM_CLASS/s/.* = "\([^\"]*\)".*/\1\n/p'
+}
+frame_shot() {
+    filename="frame-$SCREENSHOT_TIME.png"
+    import -frame "$SCREENSHOT_DIR/$filename"
+    exit
+}
+select_shot() {
+    filename="select-$SCREENSHOT_TIME.png"
+    import "$SCREENSHOT_DIR/$filename"
+    exit
+}
+
+exitTrap() {
+    play $SCREENSHOT_SOUND &> /dev/null
+    ln -sf "$filename" $SCREENSHOT_DIR/latest.png
+}
+trap exitTrap exit
+
+case ${1:-root} in
+  root  ) windowid='root' ;;
+  active) windowid=$(get_active_id) ;;
+  frame ) frame_shot ;;
+  select) select_shot ;;
+esac
+
+if [ -z "$name" ]; then
+    if [ $windowid == "root" ]; then
+        name='root'
+    else
+        name=$(get_name)
+        [ -z "$name" ] && name='window'
+    fi
+fi
+
+filename="$name-$SCREENSHOT_TIME.png"
+import -border -window $windowid "$SCREENSHOT_DIR/$filename" &

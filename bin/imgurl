@@ -13,10 +13,10 @@ get url of img.
 if [[ $1 == '-s' || $1 == '--screenshot' ]]; then
     img=$latestScreenshot
 else
-    img=$(realpath $1 2>/dev/null)
+    img=$(realpath $1 2> /dev/null)
     if [ $? -ne 0 ]; then
         _usage && exit 2
     fi
 fi
 
-curl -s -F "name=@$img" https://img.vim-cn.com | tee >(xclip &>/dev/null)
+curl -s -F "name=@$img" https://img.vim-cn.com | tee >(xclip &> /dev/null)

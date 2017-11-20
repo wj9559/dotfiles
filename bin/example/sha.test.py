@@ -3,7 +3,7 @@ from hashlib import md5, sha1, sha256, sha512, blake2b
 from random import random
 from time import time
 
-SIZE = 10000000
+SIZE = 4000000
 rands = [repr(random()).encode() for i in range(SIZE)]
 
 t = time()

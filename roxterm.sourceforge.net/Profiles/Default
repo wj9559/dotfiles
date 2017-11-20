@@ -9,10 +9,12 @@ scrollbar_pos=0
 scroll_on_keystroke=1
 font=Monaco 9
 browser_spawn_type=0
-browser=firefox --private-window
+browser=chromium --incognito
 # browser=chromium --user-data-dir=$HOME/.config/chromium-tmp
 match_plain_files=1
 filer=
 dir_filer=ranger
 dir_spawn_type=1
 file_as_dir=1
+use_custom_command=1
+command=tmux-single.sh

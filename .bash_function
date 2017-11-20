@@ -83,7 +83,7 @@ langswitch() {
 }
 
 new() {
-    roxterm -e bash -c "$*;exec bash" &>/dev/null
+    roxterm -e bash -c "$*;exec bash" &> /dev/null
 }
 
 i3-save-tree-function() {
@@ -106,7 +106,7 @@ done
 paclf() {
     for i in "$@"; do
         pkgfile --list $i || pacman -Ql $i
-        #pacman --query --list $i 2>/dev/null || pkgfile --list $i
+        #pacman --query --list $i 2> /dev/null || pkgfile --list $i
     done
 }
 
@@ -208,9 +208,9 @@ aliased() {
 }
 
 checksha() {
-local CMD
+local CMD FILE=$1 STR=$2
 local ckfile=check_sum_file.$(randomstr 10)
-echo "$2  $1" > $ckfile
+echo "$STR  $FILE" > $ckfile
 
 local BYTE=$(echo -n $2 | wc -c)
 case $BYTE in
@@ -222,8 +222,8 @@ case $BYTE in
 128 ) CMD=sha512sum ;;
 esac
 
-$CMD --check $ckfile &>/dev/null && echo "$CMD: OK" || {
-    b2sum --check $ckfile &>/dev/null && echo "b2sum: OK" || {
+$CMD --check $ckfile &> /dev/null && echo "$CMD: OK" || {
+    b2sum --check $ckfile &> /dev/null && echo "b2sum: OK" || {
         echo FAILED >&2
         rm $ckfile
         return 1
@@ -248,7 +248,7 @@ if [[ $(echo $pid | wc -w) != 1 ]]; then
     echo -en "\n\n$pid "
     sed -n "$line p; $line q" $tmpfile; rm $tmpfile
 fi
-while ps $pid &>/dev/null ; do
+while ps $pid &> /dev/null ; do
     sleep 2
 done
 bell 2
@@ -339,12 +339,11 @@ treee() {
 }
 
 dataurl() {
-    local mimeType=$(file --brief --dereference --mime-type "$1");
+    local mimeType=$(file --brief --dereference --mime-type "$1")
     if [[ $mimeType == text/* ]]; then
-        mimeType="${mimeType}";
-        #mimeType="${mimeType};charset=utf-8";
+        mimeType=$(file --brief --dereference --mime "$1")
     fi
-    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 
 whoneeds() {

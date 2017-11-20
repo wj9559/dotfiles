@@ -82,11 +82,11 @@ rm -f $TMP/mcs_*
 ################################################################################
 mkfifo $TMP/mcs_a1 $TMP/mcs_v1
 
-ffmpeg -y -i $first -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a1 2>/dev/null </dev/null &
-ffmpeg -y -i $first -an -f yuv4mpegpipe -vcodec rawvideo $TMP/mcs_v1 2>/dev/null </dev/null &
+ffmpeg -y -i $first -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a1 2> /dev/null </dev/null &
+ffmpeg -y -i $first -an -f yuv4mpegpipe -vcodec rawvideo $TMP/mcs_v1 2> /dev/null </dev/null &
 
 # if you need to log the output of decoding processes (usually not necessary)
-# then replace the "2>/dev/null" in 2 lines above with your log file names, like this:
+# then replace the "2> /dev/null" in 2 lines above with your log file names, like this:
 #ffmpeg -y -i $first -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a1 2>$TMP/log.a.1 </dev/null &
 #ffmpeg -y -i $first -an -f yuv4mpegpipe -vcodec rawvideo $TMP/mcs_v1 2>$TMP/log.v.1 </dev/null &
 
@@ -101,11 +101,11 @@ for f in $inputs
 do
 	mkfifo $TMP/mcs_a$i $TMP/mcs_v$i
 
-	ffmpeg -y -i $f -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a$i 2>/dev/null </dev/null &
-	{ ffmpeg -y -i $f -an -f yuv4mpegpipe -vcodec rawvideo - 2>/dev/null </dev/null | tail -n +2 > $TMP/mcs_v$i ; } &
+	ffmpeg -y -i $f -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a$i 2> /dev/null </dev/null &
+	{ ffmpeg -y -i $f -an -f yuv4mpegpipe -vcodec rawvideo - 2> /dev/null </dev/null | tail -n +2 > $TMP/mcs_v$i ; } &
 
 	# if you need to log the output of decoding processes (usually not necessary)
-	# then replace the "2>/dev/null" in 2 lines above with your log file names, like this:
+	# then replace the "2> /dev/null" in 2 lines above with your log file names, like this:
 	#ffmpeg -y -i $f -vn -f u16le -acodec pcm_s16le -ac 2 -ar 44100 $TMP/mcs_a$i 2>$TMP/log.a.$i </dev/null &
 	#{ ffmpeg -y -i $f -an -f yuv4mpegpipe -vcodec rawvideo - 2>$TMP/log.v.$i </dev/null | tail -n +2 > $TMP/mcs_v$i ; } &
 

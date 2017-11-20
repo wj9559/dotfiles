@@ -23,7 +23,7 @@ floating_modifier $mod
 #bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
 #bindsym $mod+Return exec --no-startup-id gnome-terminal
 bindsym $mod+Return exec --no-startup-id roxterm
-bindsym $mod+Shift+Return exec --no-startup-id roxterm -T roxterm-force-floating
+bindsym $mod+Shift+Return exec --no-startup-id roxterm --title=roxterm-force-floating --execute ""
 bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
@@ -230,15 +230,15 @@ mode "quick_Launcher" {
     bindsym c exec --no-startup-id chromium, mode "default"
     bindsym $mod+c exec --no-startup-id chromium --incognito, mode "default"
     bindsym $mod+f exec --no-startup-id firefox --private-window, mode "default"
-    bindsym $mod+o exec --no-startup-id opera --proxy-server="127.0.0.1:8787", mode "default"
-    #opera --private
+    #bindsym $mod+o exec --no-startup-id opera --proxy-server="127.0.0.1:8787", mode "default"
     bindsym e exec --no-startup-id pcmanfm, mode "default"
     bindsym f exec --no-startup-id firefox, mode "default"
     bindsym i exec --no-startup-id i3-input -F "%s" -P "i3-msg: ", mode "default"
-    bindsym o exec --no-startup-id opera, mode "default"
+    #bindsym o exec --no-startup-id opera, mode "default"
     bindsym p exec --no-startup-id zathura, mode "default"
-    bindsym s exec --no-startup-id smplayer, mode "default"
-    bindsym v exec --no-startup-id virtualbox, mode "default"
+    #bindsym s exec --no-startup-id smplayer, mode "default"
+    #bindsym v exec --no-startup-id virtualbox, mode "default"
+    bindsym z exec --no-startup-id fun l, mode "default"
 
     bindsym Escape mode "default"
 }

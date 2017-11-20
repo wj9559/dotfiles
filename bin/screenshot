@@ -5,57 +5,44 @@ echo "\
 Usage: screenshot [options]
 screenshot script for X
   root
-  active
   frame
+  active
   select"
 }
 [[ $1 == '-h' || $1 == '--help' ]] && _usage && exit
-SCREENSHOT_DIR=~/Pictures/Screenshots/
-[[ -d $SCREENSHOT_DIR ]] && mkdir $SCREENSHOT_DIR &>/dev/null
-SCREENSHOT_TIME=$(date +%Y-%m-%d_%H-%M-%S)
 
-get_active_id() {
-xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d' ' -f5
-}
-get_id() {
-xprop |grep "group leader:" |cut -d" " -f7
-}
-get_name() {
-xprop -id $windowid | sed -n '/WM_CLASS/s/.* = "\([^\"]*\)".*/\1\n/p'
+SCREENSHOT_DIR=~/Pictures/Screenshots/
+SCREENSHOT_TIME=$(date +%Y-%m-%d_%H-%M-%S)
+SCREENSHOT_SOUND=/usr/share/sounds/freedesktop/stereo/screen-capture.oga
+[ -d $SCREENSHOT_DIR ] && mkdir $SCREENSHOT_DIR &> /dev/null
+
+root_shot() {
+    filename="root-$SCREENSHOT_TIME.png"
+    import -border -window root "$SCREENSHOT_DIR/$filename" &
 }
 frame_shot() {
-filename="frame-$SCREENSHOT_TIME.png"
-import -frame "$SCREENSHOT_DIR/$filename"
-ln -sf "$filename" $SCREENSHOT_DIR/latest.png
-exit
+    filename="frame-$SCREENSHOT_TIME.png"
+    import -frame "$SCREENSHOT_DIR/$filename"
+}
+active_shot() {
+    #windowid=$(xprop | grep "group leader:" | cut -d" " -f7)
+    windowid=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d' ' -f5)
+    name=$(xprop -id $windowid | sed -n '/WM_CLASS/s/.* = "\([^\"]*\)".*/\1\n/p')
+    [ -z "$name" ] && name='window'
+    filename="active-$name-$SCREENSHOT_TIME.png"
+    import -border -window $windowid "$SCREENSHOT_DIR/$filename" &
 }
 select_shot() {
-filename="select-$SCREENSHOT_TIME.png"
-import "$SCREENSHOT_DIR/$filename"
-ln -sf "$filename" $SCREENSHOT_DIR/latest.png
-exit
+    filename="select-$SCREENSHOT_TIME.png"
+    import "$SCREENSHOT_DIR/$filename"
 }
 
 case ${1:-root} in
-  root)
-    windowid='root';;
-  active)
-    windowid=$(get_active_id);;
-  frame)
-    frame_shot;;
-  select)
-    select_shot;;
+  root  ) root_shot   ;;
+  frame ) frame_shot  ;;
+  active) active_shot ;;
+  select) select_shot ;;
 esac
 
-if [ -z "$name" ];then
-  if [ $windowid == "root" ];then
-    name='root'
-  else
-    name=$(get_name)
-    [ -z "$name" ] && name='window'
-  fi
-fi
-
-filename="$name-$SCREENSHOT_TIME.png"
-import -border -window $windowid "$SCREENSHOT_DIR/$filename" &
+play $SCREENSHOT_SOUND &> /dev/null
 ln -sf "$filename" $SCREENSHOT_DIR/latest.png

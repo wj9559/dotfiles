@@ -23,13 +23,13 @@ if tty -s; then
         tarfile=$(mktemp -t transferXXX.tar)
         basefile=$basefile.tar
         tar --create --dereference --file=$tarfile $file
-        curl --progress-bar --upload-file "$tarfile" "$api/$basefile" | tee >(xclip &>/dev/null)
+        curl --progress-bar --upload-file "$tarfile" "$api/$basefile" | tee >(xclip &> /dev/null)
         rm $tarfile
     else
-        curl --progress-bar --upload-file "$file" "$api/$basefile" | tee >(xclip &>/dev/null)
+        curl --progress-bar --upload-file "$file" "$api/$basefile" | tee >(xclip &> /dev/null)
     fi
 else
-    curl --progress-bar --upload-file "-" "$api/$basefile" | tee >(xclip &>/dev/null)
+    curl --progress-bar --upload-file "-" "$api/$basefile" | tee >(xclip &> /dev/null)
 fi
 
 echo

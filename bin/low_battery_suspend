@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # virtualbox will get battery info when running, acpi process becomes uninterruptible sleep.
-pidof VirtualBox &>/dev/null && exit 2
+pidof VirtualBox &> /dev/null && exit 2
 _usage() {
   cat << EOF
 Usage: low_battery_suspend ['warning' 1-100] ['suspend' 1-'warning']
@@ -24,7 +24,7 @@ STATE=$(cat $bDir/status)
 CHARGE=$(cat $bDir/capacity)
 
 if [ $STATE == "Discharging" ] && [ $CHARGE -le $WARN ]; then
-    play $low_battery_audio &>/dev/null
+    play $low_battery_audio &> /dev/null
 fi
 if [ $STATE == "Discharging" ] && [ $CHARGE -le $MIN ]; then
     $SUSPEND_CMD

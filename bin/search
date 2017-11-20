@@ -18,6 +18,7 @@ SITE:
   dbb,douban-book          Douban Book
   dbm,douban-movie         Douban Movie
   tb, taobao               Taobao
+  1688, alibaba            Alibaba
   jd, jingdong             JD
   al, archlinux-wiki       Archlinux Wiki
   wp, wikipedia            Wikipedia
@@ -52,6 +53,7 @@ db|douban         ) url="https://www.douban.com/search?q=$key" ;;
 dbb|douban-book   ) url="https://book.douban.com/subject_search?search_text=$key&cat=1001" ;;
 dbm|douban-movie  ) url="https://movie.douban.com/subject_search?search_text=$key&cat=1002" ;;
 tb|taobao         ) url="https://s.taobao.com/search?q=$key" ;;
+1688|alibaba      ) url="https://s.1688.com/selloffer/offer_search.htm?keywords=$key" ;;
 jd|jingdong       ) url="https://search.jd.com/Search?keyword=$key" ;;
 al|archlinux-wiki ) url="https://wiki.archlinux.org/index.php?&search=$key" ;;
 wp|wikipedia      ) url="https://zh.wikipedia.org/w/index.php?search=$key" ;;

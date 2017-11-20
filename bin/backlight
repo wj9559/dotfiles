@@ -15,7 +15,7 @@ change backlight
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-type -a light &>/dev/null
+type -a light &> /dev/null
 if [[ $? != 0 ]];then
     echo "Please install \"aur/light\""
     exit 1

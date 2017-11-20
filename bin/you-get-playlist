@@ -3,7 +3,7 @@
 
 tmpdir=/tmp/you-get-playlist
 PLAYER="smplayer -fullscreen"
-mkdir $tmpdir &>/dev/null
+mkdir $tmpdir &> /dev/null
 
 DATE=$(date +%d_%T)
 page_url=$tmpdir/page_url.$DATE
@@ -27,11 +27,11 @@ fi
 
 for line in $(seq $(wc -l < $page_url)); do
     url=$(sed -n ${line}p $page_url)
-    you-get --format=mp4 --url "$url" >> $video_url_tmp 2>/dev/null \
+    you-get --format=mp4 --url "$url" >> $video_url_tmp 2> /dev/null \
     || you-get --url "$url" >> $video_url_tmp \
     || todo you-get -i "$url"
 done
 grep -E "^https?://" $video_url_tmp > $video_url
-$PLAYER $(cat $video_url) &>/dev/null
-rm $page_url_tmp &>/dev/null
-rm $video_url_tmp &>/dev/null
+$PLAYER $(cat $video_url) &> /dev/null
+rm $page_url_tmp &> /dev/null
+rm $video_url_tmp &> /dev/null

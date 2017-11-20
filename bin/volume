@@ -14,7 +14,7 @@ change backlight
 }
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
-#type -a pactl &>/dev/null
+#type -a pactl &> /dev/null
 #if [[ $? != 0 ]];then
 #    echo "Please install \"libpulse\""
 #    exit 1

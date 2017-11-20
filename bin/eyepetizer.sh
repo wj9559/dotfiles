@@ -26,7 +26,7 @@ _download(){
     wget --continue --quiet "$1" -O $tmpdir/$(echo "$1" | cut -d= -f2 | cut -d\& -f1).mp4
 }
 _play(){
-    $PLAYER "$1" &>/dev/null
+    $PLAYER "$1" &> /dev/null
 }
 _debug(){
     echo "$1"
@@ -34,7 +34,7 @@ _debug(){
 
 _selected(){
     for id in $(curl -s "$apiUrl" | jq '.itemList[] | select(.type == "video").data.id'); do
-        if ! grep -qw $id $checkfile 2>/dev/null; then
+        if ! grep -qw $id $checkfile 2> /dev/null; then
             idList+="$id "
         fi
     done

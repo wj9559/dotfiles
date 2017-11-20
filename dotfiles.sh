@@ -3,7 +3,7 @@
 BASEDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 lncp="ln -srfn"
 lncp=${*:-$lncp}
-mkdir ~/.config &>/dev/null
+mkdir ~/.config &> /dev/null
 
 $lncp $BASEDIR/.Xmodmap ~/
 $lncp $BASEDIR/.bash_aliases ~/

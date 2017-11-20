@@ -13,7 +13,7 @@ COUNT=$(expr ${1:-1} \- 1)
 PLAYER=play
 
 _bell() {
-$PLAYER /usr/share/sounds/freedesktop/stereo/complete.oga repeat $COUNT &>/dev/null
+$PLAYER /usr/share/sounds/freedesktop/stereo/complete.oga repeat $COUNT &> /dev/null
 }
 
 _get_volume() {
@@ -35,9 +35,9 @@ fi
 
 if [[ -n $2 ]]; then
     _get_volume
-    _set_volume $2 &>/dev/null
+    _set_volume $2 &> /dev/null
     _bell
-    _restore_volume &>/dev/null
+    _restore_volume &> /dev/null
 else
     _bell &
 fi

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#ps -aux | grep -w yi | awk '{print $2}' | xargs kill -9
+
 if [[ $# == 0 ]]; then
     exec /usr/bin/ydcv
 else
