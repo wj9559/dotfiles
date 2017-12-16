@@ -22,7 +22,7 @@ conky.config = {
 
 conky.text = [[
 
-♫ ${exec mpc current 2>/dev/null | rev | cut -d/ -f1 | cut -d. -f2- | rev}   \
+♫ ${exec mpc current --format "%title% - %artist%" 2> /dev/null}   \
 ${if_up eno1} ${downspeed eno1} ${upspeed eno1}$else ${if_up wlo1} ${downspeed wlo1} ${upspeed wlo1}   ${wireless_essid wlo1}$else No Wireless $endif $endif   \
  ${cpu cpu0}% ${hwmon 0 temp 2}°C   \
  ${memperc}%   \

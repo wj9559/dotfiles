@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+URL="chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
+
+if [[ $1 == "-i" || $1 == "--incognito" ]]; then
+    chromium --incognito "${@:2}" --app="$URL" &> /dev/null &
+else
+    chromium "$@" --app="$URL" &> /dev/null &
+fi

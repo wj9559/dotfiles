@@ -44,7 +44,7 @@ key=$(echo "$1" | tr " " "+")
 case ${2:-duckduckgo} in
 bi|bing           ) url="https://www.bing.com/search?q=$key" ;;
 g |google         ) url="https://www.google.com/search?q=$key" ;;
-dd|duckduckgo     ) url="https://duckduckgo.com/?q=$key" ;;
+dd|duckduckgo     ) url="https://duckduckgo.com/?kn=1&q=$key" ;;
 ya|yandex         ) url="https://www.yandex.com/search/?text=$key" ;;
 ba|baidu          ) url="https://www.baidu.com/s?wd=$key" ;;
 zh|zhihu          ) url="https://www.zhihu.com/search?q=$key" ;;
