@@ -10,8 +10,8 @@ ranger/tagged
 !.moc/config
 
 smplayer/*
-!smplayer/smplayer.ini
 !smplayer/playlist.ini
+!smplayer/smplayer.ini
 
 mpd/*
 !mpd/config
@@ -23,9 +23,10 @@ ncmpcpp/*
 !ncmpcpp/config
 
 fcitx/*
+!fcitx/addon
+!fcitx/conf
 !fcitx/config
 !fcitx/profile
-!fcitx/conf
 
 .vim/.netrwhist
 

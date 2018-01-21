@@ -23,6 +23,7 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab                 "将tab转为space,转换正在编辑的文件用 %retab!
+"set noexpandtab
 
 "{{ misc
 set nolinebreak
