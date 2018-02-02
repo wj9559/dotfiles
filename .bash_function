@@ -363,13 +363,6 @@ ipaddress() {
     curl --silent --disable ip-api.com/json | jq .query | sed s/\"//g
 }
 
-encrypt-ccrypt() {
-    ccrypt -e < "$1" > "${2:-$1.cpt}"
-}
-decrypt-ccrypt() {
-    ccrypt -d < "$1" > "${2:-${1%.cpt}}"
-}
-
 encrypt-openssl() {
     openssl aes-256-cbc -e -salt -in "$1" -out "${2:-$1.aes}" $3
 }

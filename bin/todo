@@ -7,18 +7,22 @@ sed -i "/^$/d" $TODOFILE
 
 _usage() {
 echo "\
-Usage: todo [content]...
+Usage: todo [options] [content]...
 simple implementation of a todo list
   h, --help            display this help and exit
   l, --list            display the todo-list
   s, --show   [line]   display the specified row in the todo-list
+  g, --grep            use grep command to processing todo-list
   r, --remove [line]   remove an item from the todo-list
-  e, --edit            direct edit $TODOFILE
+  e, --edit   [line]   direct edit $TODOFILE
   --clear              clear the todo-list
 
   string...            add an item to the todo-list"
 }
 
+_list() {
+    nl -w 2 -s ". " $TODOFILE
+}
 _remove() {
     nl -w 2 -s ". " $TODOFILE
     printf %.0s- $(seq ${COLUMNS:-$(tput cols)}); echo
@@ -35,12 +39,13 @@ _write() {
 }
 
 case ${1} in
-""         ) echo -e "  h, --help            display help and exit\n" && $0 --list ;;
-h|--help   ) _usage;exit ;;
-l|--list   ) nl -w 2 -s ". " $TODOFILE ;;
+""         ) echo -e "  h, --help            display help and exit\n" ; _list ;;
+h|--help   ) _usage ; exit ;;
+l|--list   ) _list ;;
 s|--show   ) sed -n ${2}p $TODOFILE ;;
+g|--grep   ) shift ; _list | grep $@ ;;
 r|--remove ) [[ -z $2 ]] && _remove || sed -i ${2}d $TODOFILE ;;
-e|--edit   ) ${EDITOR:-nano} $TODOFILE ;;
+e|--edit   ) vim +$2 $TODOFILE ;;
 --clear    ) > $TODOFILE ;;
 *          ) _write "$*" ;;
 esac

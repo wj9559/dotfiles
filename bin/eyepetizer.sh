@@ -4,6 +4,8 @@
 # day_date_number=$(echo "($(date --date=2017$1 +%s) + 32400) * 1000" | bc)
 # night_date_number=$(echo "($(date --date=2017$1 +%s) + 75600) * 1000" | bc)
 # apiUrl="http://baobab.kaiyanapp.com/api/v4/tabs/selected?date=$date_number"
+# videoDetailUrl="http://baobab.kaiyanapp.com/api/v1/video/$id"
+# videoCommentUrl="http://baobab.kaiyanapp.com/api/v1/replies/video?id=$id"
 
 _usage() {
 echo "\
@@ -20,6 +22,7 @@ download or directly play the eyepetizer selected videos.
 checkfile="$HOME/Videos/eyepetizer.list"
 apiUrl="http://baobab.kaiyanapp.com/api/v4/tabs/selected"
 tmpdir="$HOME/Desktop/eyepetizer"
+videoSource=ucloud  # aliyun qcloud ucloud
 PLAYER=mpv
 
 _download(){
@@ -40,7 +43,7 @@ _selected(){
     done
 }
 _getlink(){
-    echo "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=$1&editionType=default&source=ucloud"
+    echo "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=$1&editionType=default&source=$videoSource"
 }
 
 _selected
