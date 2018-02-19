@@ -211,7 +211,7 @@ bindsym $mod+Shift+Print exec --no-startup-id screenshot select
 assign [instance="twitter|instagram|telegram"] $6
 assign [instance="chromium"] $8
 assign [class="Atom|Code|Gvim"] $7
-assign [class="Firefox|Opera"] $8
+assign [class="Firefox|Opera|Vivaldi*"] $8
 assign [class="VirtualBox"] $9
 assign [class="smplayer|mpv"] $0
 
@@ -220,7 +220,7 @@ assign [class="smplayer|mpv"] $0
 # for_window [title="x200: ~/work"] floating enable
 for_window [title="force-floating$"] floating enable, border pixel 1, focus
 for_window [workspace="$6|$7|$8|$9|$0"] layout tabbed, border pixel 0, focus
-#for_window [class="Firefox|Chromium|Opera|smplayer|mpv|Atom|Code|Gvim"] border pixel 0, focus
+#for_window [class="Firefox|Chromium|Opera|Vivaldi*|smplayer|mpv|Atom|Code|Gvim"] border pixel 0, focus
 #for_window [window_role="pop-up"] floating enable
 #for_window [window_role="task_dialog"] floating enable
 #for_window [class="(?i)test"] kill

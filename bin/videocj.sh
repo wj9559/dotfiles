@@ -20,7 +20,7 @@ c|cut)
     fname=${4%.*}
     ftype=${4##*.}
     ftime=$(echo $2_$3 | tr : -)
-    ffmpeg -ss $2 -t $3 -safe -1 -i $4 -acodec copy -vcodec copy $fname.$ftime.$ftype -v fatal
+    ffmpeg -ss $2 -t $3 -i $4 -acodec copy -vcodec copy $fname.$ftime.$ftype -v fatal
     ;;
 
 j|join)
