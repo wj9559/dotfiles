@@ -4,10 +4,10 @@ _usage() {
 echo "\
 Usage: tempscript [OPTION]
 create temp shell script
-  bash          bash <script.sh>
-  edit          edit <script.sh>
+  sh, bash      bash <script.sh>
+  ed, edit      edit <script.sh>
   less          less <script.sh>
-  FILE          create FILE and edit
+  FILE          create FILE and edit        (default)
 
   -h, --help    display this help and exit"
 }
@@ -18,8 +18,8 @@ LASTFILE=$DIR/latest.sh
 
 case $1 in
     -h|--help ) _usage; exit ;;
-    bash      ) $@ $LASTFILE; exit ;;
-    edit      ) ${EDITOR:-vi} $LASTFILE; exit ;;
+    sh|bash   ) $@ $LASTFILE; exit ;;
+    ed|edit   ) ${EDITOR:-vi} $LASTFILE; exit ;;
     less      ) less $LASTFILE; exit ;;
     ""        ) FILE=$DIR/$(date +%Y%m%d%H%M%S).sh ;;
     *         ) FILE=$(realpath -s "$1") ;;

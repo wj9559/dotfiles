@@ -4,9 +4,9 @@
 
 [[ -f ~/.bashrc ]] && source ~/.bashrc
 
-PATH=$PATH:~/bin
-PATH=$PATH:~/bin/chromapp
-PATH=$PATH:~/script
+appendpath ~/bin
+appendpath ~/bin/chromapp
+appendpath ~/script
 export PATH
 
 #[[ ! $TERM =~ screen ]] && SHELL=tmux fbterm

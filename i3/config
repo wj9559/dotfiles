@@ -240,6 +240,7 @@ mode "quick_Launcher" {
     #bindsym v exec --no-startup-id virtualbox, mode "default"
     bindsym z exec --no-startup-id fun l, mode "default"
 
+    bindsym $mod+z exec --no-startup-id tempscript bash, mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+z mode "quick_Launcher"

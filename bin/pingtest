@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 timeout=${1:-3}
-target=${2:-www.baidu.com}
+target=${2:-1.2.4.8}
 killtime=${3:-4}
 
 timeout $killtime ping -c3 -i.2 -W$timeout $target &> /dev/null

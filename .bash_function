@@ -31,6 +31,7 @@ timer() {
 
 stopwatch() {
     local date=$(date +%s)
+    [[ -n "$1" ]] && echo "$(date +%F_%T)  $1" || date +%F_%T
     read -p "Stop? (anyKey) " -n 1
     local seconds=$(( $(date +%s) - date ))
     date --date=@$(( seconds + 915120000 )) +%T
@@ -119,14 +120,11 @@ paclfs() {
 
 gpg-verify() {
     local sig=$1
-    local keyring=$2.gpg
     local key=$(gpg --verify $sig 2>&1 | grep 'using.*key ' | awk '{print $5}')
     echo key=$key
-
-    gpg --no-default-keyring --keyring $keyring --keyserver https://pgp.mit.edu --recv-keys $key
-    #gpg --no-default-keyring --keyring $keyring --keyserver hkp://keys.gnupg.net --recv-keys $key
+    gpg --recv-keys $key
     separatedLine
-    gpg --verify --verbose --keyring ~/.gnupg/$keyring $sig
+    gpg --verify $sig
 }
 
 you-get-play() {
@@ -235,7 +233,7 @@ pidoff() {
 local pid
 # pgrep -x        match exactly with the command name
 # pgrep -i        match case insensitively
-if ! pid=$(pgrep $1); then return 2; fi
+if ! pid=$(pgrep $@); then return 2; fi
 if [[ $(echo $pid | wc -w) != 1 ]]; then
     local L line tmpfile=$(mktemp)
     ps -o args:38,user,tname,%cpu,%mem,stat $pid > $tmpfile
@@ -251,6 +249,7 @@ while ps $pid &> /dev/null ; do
     sleep 2
 done
 bell 2
+echo "$1: END!  $(date +%F_%T)"
 notify-send --app-name=$1 --expire-time=0 "END!  $(date +%F_%T)"
 }
 
@@ -502,4 +501,11 @@ Check the content of your H_COLORS_FG and H_COLORS_BG environment variables or u
 }
 helpless(){
     $@ --help 2>&1 | less --RAW-CONTROL-CHARS --no-init
+}
+
+appendpath() {
+    case ":$PATH:" in
+        *:"$1":*) ;;
+        *) PATH="${PATH:+$PATH:}$1" ;;
+    esac
 }

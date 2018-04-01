@@ -9,7 +9,8 @@ scrollbar_pos=0
 scroll_on_keystroke=1
 font=Monaco 9
 browser_spawn_type=0
-browser=chromium --incognito
+browser=browser.sh
+# browser=chromium --incognito
 # browser=chromium --user-data-dir=$HOME/.config/chromium-tmp
 match_plain_files=1
 filer=

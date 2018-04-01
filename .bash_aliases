@@ -62,7 +62,7 @@ alias inotify-ao='inotifywait -mrq --timefmt %F_%T --format "%T %w %e %f" -e acc
 alias hd='hexdump -C'
 alias path='echo -e ${PATH//:/\\n}'
 alias errors='journalctl --priority=0..3 --catalog -n'
-alias uninterruptibleSleep='ps -eo stat,args | grep "^D\|^Z"'
+alias uninterruptibleSleep='echo "STAT START COMMAND" ; ps -eo stat,start_time,args | grep "^D\|^Z"'
 alias websiteget='wget --recursive --no-parent --page-requisites --adjust-extension --convert-links --random-wait --user-agent=mozilla'
 alias caffeine='xset s off'
 alias trA2a='tr [:upper:] [:lower:]'
