@@ -21,9 +21,8 @@ font pango:Monaco 8
 floating_modifier $mod
 
 #bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-#bindsym $mod+Return exec --no-startup-id gnome-terminal
 bindsym $mod+Return exec --no-startup-id roxterm
-bindsym $mod+Shift+Return exec --no-startup-id roxterm --title=roxterm-force-floating --execute ""
+bindsym $mod+Shift+Return exec --no-startup-id roxterm --title terminal-force-floating --execute bash
 bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop

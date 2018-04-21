@@ -31,14 +31,11 @@ example:
 [[ $1 == "-h" || $1 == "--help" ]] && _usage && exit
 
 source ~/bin/output.sh
-_nettest(){
-if ! pingtest; then
+pingtest || {
     warn Network Unavailable
     feh --bg-fill --no-fehbg ~/Pictures/wallpaper.png
     exit 2
-fi
 }
-_nettest
 
 resolution=$(xrandr | grep primary | awk '{match($0,"([0-9])*x([0-9])*",a)}END{print a[0]}')
 wallpaperDir=~/Pictures/Wallpaper

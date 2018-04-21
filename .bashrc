@@ -33,7 +33,7 @@ export VISUAL=vim
 export BUILDDIR=/tmp/makepkg makepkg
 [ "$TERM" == "xterm" ] && export TERM=xterm-256color
 if [ -n "$DISPLAY" ]; then
-    export BROWSER=chromium
+    export BROWSER=firefox
 else
     export BROWSER=w3m
 fi

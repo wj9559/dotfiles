@@ -26,7 +26,7 @@ videoSource=ucloud  # aliyun qcloud ucloud
 PLAYER=mpv
 
 _download(){
-    wget --continue --quiet "$1" -O $tmpdir/$(echo "$1" | cut -d= -f2 | cut -d\& -f1).mp4
+    wget --continue --quiet "$2" -O $tmpdir/$1.mp4
 }
 _play(){
     $PLAYER "$1" &> /dev/null
@@ -43,12 +43,12 @@ _selected(){
     done
 }
 _getlink(){
-    echo "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=$1&editionType=default&source=$videoSource"
+    echo "http://baobab.kaiyanapp.com/api/v1/playUrl?editionType=default&source=$videoSource&vid=$1"
 }
 
 _selected
 for id in $idList; do
-    _${1:-download} "$(_getlink $id)"
+    _${1:-download} $id "$(_getlink $id)"
     if [[ $1 != debug && $? == 0 ]]; then
         echo $id >> $checkfile
     fi
